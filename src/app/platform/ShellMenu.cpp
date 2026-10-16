@@ -15,9 +15,9 @@ namespace {
 // Where the verb goes: a folder, a folder's empty space (%V is the folder
 // shown), a drive's root.
 constexpr const wchar_t* kKeys[] {
-    L"Software\\Classes\\Directory\\shell\\WinShun.SearchHere",
-    L"Software\\Classes\\Directory\\Background\\shell\\WinShun.SearchHere",
-    L"Software\\Classes\\Drive\\shell\\WinShun.SearchHere",
+    L"Software\\Classes\\Directory\\shell\\Luma.SearchHere",
+    L"Software\\Classes\\Directory\\Background\\shell\\Luma.SearchHere",
+    L"Software\\Classes\\Drive\\shell\\Luma.SearchHere",
 };
 
 std::wstring readString(HKEY root, const std::wstring& key, const wchar_t* name)
@@ -47,7 +47,7 @@ bool writeString(const std::wstring& key, const wchar_t* name, const std::wstrin
 void apply(bool on, const QString& title)
 {
     const std::wstring folder = QDir::toNativeSeparators(QCoreApplication::applicationDirPath()).toStdWString();
-    const std::wstring stub = folder + L"\\WinShunSearch.exe";
+    const std::wstring stub = folder + L"\\LumaSearch.exe";
     const std::wstring command = L"\"" + stub + L"\" --search-here \"%V\"";
     if (on && ::GetFileAttributesW(stub.c_str()) == INVALID_FILE_ATTRIBUTES)
         return; // a build without it (run from the build folder)
@@ -62,7 +62,7 @@ void apply(bool on, const QString& title)
             continue;
         }
         changed |= writeString(key, L"MUIVerb", title.toStdWString());
-        changed |= writeString(key, L"Icon", folder + L"\\WinShun.exe,0");
+        changed |= writeString(key, L"Icon", folder + L"\\Luma.exe,0");
         changed |= writeString(key, L"MultiSelectModel", L"Single");
         changed |= writeString(commandKey, nullptr, command);
     }

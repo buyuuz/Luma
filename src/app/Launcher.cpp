@@ -2850,7 +2850,7 @@ void Launcher::performPlugin(const SearchResult& result, Action action)
             emit dismissRequested();
             return;
         case PluginRow::OpenKind::Url:
-            // "winshun:settings": Win顺's own settings at the plugin's card
+            // "winshun:settings": Luma's own settings at the plugin's card
             // (a row saying what to set up); never handed to the shell.
             if (p.openTarget.compare(u"winshun:settings", Qt::CaseInsensitive) == 0)
                 emit pluginSettingsRequested(p.pluginId);

@@ -74,9 +74,9 @@ struct AppUse {
 std::vector<AppUse> windowsAppUses();
 
 // Up to `limit` apps the user opens most, best first (indexes into `apps`):
-// those opened from Win顺 (`history`, by how often and how lately), then
+// those opened from Luma (`history`, by how often and how lately), then
 // those Windows saw started in the last 60 days (`windows`). Uninstallers
-// and documents, and Win顺 itself, are left out.
+// and documents, and Luma itself, are left out.
 std::vector<std::size_t> frequentApps(const AppList& apps, const History& history, const std::vector<AppUse>& windows,
     qint64 now, std::size_t limit);
 

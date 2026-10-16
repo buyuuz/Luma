@@ -34,13 +34,13 @@ constexpr int kEnough = 32; // a browser icon this large is taken over a phones'
 constexpr int kMinSide = 16;
 constexpr int kKeptDays = 30;
 
-// Never destroyed: the fetching thread may still be at it when Win顺 ends.
+// Never destroyed: the fetching thread may still be at it when Luma ends.
 struct State {
     QMutex mutex;
     QString folder;
     QSet<QString> kept; // keys with a file
     QSet<QString> queued;
-    QSet<QString> done; // fetched, or tried and failed, since Win顺 started
+    QSet<QString> done; // fetched, or tried and failed, since Luma started
     std::deque<QString> homes;
     bool running = false;
     bool ended = false;

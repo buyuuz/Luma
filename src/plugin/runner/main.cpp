@@ -1,6 +1,6 @@
 // WinShunPluginHost.exe: the process that starts and watches plugin
-// processes for Win顺 (the plugin design, §2–3; stage 0's findings in
-// docs/pitfalls.md "插件系统"). Win顺 runs elevated and must not start
+// processes for Luma (the plugin design, §2–3; stage 0's findings in
+// docs/pitfalls.md "插件系统"). Luma runs elevated and must not start
 // plugins itself; it starts this program once with the user's normal
 // rights (Explorer's token), and this program starts every plugin with a
 // plain CreateProcessW: handle list, mitigation policy and a nested job with
@@ -9,16 +9,16 @@
 //
 //   WinShunPluginHost.exe --pipe <name> --key <key>
 //
-// It connects to Win顺's named pipe `name` (made by plugin::Runner), says
+// It connects to Luma's named pipe `name` (made by plugin::Runner), says
 // hello with `key` and the facts about its own token, then speaks lines:
 //
-//   Win顺 -> runner     "_ {control message}"     a JSON object, "op" says which:
+//   Luma -> runner     "_ {control message}"     a JSON object, "op" says which:
 //                        start   {id, exe, args[], cwd, env[[name,value]…], memoryMB, processes,
 //                                 clipboardRead, clipboardWrite, ui, strict, encoding, stdin}
 //                        stop    {id}             TerminateJobObject
 //                        shutdown                 stop everything and exit
 //                       "<id> <line>"             a line for the plugin's stdin
-//   runner -> Win顺     "_ {control message}":
+//   runner -> Luma     "_ {control message}":
 //                        hello   {key, pid, …facts…}
 //                        started {id, pid, createUs} | failed {id, stage, error}
 //                        stderr  {id, text}
@@ -26,7 +26,7 @@
 //                        log     {text}
 //                       "<id> <line>"             a line of the plugin's stdout, as UTF-8
 //
-// When the pipe breaks (Win顺 gone) it ends every plugin and exits; Win顺's
+// When the pipe breaks (Luma gone) it ends every plugin and exits; Luma's
 // job (KILL_ON_JOB_CLOSE) does the same should it not get to.
 
 #include "Json.h"
@@ -55,7 +55,7 @@ namespace {
 
 constexpr int kStderrTailLines = 20;
 
-// The pipe to Win顺: overlapped, read by the main thread, written by any.
+// The pipe to Luma: overlapped, read by the main thread, written by any.
 class Uplink {
 public:
     bool open(const std::wstring& name, DWORD* error)
@@ -154,7 +154,7 @@ public:
             }
             m_buffer.append(m_chunk.data(), got);
             if (m_buffer.size() > lite::LineReader::kMaxLine)
-                m_eof = true; // a line that never ends: Win顺 would not send one
+                m_eof = true; // a line that never ends: Luma would not send one
         }
     }
 
@@ -401,7 +401,7 @@ void start(const json::Value& m)
     }
 
     // The user's environment (ours is the user's: this process runs as the
-    // user) plus what Win顺 adds.
+    // user) plus what Luma adds.
     std::vector<std::pair<std::wstring, std::wstring>> extra;
     for (const json::Value& pair : m["env"].toArray()) {
         const json::Value::Array& kv = pair.toArray();
@@ -542,7 +542,7 @@ int run(int argc, wchar_t** argv)
             key = argv[++i];
     }
     if (pipe.empty()) {
-        std::fputs("usage: WinShunPluginHost.exe --pipe <name> --key <key>  (started by WinShun)\n", stderr);
+        std::fputs("usage: LumaPluginHost.exe --pipe <name> --key <key>  (started by Luma)\n", stderr);
         return 1;
     }
     sandbox::applyOwnMitigations();
@@ -560,7 +560,7 @@ int run(int argc, wchar_t** argv)
     for (;;) {
         const std::optional<std::string> line = g_uplink.readLine(reap);
         if (!line)
-            break; // Win顺 is gone
+            break; // Luma is gone
         reap();
         if (line->empty())
             continue;

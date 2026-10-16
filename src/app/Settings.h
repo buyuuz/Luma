@@ -74,7 +74,7 @@ struct Settings {
     // explorer | totalcmd | dopus: where folders open and items are shown
     // (shell::setFileManager); Explorer while the one chosen is not installed.
     QString fileManager = QStringLiteral("explorer");
-    bool explorerMenu = true; // "用 Win顺 搜索此处" in Explorer's right-click menu (shellmenu::)
+    bool explorerMenu = true; // "用 Luma 搜索此处" in Explorer's right-click menu (shellmenu::)
     // auto | on | off: a double click on the blank space of a File Explorer
     // folder or of the desktop brings up a menu of favorite and recent
     // folders (FolderMenu, GitHub #22); auto: not while Listary runs, which
@@ -128,7 +128,7 @@ struct Settings {
     // (GitHub #21; App::volumeAccessFor). auto: directly when running as
     // administrator, else through the index service (WinShunService.exe)
     // once it answers, else by walking the folders. direct (管理员直读) has
-    // Win顺 itself run as administrator: its logon task runs elevated and
+    // Luma itself run as administrator: its logon task runs elevated and
     // the setting restarts it so, which only means something on an
     // administrator's account; service and walk never read the volumes
     // themselves, and the task runs with the user's normal rights.
@@ -162,10 +162,10 @@ struct Settings {
     QStringList clipboardExcludedApps; // program files whose copies are not kept, "KeePass.exe"
     QString clipboardNumberKeys = QStringLiteral("alt"); // alt | ctrl | off: Alt+1…9 pastes the nth row
 
-    // [Taskbar]: Win顺 in the place of Windows' search (see taskbar::)
+    // [Taskbar]: Luma in the place of Windows' search (see taskbar::)
     bool taskbarWinS = false; // Win+S opens it over the taskbar, instead of Windows' search (see winv::)
-    bool taskbarStartTyping = false; // typing in the Start menu searches with Win顺 (StartMenuTyping)
-    bool taskbarSearchBox = false; // Win顺's own search box on the taskbar (taskbar::SearchBox)
+    bool taskbarStartTyping = false; // typing in the Start menu searches with Luma (StartMenuTyping)
+    bool taskbarSearchBox = false; // Luma's own search box on the taskbar (taskbar::SearchBox)
     bool taskbarStartGap = false; // ... right of Start, the icons moved over for it (taskbar::StartGap)
 
     // [WebSearch]: keywords the user gives web pages ("gh" opens GitHub, "gh
@@ -187,7 +187,7 @@ struct Settings {
     QStringList networkExcludedNames; // folders NAS boxes and Macs keep for themselves; on top of [Index]
     QStringList networkExcludedFiles; // file names left out on shares; '*' at the start only
 
-    // [Mcp]: AI clients (Claude, Cursor, VS Code …) use Win顺 through
+    // [Mcp]: AI clients (Claude, Cursor, VS Code …) use Luma through
     // WinShunMcp.exe (src/mcp). The switch covers the read-only tools (off
     // until a client is connected from the settings, which turns it on);
     // opening things and reading the clipboard history have switches of their own.

@@ -1,6 +1,6 @@
 #pragma once
 
-// Win顺's tools for the plugins (the plugin design, §6.3; stage 3): the
+// Luma's tools for the plugins (the plugin design, §6.3; stage 3): the
 // same tools the AI clients get (mcp::ToolHost), on a host and a search
 // engine of the plugins' own -- an engine runs only its newest request, so
 // neither the launcher's nor the AI's can be shared -- and whatever the AI

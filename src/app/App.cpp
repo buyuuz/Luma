@@ -140,7 +140,7 @@ IndexService::Options indexOptions(const Settings& settings)
     return options;
 }
 
-// The index service (GitHub #21) comes up a moment after the user's Win顺 at
+// The index service (GitHub #21) comes up a moment after the user's Luma at
 // login: the index waits this long for it (IndexService::Options::accessWaitMs)
 // rather than walk a volume whose journal position it has, looking every
 // kServiceRetry meanwhile, and every kServiceRecheck after that (the service
@@ -184,7 +184,7 @@ AccessChoice chooseVolumeAccess(const QString& mode)
         return choice;
     }
     choice.why = QString::fromStdWString(service->lastError());
-    qWarning("WinShun: the index service is not used: %ls (pipe %ls)", service->lastError().c_str(),
+    qWarning("Luma: the index service is not used: %ls (pipe %ls)", service->lastError().c_str(),
         service->pipeName().c_str());
     choice.access = std::make_shared<ntfs::NoVolumeAccess>();
     return choice;
@@ -240,7 +240,7 @@ void prepareBackdrop(QQuickWindow* window)
     QObject::connect(window, &QQuickWindow::colorChanged, window, keepAlpha);
 }
 
-// Where the user dragged Win顺's box on the taskbar: in state.ini, with the
+// Where the user dragged Luma's box on the taskbar: in state.ini, with the
 // windows' spots.
 QString statePath()
 {
@@ -510,7 +510,7 @@ bool App::start(const StartOptions& options)
             showUpdate();
             return;
         }
-        m_messages->showNotification(tr("Win顺 %1 可以更新了").arg(m_updater->availableVersion()),
+        m_messages->showNotification(tr("Luma %1 可以更新了").arg(m_updater->availableVersion()),
             tr("点这里查看更新内容"));
         m_updateNotified = true;
     });
@@ -590,7 +590,7 @@ bool App::start(const StartOptions& options)
     m_messages->showTrayIcon(trayTooltip());
 
     // The button on the taskbar (WinShunSearch.exe) sets it: over the taskbar,
-    // or away again. Set before Win顺 was up (it started Win顺), it opens now.
+    // or away again. Set before Luma was up (it started Luma), it opens now.
     m_taskbarEvent = win32::UniqueHandle(taskbar::createEvent());
     if (m_taskbarEvent.valid()) {
         m_taskbarNotifier = std::make_unique<QWinEventNotifier>(m_taskbarEvent.get());
@@ -631,11 +631,11 @@ bool App::start(const StartOptions& options)
         // settings offer the index service and running as administrator.
         const bool walking = !Settings::portableFolder().isEmpty()
             && m_index->volumeAccessKind() == ntfs::VolumeAccess::Kind::None;
-        m_messages->showNotification(tr("Win顺已在后台运行"),
+        m_messages->showNotification(tr("Luma已在后台运行"),
             walking ? tr("双击 Ctrl 打开搜索。便携版按文件夹遍历建立索引；要快一些，可以在设置里安装索引服务，或以管理员身份运行。")
                     : tr("双击 Ctrl 打开搜索。首次运行需要一点时间建立文件索引。"));
     } else if (clipboardIsNew) {
-        m_messages->showNotification(tr("Win顺 现在有剪贴板历史了"),
+        m_messages->showNotification(tr("Luma 现在有剪贴板历史了"),
             m_settings.clipboard ? tr("复制过的文字、图片和文件都能找回来。点这里设置用 Win+V 打开它。")
                                  : tr("复制过的文字、图片和文件都能找回来。点这里打开它。"));
         m_updateNotified = false;
@@ -688,7 +688,7 @@ bool App::createWindow()
     connect(m_window, &QWindow::activeChanged, this, [this] {
         // Clicking elsewhere or switching apps dismisses the launcher, like a
         // menu; the clipboard under its search box goes with it (see there).
-        // Not a press on Win顺's box on the taskbar: that brings it back. Nor
+        // Not a press on Luma's box on the taskbar: that brings it back. Nor
         // the press that just brought it back: Qt may hear of the taskbar
         // taking the focus for it only after that (it slid back up while on
         // its way out). Those leave no window in front (or the taskbar, the
@@ -871,7 +871,7 @@ void App::applyAppearance()
     // Numbers and sizes ("1,234", "172 MB") the language's way.
     QLocale::setDefault(language == u"en" ? QLocale(QLocale::English, QLocale::UnitedStates)
                                           : QLocale(QLocale::Chinese, QLocale::China));
-    QGuiApplication::setApplicationDisplayName(tr("Win顺"));
+    QGuiApplication::setApplicationDisplayName(tr("Luma"));
     if (m_updater)
         m_updater->setChinese(language == u"zh");
 
@@ -893,7 +893,7 @@ void App::applyAppearance()
 
 QString App::trayTooltip() const
 {
-    return tr("Win顺 — 双击 Ctrl 打开");
+    return tr("Luma — 双击 Ctrl 打开");
 }
 
 void App::applySettings(bool initial)
@@ -916,7 +916,7 @@ void App::applySettings(bool initial)
     applyDialogs();
     applyClipboard();
     applyTaskbar();
-    // The tray's icon and the taskbar box's: Win顺's colours, or the taskbar's one.
+    // The tray's icon and the taskbar box's: Luma's colours, or the taskbar's one.
     m_messages->setTrayIconMono(m_settings.taskbarIcon == u"mono");
     updateSearchBoxLook();
     applyMcp();
@@ -927,7 +927,7 @@ void App::applySettings(bool initial)
 
     if (!initial)
         applyAppearance();
-    shellmenu::apply(m_settings.explorerMenu, tr("用 Win顺 搜索此处")); // after the language
+    shellmenu::apply(m_settings.explorerMenu, tr("用 Luma 搜索此处")); // after the language
     m_updater->setAutomatic(m_settings.autoUpdate);
     m_backup->setFolder(m_settings.backupFolder);
     m_launcher->setRecordHistory(m_settings.recordHistory);
@@ -1180,7 +1180,7 @@ void App::updateSearchBoxLook()
         return;
     const QColor accent = SystemTheme::accentColor();
     taskbar::SearchBox::Look look;
-    look.name = tr("Win顺 搜索").toStdWString();
+    look.name = tr("Luma 搜索").toStdWString();
     // Typing there: what the launcher searches (its tabs say which).
     const bool typing = m_launcher->inTaskbarBox() && !m_launcherClosing;
     look.placeholder = (typing ? m_launcher->placeholder() : tr("搜索应用和文件")).toStdWString();
@@ -1250,7 +1250,7 @@ std::optional<QRectF> App::boxCaretInField() const
 void App::startMenuTyped()
 {
     // Over the taskbar, where the Start menu was (showing it closes the
-    // Start menu, see win::bringToFront), over Win顺's box if it is there;
+    // Start menu, see win::bringToFront), over Luma's box if it is there;
     // the keys follow once it has the keyboard.
     m_deliverTyping = true;
     if (m_searchBoxShown)
@@ -1302,7 +1302,7 @@ void App::toggleAtTaskbar(bool clicked)
     // again. The button's program starts on the release, 0.1–0.3 s later.
     if (clicked && m_launcherHidden.isValid() && m_launcherHidden.elapsed() < 500)
         return;
-    if (!clicked && m_searchBoxShown) // Win+S: into Win顺's box, as Windows' own goes into its box
+    if (!clicked && m_searchBoxShown) // Win+S: into Luma's box, as Windows' own goes into its box
         showLauncherInBox();
     else
         showLauncher({}, taskbar::locate(clicked));
@@ -1312,7 +1312,7 @@ void App::startScreenClip()
 {
     // Not started from here, where it would run elevated: the taskbar
     // button's program starts it with the user's rights, as Explorer does.
-    const QString button = QCoreApplication::applicationDirPath() + u"/WinShunSearch.exe"_s;
+    const QString button = QCoreApplication::applicationDirPath() + u"/LumaSearch.exe"_s;
     if (QFileInfo::exists(button))
         shell::run(u'"' + QDir::toNativeSeparators(button) + u"\" --screenclip"_s);
     else
@@ -1646,7 +1646,7 @@ QString App::startIndexFolder()
     // default place for now, and the setting is kept for the next start.
     const auto later = [&] {
         m_indexFolderProblem
-            = tr("%1 现在用不了，这次先把索引放在默认位置，下次启动 Win顺 时再试。").arg(native);
+            = tr("%1 现在用不了，这次先把索引放在默认位置，下次启动 Luma 时再试。").arg(native);
         return m_indexDir;
     };
     if (driveType(wanted) == DRIVE_NO_ROOT_DIR)
@@ -1669,7 +1669,7 @@ QString App::startIndexFolder()
         indexfolder::remove(dataDir); // left from a start without that disk, or a move cut short
         m_indexDir = wanted;
     } else {
-        // Still in the default place (the setting was changed while Win顺 was
+        // Still in the default place (the setting was changed while Luma was
         // not running): moved there once it runs.
         m_indexFolder.clear();
     }
@@ -1744,7 +1744,7 @@ QString App::indexFolderProblem(const QString& folder) const
 void App::indexMoved(int error)
 {
     if (error == ERROR_CANCELLED)
-        return; // Win顺 is closing
+        return; // Luma is closing
     if (error == 0) {
         const QString from = std::exchange(m_indexDir, m_indexMoveDir);
         m_indexFolder = m_indexMoveFolder;
@@ -1983,7 +1983,7 @@ void App::updateNumberKeys()
     if (m_settings.numberKeys == u"off" || (!launcherInFront && !barInFront))
         return;
     // Asked again each time, as programs start and end: digits another
-    // program holds as global hotkeys stay its (PixPin's Ctrl+1…), as do Win顺's own.
+    // program holds as global hotkeys stay its (PixPin's Ctrl+1…), as do Luma's own.
     const unsigned left = numberkeys::heldMask(
         m_settings.numberKeys == u"alt" ? numberkeys::Modifier::Alt : numberkeys::Modifier::Ctrl);
     m_launcher->setNumberKeysLeft(left);
@@ -2132,7 +2132,7 @@ void App::showClipboard()
     bool keepFocus = false; // where it is, with the program it pastes into
     if (!m_clipWindow->isVisible() || prewarming) {
         // It pastes into what had the keyboard before it: a text field of
-        // Win顺's own (read before the window takes the focus from it), or
+        // Luma's own (read before the window takes the focus from it), or
         // else the window in front.
         QQuickItem* field = focusedField();
         m_clipboard->setField(field, field && field->window() == m_settingsWindow ? tr("输入框") : tr("搜索框"));
@@ -2197,7 +2197,7 @@ bool App::clipboardInCharge() const
 
 bool App::startKeyRouting(HWND target)
 {
-    // An elevated program while Win顺 is not: Windows keeps the keys typed
+    // An elevated program while Luma is not: Windows keeps the keys typed
     // there from the hook (UIPI). The clipboard takes the focus instead.
     if (integrity::higherThanOurs(target))
         return false;
@@ -2563,7 +2563,7 @@ void App::showTrayMenu()
     const bool ready = m_index->state() == IndexService::State::Ready;
     const QString info = ready ? tr("已索引 %Ln 项", nullptr, static_cast<int>(m_index->itemCount()))
                                : tr("正在建立索引…");
-    const QString show = tr("打开 Win顺");
+    const QString show = tr("打开 Luma");
     std::vector<shell::MenuItem> items {
         {ShowCommand, m_settings.doubleCtrl ? show + u'\t' + tr("双击 Ctrl") : show, false, true, true},
         {ClipboardCommand, m_clipboardShortcut.isEmpty() ? tr("剪贴板历史") : tr("剪贴板历史") + u'\t' + m_clipboardShortcut},
@@ -2597,7 +2597,7 @@ void App::showTrayMenu()
     }
     if (m_updater->available() && !m_updater->skipped()) // at the top, where it is seen
         items.insert(items.begin(),
-            {{UpdateCommand, tr("Win顺 %1 可以更新了…").arg(m_updater->availableVersion())}, shell::MenuItem::separator()});
+            {{UpdateCommand, tr("Luma %1 可以更新了…").arg(m_updater->availableVersion())}, shell::MenuItem::separator()});
     POINT pos {};
     ::GetCursorPos(&pos);
     const DWORD built = ::GetTickCount();
@@ -2697,7 +2697,7 @@ void App::reconcileAutostart(const std::optional<bool>& task)
     // task, or restarted as administrator from the settings.
     if (!integrity::processElevated())
         return;
-    qWarning("WinShun: the autostart task now starts Win顺 %s", want ? "as administrator" : "with normal rights");
+    qWarning("Luma: the autostart task now starts Luma %s", want ? "as administrator" : "with normal rights");
     autostart::setEnabled(true);
 }
 
@@ -2767,7 +2767,7 @@ void App::serviceProbed(std::shared_ptr<ntfs::ServiceVolumeAccess> service, bool
         // walked): taken from now on, the walked volumes read from their MFT.
         const auto inUse = std::dynamic_pointer_cast<ntfs::ServiceVolumeAccess>(m_index->volumeAccess());
         if (!inUse || !inUse->lastError().empty()) {
-            qWarning("WinShun: the index service (%ls) is used from now on", service->serviceVersion().c_str());
+            qWarning("Luma: the index service (%ls) is used from now on", service->serviceVersion().c_str());
             m_index->setVolumeAccess(service);
         }
         m_serviceWhy.clear();
@@ -2785,11 +2785,11 @@ QString App::serviceProblem() const
 {
     if (m_serviceWhy.contains(u"not running")) {
         return ntfs::ServiceVolumeAccess::installed()
-            ? tr("索引服务没有运行（Windows 服务“WinShun”已停止或被禁用）")
+            ? tr("索引服务没有运行（Windows 服务“Luma”已停止或被禁用）")
             : tr("没有安装索引服务");
     }
     if (m_serviceWhy.contains(u"another version"))
-        return tr("索引服务的版本和 Win顺 不配，请重新运行安装程序");
+        return tr("索引服务的版本和 Luma 不配，请重新运行安装程序");
     return m_serviceWhy;
 }
 
@@ -2833,8 +2833,8 @@ void App::refreshIndexAccess()
         notes << tr("升级前开机自启是以管理员身份运行的，所以记成了“管理员直读”；改选别的方式，开机自启就改用普通权限。");
     if (const std::optional<bool> task = autostart::taskElevated(); task && *task != autostart::elevated()) {
         // Written by the elevated copy only (reconcileAutostart).
-        notes << (*task ? tr("开机自启的任务还在以管理员身份启动 Win顺：下次登录由它启动时会改成普通权限。")
-                        : tr("开机自启的任务还在以普通权限启动 Win顺：以管理员身份重新启动后会改过来。"));
+        notes << (*task ? tr("开机自启的任务还在以管理员身份启动 Luma：下次登录由它启动时会改成普通权限。")
+                        : tr("开机自启的任务还在以普通权限启动 Luma：以管理员身份重新启动后会改过来。"));
     }
     state.note = notes.join(u'\n');
     m_settingsEditor->setIndexAccessState(state);
@@ -2844,9 +2844,9 @@ void App::installIndexService(bool install)
 {
     if (m_serviceBusy)
         return;
-    const QString exe = QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + u"/WinShunService.exe"_s);
+    const QString exe = QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + u"/LumaService.exe"_s);
     if (!QFile::exists(exe)) {
-        m_serviceMessage = tr("Win顺 旁边没有 WinShunService.exe");
+        m_serviceMessage = tr("Luma 旁边没有 LumaService.exe");
         refreshIndexAccess();
         return;
     }
@@ -2866,7 +2866,7 @@ void App::installIndexService(bool install)
                         m_serviceMessage = (install ? tr("安装索引服务失败（错误 %1）") : tr("卸载索引服务失败（错误 %1）"))
                                                .arg(*code);
                     } else if (install) {
-                        m_serviceMessage = tr("索引服务已安装并启动。移动了 Win顺 的文件夹后要重新安装。");
+                        m_serviceMessage = tr("索引服务已安装并启动。移动了 Luma 的文件夹后要重新安装。");
                         probeService(); // taken into use as soon as it answers
                     } else {
                         m_serviceMessage = tr("索引服务已卸载。");
@@ -3053,7 +3053,7 @@ void App::createPluginHost()
     if (QFileInfo::exists(appDir + u"\\plugins"_s))
         options.bundledPluginDir = appDir + u"\\plugins"_s;
     options.logPath = dataDir + u"\\plugins.log"_s;
-    options.runnerExe = appDir + u"\\WinShunPluginHost.exe"_s;
+    options.runnerExe = appDir + u"\\LumaPluginHost.exe"_s;
     options.locale = m_language;
     options.theme = isDarkMode() ? u"dark"_s : u"light"_s;
     options.version = QStringLiteral(WINSHUN_VERSION);
@@ -3160,7 +3160,7 @@ void App::refreshMcpStatus()
         }
         status = names.isEmpty() ? tr("还没有 AI 客户端连接；连上以后显示在这里") : tr("已连接：%1").arg(names.join(u"、"_s));
     } else if (m_settings.mcp) {
-        status = tr("没能建立连接通道，详见 WinShun.log");
+        status = tr("没能建立连接通道，详见 Luma.log");
     }
     m_settingsEditor->setMcpStatus(status);
 }

@@ -33,12 +33,12 @@ void revealInExplorer(const QString& path);
 // one chosen does not start.
 void setFileManager(filemanager::Kind kind);
 // Starts `program` with the user's normal rights (the desktop shell's while
-// Win顺 is elevated, its own otherwise), never elevated, for a program to
+// Luma is elevated, its own otherwise), never elevated, for a program to
 // wait for (see filemanager); the others start through open() and run().
-// `cwd`: its working folder; empty for ours. Invalid when Win顺 is elevated
+// `cwd`: its working folder; empty for ours. Invalid when Luma is elevated
 // and no shell runs to take them from.
 win32::UniqueHandle startUnelevated(const std::wstring& program, const std::wstring& args, const std::wstring& cwd = {});
-// Starts `program` as administrator (UAC asks, unless Win顺 is elevated
+// Starts `program` as administrator (UAC asks, unless Luma is elevated
 // already), without waiting: false when it did not start (the prompt
 // declined, say). `cwd` as above.
 bool startElevated(const std::wstring& program, const std::wstring& args, const std::wstring& cwd = {});
@@ -104,7 +104,7 @@ bool isEnabled();
 void refresh(); // reads the task again, in the background (changed outside WinShun?)
 bool isSetUp(); // enabled for any copy of WinShun, this one or another
 void setEnabled(bool enabled);
-// Whether the task written from now on starts Win顺 elevated (the 管理员直读
+// Whether the task written from now on starts Luma elevated (the 管理员直读
 // mode on an administrator's account, GitHub #21) or with the user's normal
 // rights (at first). Only an elevated process can register the former:
 // Windows refuses it to the others, as it would be a way around UAC.

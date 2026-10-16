@@ -1,8 +1,8 @@
-﻿<#
+<#
 .SYNOPSIS
     Package a release: build and deploy (build.ps1 -Deploy), then the
-    installer dist\WinShun-<version>-x64-setup.exe (installer\WinShun.iss,
-    Inno Setup 6.5 or later), the portable dist\WinShun-<version>-x64-portable.zip
+    installer dist\Luma-<version>-x64-setup.exe (installer\WinShun.iss,
+    Inno Setup 6.5 or later), the portable dist\Luma-<version>-x64-portable.zip
     (the same folder) and dist\SHA256SUMS.txt. With -Publish, also the GitHub
     release v<version> (gh must be logged in).
 
@@ -29,11 +29,11 @@ $version = $Matches[1]
 $tag = "v$version"
 $notes = Join-Path $root "docs\release-notes\$tag.md"
 if ($Publish -and -not (Test-Path $notes)) { throw "Write the release notes first: $notes" }
-Write-Host "WinShun $version"
+Write-Host "Luma $version"
 
-# build.ps1 -Deploy replaces dist\WinShun, which a running copy holds on to.
-$running = Get-Process WinShun -ErrorAction SilentlyContinue
-if ($running) { throw 'Quit WinShun first (tray menu > 退出): dist\WinShun is about to be replaced.' }
+# build.ps1 -Deploy replaces dist\Luma, which a running copy holds on to.
+$running = Get-Process Luma -ErrorAction SilentlyContinue
+if ($running) { throw 'Quit Luma first (tray menu > 退出): dist\Luma is about to be replaced.' }
 
 # Inno Setup: a per-user install of a recent version first (the one under
 # Program Files may be too old for the Windows 11 wizard style).
@@ -50,10 +50,10 @@ if ($PSBoundParameters.ContainsKey('QtDir')) { $buildArgs.QtDir = $QtDir } # els
 & (Join-Path $PSScriptRoot 'build.ps1') @buildArgs
 
 $dist = Join-Path $root 'dist'
-Copy-Item (Join-Path $root 'LICENSE') (Join-Path $dist 'WinShun\LICENSE.txt')
+Copy-Item (Join-Path $root 'LICENSE') (Join-Path $dist 'Luma\LICENSE.txt')
 
-$setup = Join-Path $dist "WinShun-$version-x64-setup.exe"
-& $Iscc /Q "/DAppVersion=$version" "/DSourceDir=$(Join-Path $dist 'WinShun')" "/DOutputDir=$dist" (Join-Path $root 'installer\WinShun.iss')
+$setup = Join-Path $dist "Luma-$version-x64-setup.exe"
+& $Iscc /Q "/DAppVersion=$version" "/DSourceDir=$(Join-Path $dist 'Luma')" "/DOutputDir=$dist" (Join-Path $root 'installer\WinShun.iss')
 if ($LASTEXITCODE -or -not (Test-Path $setup)) { throw 'Inno Setup failed' }
 Write-Host "Packaged $setup"
 
@@ -61,15 +61,15 @@ Write-Host "Packaged $setup"
 # "data" folder beside the program, where it then keeps its settings and
 # index (GitHub #19, Settings::portableFolder) instead of %APPDATA% and
 # %LOCALAPPDATA%. Staged, so the deployed folder stays an installed one.
-$portable = Join-Path $dist "WinShun-$version-x64-portable.zip"
+$portable = Join-Path $dist "Luma-$version-x64-portable.zip"
 Remove-Item $portable -ErrorAction SilentlyContinue
-$stage = Join-Path ([IO.Path]::GetTempPath()) "WinShun-portable-$version"
+$stage = Join-Path ([IO.Path]::GetTempPath()) "Luma-portable-$version"
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory $stage | Out-Null
-Copy-Item (Join-Path $dist 'WinShun') $stage -Recurse
-New-Item -ItemType Directory (Join-Path $stage 'WinShun\data') | Out-Null
-Copy-Item (Join-Path $root 'installer\portable-data-README.txt') (Join-Path $stage 'WinShun\data\README.txt')
-Compress-Archive -Path (Join-Path $stage 'WinShun') -DestinationPath $portable -CompressionLevel Optimal
+Copy-Item (Join-Path $dist 'Luma') $stage -Recurse
+New-Item -ItemType Directory (Join-Path $stage 'Luma\data') | Out-Null
+Copy-Item (Join-Path $root 'installer\portable-data-README.txt') (Join-Path $stage 'Luma\data\README.txt')
+Compress-Archive -Path (Join-Path $stage 'Luma') -DestinationPath $portable -CompressionLevel Optimal
 Remove-Item $stage -Recurse -Force
 Write-Host "Packaged $portable"
 
@@ -81,7 +81,7 @@ Set-Content $sums ($lines -join "`n") -Encoding ascii -NoNewline
 Get-Content $sums
 
 if ($Publish) {
-    gh release create $tag $setup $portable $sums --repo LingCore/WinShun --title "Win顺 $version" --notes-file $notes --target main
+    gh release create $tag $setup $portable $sums --repo buyuuz/Luma --title "Luma $version" --notes-file $notes --target main
     if ($LASTEXITCODE) { throw 'gh release create failed' }
     Write-Host "Published $tag"
 }

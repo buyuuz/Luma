@@ -1,4 +1,4 @@
-// winshun.h — the Win顺 (WinShun) plugin SDK for C++, in one header.
+// winshun.h — the Luma (WinShun) plugin SDK for C++, in one header.
 //
 // No dependencies beyond Win32 and the C++17 standard library; no Qt. Copy
 // this file next to your main.cpp. A resident plugin derives from
@@ -614,7 +614,7 @@ inline Json itemsJson(const Items& items)
     return Json(std::move(a));
 }
 
-// What an action asks Win顺 to do, in order (docs/plugins.md, "effects").
+// What an action asks Luma to do, in order (docs/plugins.md, "effects").
 namespace effect {
 inline Json hide() { return Json::Object {{"type", "hide"}}; }
 inline Json keep() { return Json::Object {{"type", "keep"}}; }
@@ -627,7 +627,7 @@ inline Json replace(const Items& items) { return Json::Object {{"type", "replace
 } // namespace effect
 using Effects = std::vector<Json>;
 
-// A query as Win顺 sends it.
+// A query as Luma sends it.
 struct Query {
     long long queryId = 0;
     std::string command; // the command's id
@@ -639,7 +639,7 @@ struct Query {
     int limit = 200;
 };
 
-// An action as Win顺 sends it.
+// An action as Luma sends it.
 struct ActionRequest {
     std::string command;
     std::string action; // the action's id ("default" when the command declares none)
@@ -781,7 +781,7 @@ public:
     const std::string& dataDir() const { return m_dataDir; }
     bool chinese() const { return m_locale != "en"; }
 
-    // Notifications to Win顺, at any time.
+    // Notifications to Luma, at any time.
     void log(const std::string& level, const std::string& text)
     {
         notify("winshun/log", Json::Object {{"level", level}, {"text", text}});
@@ -796,7 +796,7 @@ public:
     {
         notify("query/partial", Json::Object {{"queryId", queryId}, {"items", itemsJson(items)}, {"replace", replace}});
     }
-    // One of Win顺's tools (the same names and arguments as its MCP tools:
+    // One of Luma's tools (the same names and arguments as its MCP tools:
     // search_files, search_content, recent_files, list_folder, get_file_info,
     // open_item, show_in_folder, clipboard_history, clipboard_get,
     // index_status), as the manifest's permissions allow. The result, or an
@@ -812,7 +812,7 @@ public:
                 return message->has("error") ? Json(Json::Object {{"error", (*message)["error"]}}) : (*message)["result"];
             m_queued.push_back(line);
         }
-        return Json(Json::Object {{"error", Json::Object {{"code", -32000}, {"message", "Win顺 went away"}}}});
+        return Json(Json::Object {{"error", Json::Object {{"code", -32000}, {"message", "Luma went away"}}}});
     }
 
 protected:

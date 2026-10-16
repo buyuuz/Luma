@@ -38,7 +38,7 @@ namespace ws {
 // only waits for the modifier keys, puts the window away and presses the
 // paste keys.
 //
-// Opened from a text field of Win顺's own (the launcher's search box, the one
+// Opened from a text field of Luma's own (the launcher's search box, the one
 // by file dialogs, one in the settings window), the window drops down under
 // that field (App) and goes back to it instead, Esc included: the field gets
 // its caret and selection back, and a paste types the entry's text in there,
@@ -57,7 +57,7 @@ class Clipboard : public QObject {
     // the front, and takes no focus: a click on an entry pastes into the
     // program in front, again and again. The keys stay that program's until
     // the hotkey is pressed again or the search field clicked (keysWanted),
-    // up to the next paste or Esc. Not while it pastes into a field of Win顺's own.
+    // up to the next paste or Esc. Not while it pastes into a field of Luma's own.
     Q_PROPERTY(bool pinned READ pinned WRITE setPinned NOTIFY pinnedChanged FINAL)
     // The preview beside the list (Alt+P, →): as it was left, next time too.
     Q_PROPERTY(bool previewOpen READ previewOpen WRITE setPreviewOpen NOTIFY previewOpenChanged FINAL)
@@ -83,7 +83,7 @@ class Clipboard : public QObject {
     Q_PROPERTY(QString statusText READ statusText NOTIFY statusChanged FINAL)
     Q_PROPERTY(QString separatorName READ separatorName NOTIFY separatorChanged FINAL)
     Q_PROPERTY(bool canUndo READ canUndo NOTIFY undoChanged FINAL)
-    // Where Enter pastes, when it is a field of Win顺's own ("搜索框"); empty
+    // Where Enter pastes, when it is a field of Luma's own ("搜索框"); empty
     // for the program that was in front.
     Q_PROPERTY(QString fieldName READ fieldName NOTIFY fieldChanged FINAL)
     // The field itself (Main.qml: the launcher folds its rows away while the
@@ -148,7 +148,7 @@ public:
     // (pinned: before it took the keys; else the one in front as it pastes).
     void setTarget(HWND window) { m_target = window; }
     HWND target() const { return m_target; }
-    // The field of Win顺's own that had the keyboard as the window opened, if
+    // The field of Luma's own that had the keyboard as the window opened, if
     // any (see the class comment). Taken before the window takes the focus:
     // its selection is gone then.
     void setField(QQuickItem* field, const QString& name);
@@ -240,9 +240,9 @@ private:
         qint64 group = 0;
     };
     // Where a paste goes: only onto the clipboard (a copy), into the program
-    // that was in front, or into a field of Win顺's own.
+    // that was in front, or into a field of Luma's own.
     enum class Into { Clipboard, Program, Field };
-    // A field of Win顺's own, as it was when the window opened.
+    // A field of Luma's own, as it was when the window opened.
     struct Field {
         QPointer<QQuickItem> item;
         QString name;

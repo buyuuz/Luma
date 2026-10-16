@@ -2,9 +2,9 @@
 
 #include <QString>
 
-// Explorer's right-click "用 Win顺 搜索此处" (GitHub #20) on a folder, in a
+// Explorer's right-click "用 Luma 搜索此处" (GitHub #20) on a folder, in a
 // folder's empty space, and on a drive: it runs WinShunSearch.exe
-// --search-here "<folder>" (src/stub), which hands the folder to Win顺.
+// --search-here "<folder>" (src/stub), which hands the folder to Luma.
 // Classic verbs under HKCU\Software\Classes: no administrator needed, the
 // same for an installed and a portable copy; on Windows 11 they are under
 // "显示更多选项" (Shift+right-click). They name the copy that set them; a

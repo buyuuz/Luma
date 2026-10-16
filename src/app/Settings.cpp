@@ -193,7 +193,7 @@ void writeWebShortcuts(QSettings& s, const WebShortcuts& shortcuts)
 // The file may have been edited by hand: addresses are tidied as the settings
 // window would ("github.com/..." gets https://), an entry without a name takes
 // its keyword, and one that cannot be used (no keyword to type, an address
-// Win顺 does not open) is left out.
+// Luma does not open) is left out.
 WebShortcuts readWebShortcuts(QSettings& s, const WebShortcuts& fallback)
 {
     if (!s.contains(u"WebSearch/size"_s)) { // never written: the defaults, and into the file with them
@@ -218,7 +218,7 @@ WebShortcuts readWebShortcuts(QSettings& s, const WebShortcuts& fallback)
         shortcuts.append(shortcut);
     }
     s.endArray();
-    // Written by an older Win顺: the defaults added since, once.
+    // Written by an older Luma: the defaults added since, once.
     if (s.value(u"WebSearch/Defaults"_s, 1).toInt() < kWebDefaultsVersion) {
         shortcuts = withNewDefaults(shortcuts, fallback);
         writeWebShortcuts(s, shortcuts);
@@ -410,12 +410,12 @@ QString Settings::sharePath(const QString& text)
 
 QString Settings::filePath()
 {
-    return QSettings(QSettings::IniFormat, QSettings::UserScope, u"WinShun"_s, u"WinShun"_s).fileName();
+    return QSettings(QSettings::IniFormat, QSettings::UserScope, u"Luma"_s, u"Luma"_s).fileName();
 }
 
 QString Settings::storedRenderer()
 {
-    QSettings s(QSettings::IniFormat, QSettings::UserScope, u"WinShun"_s, u"WinShun"_s);
+    QSettings s(QSettings::IniFormat, QSettings::UserScope, u"Luma"_s, u"Luma"_s);
     return resolveRenderer(s.value(u"Launcher/Renderer"_s).toString().trimmed().toLower());
 }
 
@@ -472,7 +472,7 @@ QString Settings::dataDir()
     if (!g_profile.isEmpty())
         return g_profile;
     return QDir::toNativeSeparators(
-        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + u"/WinShun"_s);
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + u"/Luma"_s);
 }
 
 QString Settings::indexDir() const
@@ -552,7 +552,7 @@ Settings Settings::defaults()
 
 bool Settings::hasClipboardSettings()
 {
-    QSettings s(QSettings::IniFormat, QSettings::UserScope, u"WinShun"_s, u"WinShun"_s);
+    QSettings s(QSettings::IniFormat, QSettings::UserScope, u"Luma"_s, u"Luma"_s);
     return s.contains(u"Clipboard/Enabled"_s);
 }
 
@@ -573,7 +573,7 @@ bool Settings::exists()
 
 void Settings::load()
 {
-    QSettings s(QSettings::IniFormat, QSettings::UserScope, u"WinShun"_s, u"WinShun"_s);
+    QSettings s(QSettings::IniFormat, QSettings::UserScope, u"Luma"_s, u"Luma"_s);
     const Settings d = defaults();
 
     doubleCtrl = readOrDefault(s, u"Launcher/DoubleCtrl"_s, d.doubleCtrl);
@@ -724,7 +724,7 @@ void Settings::load()
 
 void Settings::save() const
 {
-    QSettings s(QSettings::IniFormat, QSettings::UserScope, u"WinShun"_s, u"WinShun"_s);
+    QSettings s(QSettings::IniFormat, QSettings::UserScope, u"Luma"_s, u"Luma"_s);
     s.setValue(u"Launcher/DoubleCtrl"_s, doubleCtrl);
     s.setValue(u"Launcher/DoubleCtrlPauseInGames"_s, doubleCtrlPauseInGames);
     s.setValue(u"Launcher/DoubleCtrlPauseInFullScreen"_s, doubleCtrlPauseInFullScreen);

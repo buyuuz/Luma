@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import WinShun
 
-// Settings → AI 助手 › 权限: what AI clients may do through Win顺 (the MCP
+// Settings → AI 助手 › 权限: what AI clients may do through Luma (the MCP
 // server, src/mcp): the switch, opening things, the clipboard history, the
 // plugins. The folders they never see and the log of their calls are on the
 // 隐私与记录 tab (AiPrivacySection).
@@ -13,16 +13,16 @@ SettingsSection {
     // Rows on other tabs shown only while AI may connect (AiPrivacySection.lockedRows).
     property var lockedElsewhere: []
 
-    note: qsTr("Claude、Cursor、VS Code 等 AI 助手通过 MCP（Model Context Protocol）连接 Win顺，就能搜文件名、文件里的文字和最近改过的文件：和你在搜索框里一样快，拼音也行。默认只读，不改动任何文件。")
+    note: qsTr("Claude、Cursor、VS Code 等 AI 助手通过 MCP（Model Context Protocol）连接 Luma，就能搜文件名、文件里的文字和最近改过的文件：和你在搜索框里一样快，拼音也行。默认只读，不改动任何文件。")
 
     SettingRow {
         id: enableRow
 
         title: qsTr("允许 AI 连接")
         keywords: qsTr("MCP;AI;Claude;Cursor;智能;助手;大模型;人工智能").split(";")
-        description: !aiSection.editor.mcp ? qsTr("关着时 AI 客户端连不上 Win顺")
+        description: !aiSection.editor.mcp ? qsTr("关着时 AI 客户端连不上 Luma")
                    : aiSection.editor.mcpStatus.length > 0 ? aiSection.editor.mcpStatus
-                   : qsTr("AI 客户端启动 WinShunMcp.exe 就能连上")
+                   : qsTr("AI 客户端启动 LumaMcp.exe 就能连上")
         unlocks: [openRow, clipboardRow, pluginsRow, actionsRow, ...aiSection.lockedElsewhere]
 
         ToggleSwitch {

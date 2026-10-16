@@ -48,13 +48,13 @@ bool moveFolder(const QString& from, const QString& to, const QStringList& renam
     QDir dir(to);
     for (const QString& name : renames) {
         if (dir.exists(name))
-            dir.rename(name, QString(name).replace(u"QuickFind"_s, u"WinShun"_s));
+            dir.rename(name, QString(name).replace(u"QuickFind"_s, u"Luma"_s));
     }
     return true;
 }
 
 // Everything in `from` into `to`, files already there left alone; not logs,
-// and not Qt's own cache (the "WinShun" folder inside).
+// and not Qt's own cache (the "Luma" folder inside).
 void copyFolder(const QString& from, const QString& to)
 {
     QDir().mkpath(to);
@@ -62,7 +62,7 @@ void copyFolder(const QString& from, const QString& to)
     for (const QFileInfo& item : source.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden)) {
         const QString target = to + u'/' + item.fileName();
         if (item.isDir()) {
-            if (item.fileName().compare(u"WinShun"_s, Qt::CaseInsensitive) != 0 && !item.isSymLink())
+            if (item.fileName().compare(u"Luma"_s, Qt::CaseInsensitive) != 0 && !item.isSymLink())
                 copyFolder(item.filePath(), target);
         } else if (!item.fileName().endsWith(u".log"_s, Qt::CaseInsensitive) && !QFileInfo::exists(target)) {
             QFile::copy(item.filePath(), target);
@@ -78,12 +78,12 @@ void copyIntoPortable()
     if (QFileInfo::exists(iniTo))
         return;
     const QString roaming = qEnvironmentVariable("APPDATA");
-    const QString iniFrom = roaming + u"/WinShun/WinShun.ini"_s;
+    const QString iniFrom = roaming + u"/Luma/Luma.ini"_s;
     if (roaming.isEmpty() || !QFileInfo::exists(iniFrom))
         return; // never used on this account: starts afresh
     QDir().mkpath(QFileInfo(iniTo).absolutePath());
     QFile::copy(iniFrom, iniTo);
-    const QString dataFrom = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + u"/WinShun"_s;
+    const QString dataFrom = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + u"/Luma"_s;
     if (QFileInfo(dataFrom).isDir())
         copyFolder(dataFrom, QDir::fromNativeSeparators(Settings::dataDir()));
 }

@@ -109,7 +109,7 @@ unsigned long connect(std::wstring_view path, const Entered& entered)
     DWORD error = ::WNetAddConnection2W(&resource, entered.password.c_str(), entered.user.c_str(), 0);
     if (error == ERROR_SESSION_CREDENTIAL_CONFLICT) {
         // Windows holds one name per server and session: the connections
-        // under the other one go first (made by Win顺, or mirrored from
+        // under the other one go first (made by Luma, or mirrored from
         // Explorer's; Explorer's own are not touched).
         for (const std::wstring& c : connectionsTo(host))
             ::WNetCancelConnection2W(c.c_str(), 0, TRUE);

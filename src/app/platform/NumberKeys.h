@@ -4,7 +4,7 @@
 
 namespace ws::numberkeys {
 
-// Ctrl+1…9 (or Alt+1…9) on Win顺's own search boxes reach them as the
+// Ctrl+1…9 (or Alt+1…9) on Luma's own search boxes reach them as the
 // window's own keys, except the digits another program holds as global
 // hotkeys (PixPin takes Ctrl+1 and up; Windows hands a global hotkey to its
 // program before the window in front sees the key): those stay its, and
@@ -18,7 +18,7 @@ namespace ws::numberkeys {
 enum class Modifier { Ctrl, Alt };
 
 // The digits 1…9 whose chord with `modifier` is a global hotkey already
-// (RegisterHotKey refuses it: another program's, or one of Win顺's own),
+// (RegisterHotKey refuses it: another program's, or one of Luma's own),
 // for the settings to name. Hooks other programs keep (AutoHotkey's) do
 // not show. GUI thread.
 std::vector<int> heldAsHotkeys(Modifier modifier);

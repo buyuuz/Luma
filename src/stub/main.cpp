@@ -1,26 +1,26 @@
-// WinShunSearch.exe: the button on the taskbar that opens Win顺 the way
+// WinShunSearch.exe: the button on the taskbar that opens Luma the way
 // Windows' own search opens (see src/app/platform/TaskbarSearch.h).
 //
-// Win顺 runs elevated, and a pinned program that needs elevation asks UAC on
+// Luma runs elevated, and a pinned program that needs elevation asks UAC on
 // every click; this one runs with the user's normal rights, so it can be
 // pinned. A click starts it: it passes on the right to take the foreground
-// (the click gave it that) and sets the event Win顺 waits on, then exits.
+// (the click gave it that) and sets the event Luma waits on, then exits.
 // About 10 ms: no Qt, no C runtime DLL, nothing else to load.
 //
 // --screenclip starts Windows' screen capture as Explorer's Win+Shift+S does,
-// for Win顺 once it has taken Win+S over (Explorer then lets go of every
-// Win+S key): Win顺 cannot start it itself, the capture would run elevated.
+// for Luma once it has taken Win+S over (Explorer then lets go of every
+// Win+S key): Luma cannot start it itself, the capture would run elevated.
 //
-// --search-here "<folder>" is Explorer's right-click "用 Win顺 搜索此处"
-// (GitHub #20; ShellMenu.cpp registers it): Win顺 opens with "<folder>\ "
+// --search-here "<folder>" is Explorer's right-click "用 Luma 搜索此处"
+// (GitHub #20; ShellMenu.cpp registers it): Luma opens with "<folder>\ "
 // typed, searching in that folder.
 //
 // --pin <shortcut> asks Windows to pin this program to the taskbar; the user
 // says yes in Windows' own dialog (TaskbarManager, open to desktop programs
-// since Windows 11 KB5074105). Win顺 starts it so from its settings, on the
+// since Windows 11 KB5074105). Luma starts it so from its settings, on the
 // user's click: Windows wants the program asking in front, asking right
-// after a click, and in the Start menu as itself (`shortcut`, which Win顺
-// makes sure of, has the AppUserModelID this program sets). Elevated, Win顺
+// after a click, and in the Start menu as itself (`shortcut`, which Luma
+// makes sure of, has the AppUserModelID this program sets). Elevated, Luma
 // could not ask for itself, and it is this program that goes on the taskbar.
 
 #include <windows.h>
@@ -41,12 +41,12 @@ using Microsoft::WRL::ComPtr;
 
 namespace {
 
-constexpr wchar_t kEventName[] = L"Local\\WinShun.TaskbarSearch"; // taskbar::kEventName
-constexpr wchar_t kMessageWindow[] = L"WinShun.MessageWindow"; // MessageWindow.cpp
-constexpr wchar_t kAutostartTask[] = L"WinShun"; // autostart:: in Shell.cpp
+constexpr wchar_t kEventName[] = L"Local\\Luma.TaskbarSearch"; // taskbar::kEventName
+constexpr wchar_t kMessageWindow[] = L"Luma.MessageWindow"; // MessageWindow.cpp
+constexpr wchar_t kAutostartTask[] = L"Luma"; // autostart:: in Shell.cpp
 // Its AppUserModelID, the same on its Start menu shortcut (taskbar::kButtonAppId):
 // how Windows knows that the program asking to be pinned is that entry.
-constexpr wchar_t kAppId[] = L"LingCore.WinShun.Search";
+constexpr wchar_t kAppId[] = L"buyuuz.Luma.Search";
 
 // What Explorer starts the capture with on Win+Shift+S.
 constexpr wchar_t kScreenClip[] = L"ms-screenclip:///?source=HotKey";
@@ -70,7 +70,7 @@ std::wstring ownFolder()
     return folder;
 }
 
-// The running Win顺: lets it come to the front and asks it to show or hide
+// The running Luma: lets it come to the front and asks it to show or hide
 // its window. False when it is not running (or not far enough yet).
 bool signalRunning()
 {
@@ -102,11 +102,11 @@ bool startsThisCopy(IRegisteredTask* task)
     ::SysFreeString(path);
     if (started.size() >= 2 && started.front() == L'"' && started.back() == L'"')
         started = started.substr(1, started.size() - 2);
-    const std::wstring own = ownFolder() + L"\\WinShun.exe";
+    const std::wstring own = ownFolder() + L"\\Luma.exe";
     return ::CompareStringOrdinal(started.c_str(), -1, own.c_str(), -1, TRUE) == CSTR_EQUAL;
 }
 
-// Win顺's logon task starts it elevated without asking UAC, and the user may
+// Luma's logon task starts it elevated without asking UAC, and the user may
 // run it on demand. Only when it starts this copy.
 bool runAutostartTask()
 {
@@ -129,7 +129,7 @@ void startWinShun()
 {
     if (!runAutostartTask()) {
         const std::wstring folder = ownFolder();
-        const std::wstring exe = folder + L"\\WinShun.exe";
+        const std::wstring exe = folder + L"\\Luma.exe";
         if (folder.empty()
             || reinterpret_cast<INT_PTR>(::ShellExecuteW(nullptr, nullptr, exe.c_str(), L"--background", folder.c_str(),
                    SW_SHOWNORMAL))
@@ -167,18 +167,18 @@ std::wstring searchHereFolder()
     return folder;
 }
 
-// Explorer's "search here" (GitHub #20): the folder to Win顺's window for it
+// Explorer's "search here" (GitHub #20): the folder to Luma's window for it
 // (MessageWindow, open to this program), which shows the search box with
 // "<folder>\ " typed. Not running: started first, as above.
 void searchHere(const std::wstring& folder)
 {
-    constexpr wchar_t kWindow[] = L"WinShun.SearchHere";
+    constexpr wchar_t kWindow[] = L"Luma.SearchHere";
     constexpr ULONG_PTR kTag = 0x57535348; // "WSSH"
     HWND window = ::FindWindowExW(HWND_MESSAGE, nullptr, kWindow, nullptr);
     if (!window) {
         if (!runAutostartTask()) {
             const std::wstring own = ownFolder();
-            const std::wstring exe = own + L"\\WinShun.exe";
+            const std::wstring exe = own + L"\\Luma.exe";
             if (own.empty()
                 || reinterpret_cast<INT_PTR>(
                        ::ShellExecuteW(nullptr, nullptr, exe.c_str(), L"--background", own.c_str(), SW_SHOWNORMAL))
@@ -295,11 +295,11 @@ void pinToTaskbar(const std::wstring& shortcut)
     using winrt::Windows::UI::Shell::ITaskbarManagerDesktopAppSupportStatics;
     using winrt::Windows::UI::Shell::TaskbarManager;
     // In front, as Windows wants the program asking: a window of its own,
-    // one transparent pixel under the pointer (the click on Win顺's button
+    // one transparent pixel under the pointer (the click on Luma's button
     // gave this program the right to come to the front).
     POINT pointer {};
     ::GetCursorPos(&pointer);
-    HWND window = ::CreateWindowExW(WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_TOPMOST, L"STATIC", L"Win顺",
+    HWND window = ::CreateWindowExW(WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_TOPMOST, L"STATIC", L"Luma",
         WS_POPUP, pointer.x, pointer.y, 1, 1, nullptr, nullptr, ::GetModuleHandleW(nullptr), nullptr);
     if (window) {
         ::SetLayeredWindowAttributes(window, 0, 0, LWA_ALPHA);

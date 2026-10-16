@@ -1,6 +1,6 @@
 #pragma once
 
-// The AI clients Win顺 can be added to as an MCP server (through
+// The AI clients Luma can be added to as an MCP server (through
 // WinShunMcp.exe, src/mcp): which are installed, which already name it, and
 // writing it into their configuration (settings → AI 助手 → 连接).
 

@@ -16,7 +16,7 @@ struct _OVERLAPPED;
 // them. Both need administrator rights (they open the volume itself), so the
 // readers here are also behind interfaces (RecordSource, JournalSource,
 // VolumeAccess) that the index service's pipe client implements the same way
-// (ServiceVolumeAccess), for a Win顺 that runs with the user's normal rights.
+// (ServiceVolumeAccess), for a Luma that runs with the user's normal rights.
 namespace ws::ntfs {
 
 inline constexpr std::uint32_t kRootRecord = 5; // the root folder's record number

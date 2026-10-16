@@ -194,9 +194,9 @@ void McpServer::handleRequest(Session& session, const QJsonValue& id, const QStr
         session.initialized = true;
         reply({{u"protocolVersion"_s, version}, {u"capabilities"_s, QJsonObject {{u"tools"_s, QJsonObject {{u"listChanged"_s, true}}}}},
             {u"serverInfo"_s,
-                QJsonObject {{u"name"_s, QString::fromLatin1(kServerName)}, {u"title"_s, u"Win顺 · WinShun"_s}, {u"version"_s, m_version},
-                    {u"description"_s, u"Search files, folders and text on this PC with Win顺"_s},
-                    {u"websiteUrl"_s, u"https://github.com/LingCore/WinShun"_s}}},
+                QJsonObject {{u"name"_s, QString::fromLatin1(kServerName)}, {u"title"_s, u"Luma · Luma"_s}, {u"version"_s, m_version},
+                    {u"description"_s, u"Search files, folders and text on this PC with Luma"_s},
+                    {u"websiteUrl"_s, u"https://github.com/buyuuz/Luma"_s}}},
             {u"instructions"_s, ToolHost::instructions()}});
         emit sessionsChanged();
         return;
@@ -257,7 +257,7 @@ void McpServer::callTool(Session& session, const QJsonValue& id, const QJsonObje
         session.sink(jsonrpc::response(id,
             toolResult({{}, true,
                 reason.isEmpty()
-                    ? u"The tool '%1' is turned off in Win顺's settings (设置 → AI 助手). Ask the user to turn it on there, then call it again."_s.arg(name)
+                    ? u"The tool '%1' is turned off in Luma's settings (设置 → AI 助手). Ask the user to turn it on there, then call it again."_s.arg(name)
                     : reason})));
         return;
     }

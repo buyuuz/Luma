@@ -86,11 +86,11 @@ Window {
         if (preview.dialogShown && !preview.aiPage) {
             dialog.ask("permissions", {
                 id: "lingcore.kill", name: qsTr("结束进程"), version: "1.2.0", author: "LingCore",
-                homepage: "https://github.com/LingCore/WinShun", source: qsTr("你的插件文件夹"),
+                homepage: "https://github.com/buyuuz/Luma", source: qsTr("你的插件文件夹"),
                 permissions: [ // the strict sandbox's sentence: the longest, wrapping onto a second line
                     { name: "", text: qsTr("在严格沙箱里运行：低完整性，不是管理员，写不了你的文件（只能写它自己的数据文件夹）；内存上限 %1 MB").arg(64), enforced: true, note: "" },
                     { name: "processes", text: qsTr("启动其他程序（子进程）"), enforced: true, note: "" },
-                    { name: "network", text: qsTr("联网"), enforced: false, note: qsTr("Win顺 不能阻止它联网") }
+                    { name: "network", text: qsTr("联网"), enforced: false, note: qsTr("Luma 不能阻止它联网") }
                 ],
                 more: true, newNames: ["network"]
             })

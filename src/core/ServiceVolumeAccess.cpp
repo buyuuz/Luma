@@ -264,7 +264,7 @@ public:
             const std::int64_t next = parseUsnRecords(m_buffer, records);
             if (next < 0) {
                 records.clear();
-                qWarning("WinShun: the index service sent a malformed journal batch for %ls", m_root.c_str());
+                qWarning("Luma: the index service sent a malformed journal batch for %ls", m_root.c_str());
                 m_channel.close();
                 return retryLater(nextUsn);
             }
@@ -275,7 +275,7 @@ public:
         case Type::JournalLost: {
             JournalLost lost;
             decode(payload, lost);
-            qWarning("WinShun: the change journal of %ls is lost (error %lu, from the index service)", m_root.c_str(),
+            qWarning("Luma: the change journal of %ls is lost (error %lu, from the index service)", m_root.c_str(),
                 static_cast<unsigned long>(lost.error));
             m_lost = true;
             return false;
@@ -348,7 +348,7 @@ private:
         if (type == Type::Error) {
             Error e;
             decode(payload, e);
-            qWarning("WinShun: the index service cannot follow the journal of %ls: %ls (error %lu)", m_root.c_str(),
+            qWarning("Luma: the index service cannot follow the journal of %ls: %ls (error %lu)", m_root.c_str(),
                 e.message.c_str(), static_cast<unsigned long>(e.code));
             m_lost = true;
         }
@@ -361,9 +361,9 @@ private:
         const auto now = std::chrono::steady_clock::now();
         if (!m_lostSince) {
             m_lostSince = now;
-            qWarning("WinShun: the index service's connection for %ls broke; reconnecting", m_root.c_str());
+            qWarning("Luma: the index service's connection for %ls broke; reconnecting", m_root.c_str());
         } else if (now - *m_lostSince > std::chrono::milliseconds(g_reconnectMs.load())) {
-            qWarning("WinShun: the index service did not come back for %ls: reading the volume again", m_root.c_str());
+            qWarning("Luma: the index service did not come back for %ls: reading the volume again", m_root.c_str());
             m_lost = true;
             return false;
         }
@@ -484,7 +484,7 @@ std::optional<JournalInfo> ServiceVolumeAccess::queryJournal(std::wstring_view r
     JournalInfo info;
     if (!ask(*channel, w.finish(Type::QueryJournal), Type::JournalInfo, payload, kReplyMs, error)
         || !decode(payload, info)) {
-        qWarning("WinShun: the index service has no change journal for %ls: %ls", std::wstring(root).c_str(),
+        qWarning("Luma: the index service has no change journal for %ls: %ls", std::wstring(root).c_str(),
             error.c_str());
         return std::nullopt;
     }
@@ -509,7 +509,7 @@ void ServiceVolumeAccess::closeVolume(std::wstring_view root)
     encode(w, close);
     std::vector<std::byte> payload;
     if (!ask(*channel, w.finish(Type::CloseVolume), Type::Closed, payload, kCloseMs, error))
-        qWarning("WinShun: the index service did not confirm letting go of %ls: %ls", std::wstring(root).c_str(),
+        qWarning("Luma: the index service did not confirm letting go of %ls: %ls", std::wstring(root).c_str(),
             error.c_str());
 }
 

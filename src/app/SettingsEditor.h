@@ -89,7 +89,7 @@ class SettingsEditor : public QObject {
     Q_PROPERTY(QString sort READ sort WRITE setSort NOTIFY changed FINAL) // match | newest | oldest
     Q_PROPERTY(QString startList READ startList WRITE setStartList NOTIFY changed FINAL) // opened | modified
     Q_PROPERTY(QString numberKeys READ numberKeys WRITE setNumberKeys NOTIFY changed FINAL) // ctrl | alt | off
-    // Which of the chosen number keys are other programs' hotkeys, or Win顺's
+    // Which of the chosen number keys are other programs' hotkeys, or Luma's
     // own shortcuts, said for the user; empty when none (refreshNumberKeys).
     Q_PROPERTY(QString numberKeysNote READ numberKeysNote NOTIFY numberKeysNoteChanged FINAL)
     // 剪贴板
@@ -113,7 +113,7 @@ class SettingsEditor : public QObject {
     Q_PROPERTY(bool taskbarWinS READ taskbarWinS WRITE setTaskbarWinS NOTIFY changed FINAL)
     Q_PROPERTY(QString winSState READ winSState NOTIFY winSStateChanged FINAL) // as winVState, for Win+S
     Q_PROPERTY(bool taskbarStartTyping READ taskbarStartTyping WRITE setTaskbarStartTyping NOTIFY changed FINAL)
-    // Win顺's own search box on the taskbar: the setting, whether Windows has
+    // Luma's own search box on the taskbar: the setting, whether Windows has
     // the taskbar for it (11), whether it is on the taskbar now (not where
     // the icons leave no room for it).
     Q_PROPERTY(bool taskbarSearchBox READ taskbarSearchBox WRITE setTaskbarSearchBox NOTIFY changed FINAL)
@@ -127,7 +127,7 @@ class SettingsEditor : public QObject {
     Q_PROPERTY(QString startGapState READ startGapState NOTIFY startGapStateChanged FINAL)
     Q_PROPERTY(QString startGapReason READ startGapReason NOTIFY startGapStateChanged FINAL)
     // Read again as the window comes to the front (refreshTaskbarState): the
-    // user pins the button and hides Windows' search outside Win顺.
+    // user pins the button and hides Windows' search outside Luma.
     Q_PROPERTY(bool taskbarButtonPinned READ taskbarButtonPinned NOTIFY taskbarStateChanged FINAL)
     Q_PROPERTY(bool windowsSearchShown READ windowsSearchShown NOTIFY taskbarStateChanged FINAL)
     // 网页搜索: for each, {keyword, name, url, home, searches, shownUrl, shownHome, homeUrl}
@@ -240,7 +240,7 @@ public:
         QString effective; // direct | service | walk: the way in use
         QString status; // what is in use, or why not what was asked for, said for the user
         QString note; // worth reading: the mode taken from an old task, the task's level not the mode's ...
-        bool elevated = false; // Win顺 runs as administrator now
+        bool elevated = false; // Luma runs as administrator now
         bool administrator = false; // the account is an administrator's (direct means something)
         bool portable = false; // a portable copy: the service is installed from here
         bool serviceInstalled = false;
@@ -258,7 +258,7 @@ public:
     bool indexServiceInstalled() const { return m_indexAccessState.serviceInstalled; }
     bool indexServiceBusy() const { return m_indexAccessState.serviceBusy; }
     QString indexServiceMessage() const { return m_indexAccessState.serviceMessage; }
-    // The app restarts Win顺 as administrator (UAC asks once), installs or
+    // The app restarts Luma as administrator (UAC asks once), installs or
     // uninstalls the index service (WinShunService.exe, elevated, UAC once).
     Q_INVOKABLE void restartAsAdministrator() { emit elevatedRestartRequested(); }
     Q_INVOKABLE void installIndexService() { emit indexServiceInstallRequested(true); }
@@ -488,7 +488,7 @@ public:
     QVariantList mcpClients() const { return m_mcpClients; }
     QString mcpRelayPath() const { return m_mcpRelayPath; }
     Q_INVOKABLE void refreshMcpClients(); // looks again (as the window comes to the front)
-    Q_INVOKABLE void connectMcpClient(const QString& id); // writes Win顺 into its configuration; mcpMessage says how it went
+    Q_INVOKABLE void connectMcpClient(const QString& id); // writes Luma into its configuration; mcpMessage says how it went
     Q_INVOKABLE void copyMcpSnippet(const QString& id); // its configuration (or command) to the clipboard; "": the generic JSON
     QString mcpMessage() const { return m_mcpMessage; }
     Q_INVOKABLE void clearMcpMessage() { setMcpMessage({}); }

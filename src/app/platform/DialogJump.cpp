@@ -102,7 +102,7 @@ void DialogJump::follow(HWND foreground)
         m_worker.post([this, dialog = m_lastDialog] { noteManager(dialog); });
     }
     const bool fromManager = std::erase(m_wentToManager, foreground) > 0;
-    // An elevated program's dialog while Win顺 is not: Windows refuses the
+    // An elevated program's dialog while Luma is not: Windows refuses the
     // messages and keys that would take it to a folder (UIPI).
     if (integrity::higherThanOurs(foreground)) {
         setDialog(nullptr, false);

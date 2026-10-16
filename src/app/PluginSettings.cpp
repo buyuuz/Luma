@@ -411,7 +411,7 @@ void PluginSettings::clearMessage()
 
 QString PluginSettings::permissionsNote() const
 {
-    return tr("这些由 Windows 强制：不是管理员、内存上限、子进程、剪贴板、窗口。这些只是插件自己的说明，Win顺 挡不住：联网、读哪些文件、写哪些文件（严格沙箱的插件除外）。只安装你信得过来源的插件。");
+    return tr("这些由 Windows 强制：不是管理员、内存上限、子进程、剪贴板、窗口。这些只是插件自己的说明，Luma 挡不住：联网、读哪些文件、写哪些文件（严格沙箱的插件除外）。只安装你信得过来源的插件。");
 }
 
 // What each permission means and whether Windows holds the plugin to it
@@ -428,11 +428,11 @@ QVariantList PluginSettings::permissionRows(const QString& id) const
     const plugin::Manifest& m = *e->manifest;
     const bool strict = m.runtime && m.runtime->sandbox == plugin::SandboxLevel::Strict;
     // What every plugin gets, as it is: a zero-code one runs no program of
-    // its own (Win顺 does what its manifest says, as the user); a strict
+    // its own (Luma does what its manifest says, as the user); a strict
     // one runs at low integrity (runner: restrictedToken(LOW)), which
     // cannot write the user's files, only its own data folder.
     if (!m.runtime)
-        row(QString(), tr("不运行自己的程序：Win顺 按它的清单打开网址、程序或文件夹，用你的普通权限，不是管理员"), true);
+        row(QString(), tr("不运行自己的程序：Luma 按它的清单打开网址、程序或文件夹，用你的普通权限，不是管理员"), true);
     else if (strict)
         row(QString(), tr("在严格沙箱里运行：低完整性，不是管理员，写不了你的文件（只能写它自己的数据文件夹）；内存上限 %1 MB").arg(m.runtime->memoryMB), true);
     else
@@ -447,19 +447,19 @@ QVariantList PluginSettings::permissionRows(const QString& id) const
     if (m.permissions.has(P::Ui))
         row(u"ui"_s, tr("打开自己的窗口、切换前台"), true, tr("部分"));
     if (m.permissions.has(P::WinshunSearch))
-        row(u"winshun:search"_s, tr("用 Win顺 搜索文件名和内容"), true);
+        row(u"winshun:search"_s, tr("用 Luma 搜索文件名和内容"), true);
     if (m.permissions.has(P::WinshunOpen))
-        row(u"winshun:open"_s, tr("让 Win顺 打开文件和网址（以普通权限）"), true);
+        row(u"winshun:open"_s, tr("让 Luma 打开文件和网址（以普通权限）"), true);
     if (m.permissions.has(P::WinshunHistory))
         row(u"winshun:history"_s, tr("读最近打开的项目"), true);
     if (m.permissions.has(P::WinshunContent))
-        row(u"winshun:content"_s, tr("读 Win顺 从文档和文本文件里取出的文字"), true);
+        row(u"winshun:content"_s, tr("读 Luma 从文档和文本文件里取出的文字"), true);
     if (m.permissions.has(P::FilesWrite))
         row(u"files:write"_s, tr("写文件"), strict, strict ? tr("严格沙箱：只能写它自己的数据文件夹") : tr("和你自己一样能写"));
     if (m.permissions.has(P::FilesRead))
         row(u"files:read"_s, m.permissions.readPaths.isEmpty() ? tr("读你的文件") : tr("读这些文件：%1").arg(m.permissions.readPaths.join(u"、"_s)), false);
     if (m.permissions.has(P::Network))
-        row(u"network"_s, tr("联网"), false, tr("Win顺 不能阻止它联网"));
+        row(u"network"_s, tr("联网"), false, tr("Luma 不能阻止它联网"));
     return rows;
 }
 
@@ -655,7 +655,7 @@ void PluginSettings::rebuild()
     const bool rowsChanged = m_list.setCards(std::move(cards));
     QString note;
     if (m_host->tokenSource() == plugin::Runner::TokenSource::Restricted)
-        note = tr("插件看不到你在资源管理器里登录的网络位置：资源管理器以管理员身份运行或没有运行，插件只能用 Win顺 自己降权后的身份，它和资源管理器不在同一个登录会话里。");
+        note = tr("插件看不到你在资源管理器里登录的网络位置：资源管理器以管理员身份运行或没有运行，插件只能用 Luma 自己降权后的身份，它和资源管理器不在同一个登录会话里。");
     if (note != m_restrictedNote) {
         m_restrictedNote = note;
         emit stateChanged();
@@ -701,7 +701,7 @@ void PluginSettings::setEnabled(const QString& id, bool on)
     if (confirmed.isEmpty() || !more.isEmpty()) {
         QVariantMap info {{u"id"_s, id}, {u"name"_s, e->manifest->name.pick(m_locale)}, {u"version"_s, e->manifest->version},
             {u"author"_s, e->manifest->author}, {u"homepage"_s, e->manifest->homepage},
-            {u"source"_s, e->source == plugin::Entry::Source::Bundled ? tr("随 Win顺 安装") : tr("你的插件文件夹")},
+            {u"source"_s, e->source == plugin::Entry::Source::Bundled ? tr("随 Luma 安装") : tr("你的插件文件夹")},
             {u"permissions"_s, permissionRows(id)}, {u"more"_s, !confirmed.isEmpty()}, {u"newNames"_s, more}};
         emit confirmationNeeded(info);
         return;
@@ -1041,26 +1041,26 @@ std::vector<TemplateFile> templateFiles(const QString& kind, const QString& id, 
     if (kind == u"powershell") {
         files.push_back({u"plugin.json"_s, manifestText(id, name, u"用 PowerShell 写的常驻插件"_s, u"{\"mode\": \"resident\", \"program\": \"powershell\", \"script\": \"main.ps1\"}"_s)});
         files.push_back({u"main.ps1"_s,
-            u"# Win顺 常驻插件（Windows PowerShell），用 WinShun.psm1 SDK：stdio 上一行一条 JSON-RPC，SDK 包好了。\n"
+            u"# Luma 常驻插件（Windows PowerShell），用 Luma.psm1 SDK：stdio 上一行一条 JSON-RPC，SDK 包好了。\n"
             "# 这个文件要保存为带 BOM 的 UTF-8（Windows PowerShell 5.1 才能读对中文）。\n"
-            "Import-Module \"$PSScriptRoot\\WinShun.psm1\"\n\n"
-            "Start-WinShunPlugin -Name '%1' -OnQuery {\n"
+            "Import-Module \"$PSScriptRoot\\Luma.psm1\"\n\n"
+            "Start-LumaPlugin -Name '%1' -OnQuery {\n"
             "    param($q, $plugin)\n"
             "    $greeting = if ($plugin.settings.greeting) { $plugin.settings.greeting } else { '你好' }\n"
             "    @(\n"
-            "        (New-WinShunItem -Id 'echo' -Title \"$greeting，$($q.text)\" -Subtitle '按 Enter 复制' -Copy $q.text -Score 90),\n"
-            "        (New-WinShunItem -Id 'upper' -Title $q.text.ToUpperInvariant() -Subtitle '大写' -Copy $q.text.ToUpperInvariant())\n"
+            "        (New-LumaItem -Id 'echo' -Title \"$greeting，$($q.text)\" -Subtitle '按 Enter 复制' -Copy $q.text -Score 90),\n"
+            "        (New-LumaItem -Id 'upper' -Title $q.text.ToUpperInvariant() -Subtitle '大写' -Copy $q.text.ToUpperInvariant())\n"
             "    )\n"
             "}\n"
             "# Enter 默认复制 -Copy 的文字；要做别的，加 -OnAction { param($a, $plugin) ... }，\n"
-            "# 返回 New-WinShunEffect -Notify '...'、-OpenPath、-OpenUrl、-SetQuery、-Hide 等。\n"_s.arg(id),
+            "# 返回 New-LumaEffect -Notify '...'、-OpenPath、-OpenUrl、-SetQuery、-Hide 等。\n"_s.arg(id),
             true});
         files.push_back({u"README.md"_s,
-            u"# %1\n\n用 Windows PowerShell 写的 Win顺 常驻插件：输入 `%1 文字` 看效果。\n\n- `plugin.json`：清单（关键字、权限、设置项）。\n- `main.ps1`：脚本，带 BOM 的 UTF-8。\n- `WinShun.psm1`：SDK（随 Win顺 提供，新版本可以直接覆盖）。\n"_s.arg(name) + readmeTail});
+            u"# %1\n\n用 Windows PowerShell 写的 Luma 常驻插件：输入 `%1 文字` 看效果。\n\n- `plugin.json`：清单（关键字、权限、设置项）。\n- `main.ps1`：脚本，带 BOM 的 UTF-8。\n- `Luma.psm1`：SDK（随 Luma 提供，新版本可以直接覆盖）。\n"_s.arg(name) + readmeTail});
     } else if (kind == u"python") {
         files.push_back({u"plugin.json"_s, manifestText(id, name, u"用 Python 写的一次性插件：每次查询起一个进程"_s, u"{\"mode\": \"once\", \"program\": \"python\", \"script\": \"main.py\"}"_s)});
         files.push_back({u"main.py"_s,
-            u"# Win顺 一次性插件（Python），用 winshun.py SDK：查询在环境变量里，结果打印成一个 JSON 对象。\n"
+            u"# Luma 一次性插件（Python），用 winshun.py SDK：查询在环境变量里，结果打印成一个 JSON 对象。\n"
             "import winshun\n\n"
             "q = winshun.query()\n"
             "settings = winshun.settings()\n"
@@ -1070,11 +1070,11 @@ std::vector<TemplateFile> templateFiles(const QString& kind, const QString& id, 
             "    winshun.item(\"upper\", q.text.upper(), \"大写\", copy=q.text.upper()),\n"
             "])\n"_s});
         files.push_back({u"README.md"_s,
-            u"# %1\n\n用 Python 写的 Win顺 一次性插件：输入 `%1 文字` 看效果。需要 Python 3。\n\n- `plugin.json`：清单。\n- `main.py`：脚本。\n- `winshun.py`：SDK（随 Win顺 提供，新版本可以直接覆盖）。\n"_s.arg(name) + readmeTail});
+            u"# %1\n\n用 Python 写的 Luma 一次性插件：输入 `%1 文字` 看效果。需要 Python 3。\n\n- `plugin.json`：清单。\n- `main.py`：脚本。\n- `winshun.py`：SDK（随 Luma 提供，新版本可以直接覆盖）。\n"_s.arg(name) + readmeTail});
     } else if (kind == u"python-resident") {
         files.push_back({u"plugin.json"_s, manifestText(id, name, u"用 Python 写的常驻插件"_s, u"{\"mode\": \"resident\", \"program\": \"python\", \"script\": \"main.py\"}"_s)});
         files.push_back({u"main.py"_s,
-            u"# Win顺 常驻插件（Python），用 winshun.py SDK：一个进程一直开着，stdio 上一行一条 JSON-RPC，SDK 包好了。\n"
+            u"# Luma 常驻插件（Python），用 winshun.py SDK：一个进程一直开着，stdio 上一行一条 JSON-RPC，SDK 包好了。\n"
             "import winshun\n\n\n"
             "def on_query(q, plugin):\n"
             "    greeting = (plugin.settings or {}).get(\"greeting\") or \"你好\"\n"
@@ -1085,11 +1085,11 @@ std::vector<TemplateFile> templateFiles(const QString& kind, const QString& id, 
             "# Enter 默认复制 copy 的文字；要做别的，传 on_action=lambda a, plugin: [winshun.notify(\"…\"), winshun.hide()]。\n"
             "winshun.serve(on_query, name=\"%1\")\n"_s.arg(id)});
         files.push_back({u"README.md"_s,
-            u"# %1\n\n用 Python 写的 Win顺 常驻插件：输入 `%1 文字` 看效果。需要 Python 3。\n\n- `plugin.json`：清单。\n- `main.py`：脚本。\n- `winshun.py`：SDK（随 Win顺 提供，新版本可以直接覆盖）。\n"_s.arg(name) + readmeTail});
+            u"# %1\n\n用 Python 写的 Luma 常驻插件：输入 `%1 文字` 看效果。需要 Python 3。\n\n- `plugin.json`：清单。\n- `main.py`：脚本。\n- `winshun.py`：SDK（随 Luma 提供，新版本可以直接覆盖）。\n"_s.arg(name) + readmeTail});
     } else if (kind == u"cpp") {
         files.push_back({u"plugin.json"_s, manifestText(id, name, u"用 C++ 写的常驻插件（winshun.h 单头文件 SDK）"_s, u"{\"mode\": \"resident\", \"program\": \"%1.exe\", \"sandbox\": \"strict\"}"_s.arg(name))});
         files.push_back({u"main.cpp"_s,
-            u"// Win顺 常驻插件（C++），用 winshun.h 单头文件 SDK：无 Qt，只要 Win32 和标准库。\n"
+            u"// Luma 常驻插件（C++），用 winshun.h 单头文件 SDK：无 Qt，只要 Win32 和标准库。\n"
             "#include \"winshun.h\"\n\n"
             "struct Plugin : winshun::Plugin {\n"
             "    std::string name() const override { return \"%1\"; }\n\n"
@@ -1122,12 +1122,12 @@ std::vector<TemplateFile> templateFiles(const QString& kind, const QString& id, 
             "# Built straight into the plugin folder, where plugin.json names it.\n"
             "set_target_properties(%1 PROPERTIES RUNTIME_OUTPUT_DIRECTORY \"${CMAKE_SOURCE_DIR}\" RUNTIME_OUTPUT_DIRECTORY_RELEASE \"${CMAKE_SOURCE_DIR}\")\n"_s.arg(name)});
         files.push_back({u"README.md"_s,
-            u"# %1\n\n用 C++ 写的 Win顺 常驻插件：无 Qt，只要 Win32 和标准库，`winshun.h` 一个头文件就是 SDK。\n\n"
+            u"# %1\n\n用 C++ 写的 Luma 常驻插件：无 Qt，只要 Win32 和标准库，`winshun.h` 一个头文件就是 SDK。\n\n"
             "编译（Visual Studio 的开发者命令行，或装了 CMake 和 MSVC 的终端）：\n\n"
             "```\ncmake -B build\ncmake --build build --config Release\n```\n\n"
             "`%1.exe` 会直接生成在这个文件夹里（`plugin.json` 的 `runtime.program` 就是它），然后打开插件的开关、输入 `%1 文字`。\n"
             "它跑在严格沙箱里（`sandbox: strict`：低完整性、不能起子进程、不碰剪贴板），要写文件只能写 `dataDir()`；需要更多就把 `sandbox` 去掉。\n\n"
-            "- `plugin.json`：清单。\n- `main.cpp`：代码。\n- `winshun.h`：SDK（随 Win顺 提供，新版本可以直接覆盖）。\n- `CMakeLists.txt`：编译脚本。\n"_s.arg(name) + readmeTail});
+            "- `plugin.json`：清单。\n- `main.cpp`：代码。\n- `winshun.h`：SDK（随 Luma 提供，新版本可以直接覆盖）。\n- `CMakeLists.txt`：编译脚本。\n"_s.arg(name) + readmeTail});
     } else {
         files.push_back({u"plugin.json"_s,
             u"{\n  \"manifest\": 1,\n  \"id\": \"%1\",\n  \"name\": {\"zh\": \"%2\", \"en\": \"%2\"},\n  \"version\": \"0.1.0\",\n"
@@ -1138,7 +1138,7 @@ std::vector<TemplateFile> templateFiles(const QString& kind, const QString& id, 
             "    {\"id\": \"pdf\", \"keyword\": \"%2pdf\", \"title\": {\"zh\": \"找 PDF\", \"en\": \"Find PDFs\"}, \"icon\": \"ext:pdf\", \"run\": {\"search\": {\"query\": \"ext:pdf %s\", \"scope\": \"files\"}}}\n"
             "  ]\n}\n"_s.arg(id, name)});
         files.push_back({u"README.md"_s,
-            u"# %1\n\n零代码 Win顺 插件：只有 `plugin.json`，没有脚本。`run` 可以是 `url`（%s 是要搜的文字）、`program`、`folder`、`search` 或 `items`。\n"_s.arg(name) + readmeTail});
+            u"# %1\n\n零代码 Luma 插件：只有 `plugin.json`，没有脚本。`run` 可以是 `url`（%s 是要搜的文字）、`program`、`folder`、`search` 或 `items`。\n"_s.arg(name) + readmeTail});
     }
     return files;
 }
@@ -1147,7 +1147,7 @@ std::vector<TemplateFile> templateFiles(const QString& kind, const QString& id, 
 QString sdkFileFor(const QString& kind)
 {
     if (kind == u"powershell")
-        return u"WinShun.psm1"_s;
+        return u"Luma.psm1"_s;
     if (kind == u"python" || kind == u"python-resident")
         return u"winshun.py"_s;
     if (kind == u"cpp")
@@ -1203,14 +1203,14 @@ QString PluginSettings::createFromTemplate(const QString& kind, const QString& g
 void PluginSettings::loadPreview()
 {
     m_preview = std::make_unique<Preview>();
-    m_userDir = u"C:\\Users\\me\\AppData\\Local\\WinShun\\plugins"_s;
+    m_userDir = u"C:\\Users\\me\\AppData\\Local\\Luma\\plugins"_s;
     const bool dark = darkMode();
     const auto glyph = [&](const QString& code) { return FileIconProvider::pluginIconUrl(u"preview"_s, u"glyph:"_s + code, dark); };
     const auto permission = [](const QString& name, const QString& text, bool enforced, const QString& note = {}) {
         return QVariantMap {{u"name"_s, name}, {u"text"_s, text}, {u"enforced"_s, enforced}, {u"note"_s, note}};
     };
     const QVariantMap admin = permission({}, tr("以普通用户权限运行，不是管理员；内存上限 %1 MB").arg(256), true);
-    const QVariantMap zeroCode = permission({}, tr("不运行自己的程序：Win顺 按它的清单打开网址、程序或文件夹，用你的普通权限，不是管理员"), true);
+    const QVariantMap zeroCode = permission({}, tr("不运行自己的程序：Luma 按它的清单打开网址、程序或文件夹，用你的普通权限，不是管理员"), true);
     const QVariantMap strict = permission({}, tr("在严格沙箱里运行：低完整性，不是管理员，写不了你的文件（只能写它自己的数据文件夹）；内存上限 %1 MB").arg(64), true);
     const auto keyword = [](const QString& command, const QString& title, const QString& kw, const QString& defaults, const QString& conflict, bool user) {
         return QVariantMap {{u"command"_s, command}, {u"title"_s, title}, {u"keyword"_s, kw}, {u"defaults"_s, defaults}, {u"inUse"_s, conflict.isEmpty() ? kw : QString()},
@@ -1223,7 +1223,7 @@ void PluginSettings::loadPreview()
         c.name = tr("结束进程");
         c.version = u"1.2.0"_s;
         c.author = u"LingCore"_s;
-        c.homepage = u"https://github.com/LingCore/WinShun"_s;
+        c.homepage = u"https://github.com/buyuuz/Luma"_s;
         c.description = tr("kill <进程名或 PID> 列出进程，Enter 结束，Ctrl+Enter 连同子进程");
         c.icon = glyph(u"U+E711"_s);
         c.enabled = true;
@@ -1253,8 +1253,8 @@ void PluginSettings::loadPreview()
         c.status = tr("就绪，用到时启动");
         c.tone = u"ok"_s;
         c.keywords = {keyword(u"tr"_s, tr("翻译"), u"tr"_s, u"tr"_s, {}, false)};
-        c.permissions = {admin, permission(u"network"_s, tr("联网"), false, tr("Win顺 不能阻止它联网")),
-            permission(u"winshun:search"_s, tr("用 Win顺 搜索文件名和内容"), true)};
+        c.permissions = {admin, permission(u"network"_s, tr("联网"), false, tr("Luma 不能阻止它联网")),
+            permission(u"winshun:search"_s, tr("用 Luma 搜索文件名和内容"), true)};
         c.settings = {QVariantMap {{u"key"_s, u"apiKey"_s}, {u"type"_s, u"password"_s}, {u"title"_s, tr("API 密钥")}, {u"hint"_s, tr("存在 Windows 凭据管理器里，不写进设置文件")}, {u"value"_s, QString()}, {u"set"_s, true}},
             QVariantMap {{u"key"_s, u"engine"_s}, {u"type"_s, u"choice"_s}, {u"title"_s, tr("用哪家")}, {u"hint"_s, QString()}, {u"value"_s, u"deepl"_s},
                 {u"options"_s, QStringList {u"DeepL"_s, u"Google"_s, u"百度"_s}}, {u"optionValues"_s, QStringList {u"deepl"_s, u"google"_s, u"baidu"_s}}, {u"optionIndex"_s, 0}},
@@ -1335,7 +1335,7 @@ void PluginSettings::loadPreview()
     m_preview->cards = std::move(cards);
     m_editor->m_settings.pluginDeveloperMode = true; // the log pane and the templates on show
     emit developerModeChanged();
-    m_restrictedNote = tr("插件看不到你在资源管理器里登录的网络位置：资源管理器以管理员身份运行或没有运行，插件只能用 Win顺 自己降权后的身份，它和资源管理器不在同一个登录会话里。");
+    m_restrictedNote = tr("插件看不到你在资源管理器里登录的网络位置：资源管理器以管理员身份运行或没有运行，插件只能用 Luma 自己降权后的身份，它和资源管理器不在同一个登录会话里。");
     for (int i = 0; i < 6; ++i) {
         m_log.append({u"14:0%1:12.%2"_s.arg(i).arg(100 + i * 37), i % 2 ? u"lingcore.translate"_s : u"lingcore.kill"_s, i % 3 == 0 ? u"→"_s : i % 3 == 1 ? u"←"_s : u"stderr"_s,
             i % 3 == 0 ? u"query #%1"_s.arg(i) : i % 3 == 1 ? u"result #%1"_s.arg(i - 1) : u"Warning: slow"_s,

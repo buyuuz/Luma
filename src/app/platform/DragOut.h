@@ -6,8 +6,8 @@
 #include <objidl.h>
 #include <wrl/client.h>
 
-// Dragging search results out of Win顺: into a chat (WeChat), a folder in
-// Explorer, a mail, any program that takes files. Win顺 runs elevated and the
+// Dragging search results out of Luma: into a chat (WeChat), a folder in
+// Explorer, a mail, any program that takes files. Luma runs elevated and the
 // programs it drops into do not; that works: OLE calls down into the target,
 // and the target's calls back into the data object are let through (measured
 // 2026-10-11, OLE targets and WM_DROPFILES ones alike).

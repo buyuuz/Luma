@@ -1,4 +1,4 @@
-LIBRARY WinShunTap
+LIBRARY LumaTap
 EXPORTS
     DllGetClassObject PRIVATE
     DllCanUnloadNow PRIVATE

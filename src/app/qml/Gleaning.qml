@@ -27,10 +27,10 @@ QtObject {
     readonly property var works: [
         {
             id: "winshun",
-            name: qsTr("Win顺"),
+            name: qsTr("Luma"),
             summary: qsTr("让 Windows 用起来更顺手"),
             openSource: true,
-            url: "https://github.com/LingCore/WinShun",
+            url: "https://github.com/buyuuz/Luma",
             icon: "qrc:/qt/qml/WinShun/gleaning/winshun.png"
         },
         {

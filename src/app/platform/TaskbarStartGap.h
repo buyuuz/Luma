@@ -10,7 +10,7 @@ namespace ws::taskbar {
 
 // Puts WinShunTap.dll where Explorer may load it from (%ProgramData%\WinShun\
 // tap\<hash>\, writable by administrators only): `WinShun.exe --stage-tap`,
-// run elevated by the installer, since a Win顺 with the user's normal rights
+// run elevated by the installer, since a Luma with the user's normal rights
 // cannot (GitHub #21) and only checks that it is there, by its hash. Returns
 // 0, else says why on stderr and returns 1.
 int stageTap();

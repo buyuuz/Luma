@@ -69,9 +69,9 @@ QString describe(const Entry& e, const Command& c)
     const QString own = c.ai.value(u"description"_s).toString();
     const QString name = e.manifest->name.pick(u"en"_s);
     if (!own.isEmpty())
-        return u"%1 (the '%2' plugin of Win顺)"_s.arg(own, name);
+        return u"%1 (the '%2' plugin of Luma)"_s.arg(own, name);
     const QString description = c.description.pick(u"en"_s).isEmpty() ? c.title.pick(u"en"_s) : c.description.pick(u"en"_s);
-    return u"%1: the '%2' command of the '%3' plugin of Win顺. Returns the rows the command would show in the launcher."_s.arg(
+    return u"%1: the '%2' command of the '%3' plugin of Luma. Returns the rows the command would show in the launcher."_s.arg(
         description, c.title.pick(u"en"_s), name);
 }
 
@@ -148,7 +148,7 @@ void AiBridge::rebuild()
                 continue;
             const bool offered = m_host->catalog().enabled(e.id);
             const QString offReason = offered ? QString()
-                                              : u"The plugin '%1' is turned off in Win顺's settings (设置 → 插件). Ask the user to turn it on there, then call this again."_s.arg(
+                                              : u"The plugin '%1' is turned off in Luma's settings (设置 → 插件). Ask the user to turn it on there, then call this again."_s.arg(
                                                     e.manifest->name.pick(u"en"_s));
             for (const Command& c : e.manifest->commands) {
                 tools.push_back(queryTool(e, c, offered, offReason));
@@ -206,7 +206,7 @@ mcp::ExternalTool AiBridge::actionTool(const Entry& e, const Command& c, bool of
     QStringList actions;
     for (const Action& a : c.actions)
         actions.push_back(u"'%1' (%2)"_s.arg(a.id, a.title.pick(u"en"_s)));
-    t.description = u"Runs an action of the '%1' command of the '%2' plugin of Win顺 on one of its rows: first call %3 with the same query, then give the row's id here.%4"_s.arg(
+    t.description = u"Runs an action of the '%1' command of the '%2' plugin of Luma on one of its rows: first call %3 with the same query, then give the row's id here.%4"_s.arg(
         c.title.pick(u"en"_s), e.manifest->name.pick(u"en"_s), toolName(e.id, c.id, false),
         actions.isEmpty() ? u" The action is what Enter does in the launcher."_s : u" Actions: %1; the first is what Enter does."_s.arg(actions.join(u", "_s)));
     QJsonObject properties {{u"query"_s, typed("string", u"The same query as for the listing"_s)}, {u"item_id"_s, typed("string", u"The id of the row to act on"_s)},
@@ -215,7 +215,7 @@ mcp::ExternalTool AiBridge::actionTool(const Entry& e, const Command& c, bool of
     t.outputSchema = {{u"type"_s, u"object"_s},
         {u"properties"_s,
             QJsonObject {{u"done"_s, typed("boolean", u"Whether the plugin did it"_s)}, {u"message"_s, typed("string", u"What the plugin said (its notification), if anything"_s)},
-                {u"effects"_s, QJsonObject {{u"type"_s, u"array"_s}, {u"items"_s, typed("string", u"The effects the plugin asked Win顺 for"_s)}}}}}};
+                {u"effects"_s, QJsonObject {{u"type"_s, u"array"_s}, {u"items"_s, typed("string", u"The effects the plugin asked Luma for"_s)}}}}}};
     t.readOnly = false;
     t.openWorld = e.manifest->permissions.has(Permission::Network);
     t.offered = offered;
@@ -261,7 +261,7 @@ mcp::ExternalTool AiBridge::actionTool(const Entry& e, const Command& c, bool of
                     done({{}, true, u"The row '%1' is a message, not something to act on"_s.arg(item->title)});
                     return;
                 }
-                // What Win顺 itself would do for the row, done here for the model's benefit only in words.
+                // What Luma itself would do for the row, done here for the model's benefit only in words.
                 if (item->open.kind != Open::Kind::None || !item->setQuery.isEmpty() || !item->searchQuery.isEmpty()) {
                     const bool first = actionId == u"default"_s || (item->actions.isEmpty() ? false : item->actions.first().id == actionId);
                     if (first) {

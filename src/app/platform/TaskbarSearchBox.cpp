@@ -32,8 +32,8 @@ namespace ws::taskbar {
 
 namespace {
 
-constexpr wchar_t kBoxClass[] = L"WinShun.TaskbarSearchBox";
-constexpr wchar_t kHelperClass[] = L"WinShun.TaskbarSearchBoxHelper";
+constexpr wchar_t kBoxClass[] = L"Luma.TaskbarSearchBox";
+constexpr wchar_t kHelperClass[] = L"Luma.TaskbarSearchBoxHelper";
 
 // To the box's thread, through its helper window.
 constexpr UINT kStateMessage = WM_APP + 1; // the look or the text changed
@@ -1942,7 +1942,7 @@ struct SearchBox::Impl {
         return highContrast ? ::GetSysColor(COLOR_WINDOWTEXT) : dark ? RGB(0xFF, 0xFF, 0xFF) : RGB(0x1B, 0x1B, 0x1B);
     }
 
-    // Win顺's icon at its exact size (the .ico has 16 to 48 in steps), or
+    // Luma's icon at its exact size (the .ico has 16 to 48 in steps), or
     // drawn in one colour.
     void ensureIcon()
     {

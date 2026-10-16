@@ -12,7 +12,7 @@ namespace {
 
 using Edge = PeekingLogo::Edge;
 
-constexpr wchar_t kClassName[] = L"WinShun.PeekingLogo";
+constexpr wchar_t kClassName[] = L"Luma.PeekingLogo";
 constexpr wchar_t kAppIconResource[] = L"IDI_ICON1"; // see app.rc
 constexpr int kLargest = 256; // in app.ico
 

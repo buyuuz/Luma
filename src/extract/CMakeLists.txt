@@ -64,3 +64,6 @@ target_link_libraries(WinShunExtract PRIVATE wsextract)
 
 install(TARGETS WinShunExtract RUNTIME DESTINATION .)
 install(FILES "${PDFIUM_DIR}/bin/pdfium.dll" DESTINATION .)
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShunExtract PROPERTIES OUTPUT_NAME "LumaExtract")

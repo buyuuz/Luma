@@ -80,7 +80,7 @@ void Backup::restore(QWindow* window)
         return;
     const HWND owner = window ? reinterpret_cast<HWND>(window->winId()) : nullptr;
     const QString file = shell::pickFile(owner, tr("选择要恢复的备份"),
-        {{tr("Win顺 备份"), u"WinShun-*.zip"_s}, {tr("所有文件"), u"*.*"_s}});
+        {{tr("Luma 备份"), u"Luma-*.zip"_s}, {tr("所有文件"), u"*.*"_s}});
     if (!file.isEmpty())
         run(file);
 }

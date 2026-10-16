@@ -11,7 +11,7 @@ namespace ws::siteicon {
 // PNG or a Windows bitmap) for which the largest it holds. Null for anything
 // else (JPEG, GIF, WebP, SVG: few sites' only icon) and anything damaged.
 // Read by Qt's own PNG reader and the ICO reader here, never by Windows'
-// codecs: those load whatever codecs are installed, and Win顺 runs as
+// codecs: those load whatever codecs are installed, and Luma runs as
 // administrator with bytes from the internet.
 QImage decode(QByteArrayView bytes);
 

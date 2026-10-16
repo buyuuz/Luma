@@ -16,7 +16,7 @@ namespace ws {
 // after another; the recognizer is let go when nothing is left to read.
 //
 // By PP-OCRv6 (PaddleOcr: Chinese, English, Latin-script languages), which
-// comes with Win顺. Windows' own recognizer (Windows.Media.Ocr, part of a
+// comes with Luma. Windows' own recognizer (Windows.Media.Ocr, part of a
 // language's optional features) when the first East Asian language in the
 // user's list is Japanese or Korean, or when PaddleOcr will not load: in
 // that language if it has a recognizer, else in the user's languages as

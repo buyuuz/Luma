@@ -477,7 +477,7 @@ std::unique_ptr<PaddleOcr> PaddleOcr::load(const QString& programFolder, int thr
             .SetGlobalSpinControl(0)
             .SetGlobalCustomCreateThreadFn(createThread)
             .SetGlobalCustomJoinThreadFn(joinThread);
-        impl->env = Ort::Env(threading, ORT_LOGGING_LEVEL_ERROR, "WinShun");
+        impl->env = Ort::Env(threading, ORT_LOGGING_LEVEL_ERROR, "Luma");
         Ort::SessionOptions options;
         options.DisablePerSessionThreads()
             .SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_ALL)

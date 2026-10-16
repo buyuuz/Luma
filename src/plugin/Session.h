@@ -2,7 +2,7 @@
 
 // A resident plugin's JSON-RPC session (the plugin design, appendix A):
 // requests to the plugin with their replies waited for by id, its
-// notifications and requests to Win顺 handed to handlers. Lines come in
+// notifications and requests to Luma handed to handlers. Lines come in
 // through receive() (its stdout) and go out through the sink (its stdin).
 // Lives on the Host's thread.
 
@@ -19,7 +19,7 @@
 
 namespace ws::plugin {
 
-// Server-defined errors Win顺 answers a plugin with.
+// Server-defined errors Luma answers a plugin with.
 inline constexpr int kPermissionDenied = -32001;
 
 class Session {

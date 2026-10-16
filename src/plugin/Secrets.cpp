@@ -11,7 +11,7 @@ namespace ws::plugin::secrets {
 
 namespace {
 
-constexpr QStringView kPrefix = u"WinShun/plugin/";
+constexpr QStringView kPrefix = u"Luma/plugin/";
 
 } // namespace
 
@@ -25,7 +25,7 @@ bool write(const QString& pluginId, const QString& key, const QString& value)
     if (value.isEmpty())
         return remove(pluginId, key);
     std::wstring name = target(pluginId, key).toStdWString();
-    std::wstring user = L"WinShun";
+    std::wstring user = L"Luma";
     // UTF-16 as the blob, as Explorer keeps its passwords; 512 * 5 bytes is
     // the most a generic credential holds.
     std::wstring blob = value.toStdWString();

@@ -166,7 +166,7 @@ struct Manifest {
     friend bool operator==(const Manifest&, const Manifest&) = default;
 
     // The text of a plugin.json. Nothing, with `error` a sentence, when it
-    // is not a manifest Win顺 can use.
+    // is not a manifest Luma can use.
     static std::optional<Manifest> parse(const QByteArray& json, QString* error);
     static std::optional<Manifest> load(const QString& path, QString* error);
 };

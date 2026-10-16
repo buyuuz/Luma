@@ -5,13 +5,13 @@
 #include <optional>
 #include <string>
 
-// Win顺 in the place of Windows' search on the taskbar.
+// Luma in the place of Windows' search on the taskbar.
 //
 // The button on the taskbar is WinShunSearch.exe (src/stub), which the user
-// pins there: Win顺 runs elevated, and a pinned program that needs elevation
-// asks UAC on every click. A click starts it; it lets Win顺 take the
-// foreground and sets the event Win顺 waits on, then exits (about 10 ms from
-// the click: no process has to stay behind for it). Win顺 then opens over the
+// pins there: Luma runs elevated, and a pinned program that needs elevation
+// asks UAC on every click. A click starts it; it lets Luma take the
+// foreground and sets the event Luma waits on, then exits (about 10 ms from
+// the click: no process has to stay behind for it). Luma then opens over the
 // taskbar at the button, as Windows' own search does; Win+S does too, once
 // Explorer has given it up (winv::).
 //
@@ -24,8 +24,8 @@ namespace ws::taskbar {
 
 // The event WinShunSearch.exe sets to show or hide the launcher (its source
 // names it too). Made so that the user's own processes may set it with their
-// normal rights; made by Win顺 the usual way, only elevated ones could.
-inline constexpr wchar_t kEventName[] = L"Local\\WinShun.TaskbarSearch";
+// normal rights; made by Luma the usual way, only elevated ones could.
+inline constexpr wchar_t kEventName[] = L"Local\\Luma.TaskbarSearch";
 HANDLE createEvent(); // null if it could not be made
 
 enum class Edge { Bottom, Top, Left, Right };
@@ -43,7 +43,7 @@ struct Spot {
 // pointer, where its icons are (centred, as Windows 11 has them by default:
 // its middle). Nothing when that monitor has no taskbar.
 std::optional<Spot> locate(bool atPointer);
-// Something of Win顺's on the taskbar, centred at `button`, was clicked:
+// Something of Luma's on the taskbar, centred at `button`, was clicked:
 // centred on it, over the taskbar it is on.
 std::optional<Spot> locateAt(POINT button);
 
@@ -56,7 +56,7 @@ bool isTaskbar(HWND window);
 // The button's AppUserModelID: the program sets it for itself, and its Start
 // menu shortcut has it too. That is how Windows knows the program asking to
 // be pinned (TaskbarManager) is that entry: without it, pinning is not allowed.
-inline constexpr wchar_t kButtonAppId[] = L"LingCore.WinShun.Search";
+inline constexpr wchar_t kButtonAppId[] = L"buyuuz.Luma.Search";
 
 // The Start menu shortcut to `button` (WinShunSearch.exe), which Windows
 // wants before it lets the program ask to be pinned, and which the user can

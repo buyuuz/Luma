@@ -35,7 +35,7 @@ class Updater : public QObject {
     Q_PROPERTY(QDateTime lastChecked READ lastChecked NOTIFY changed FINAL)
 
 public:
-    static constexpr auto kRepository = "LingCore/WinShun";
+    static constexpr auto kRepository = "buyuuz/Luma";
 
     explicit Updater(QObject* parent = nullptr);
 

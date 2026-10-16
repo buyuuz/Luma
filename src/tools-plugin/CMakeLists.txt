@@ -16,3 +16,6 @@ add_executable(WinShunTools
 target_include_directories(WinShunTools PRIVATE ${PROJECT_SOURCE_DIR}/src/plugins-sdk)
 target_link_libraries(WinShunTools PRIVATE winshun_options bcrypt)
 set_target_properties(WinShunTools PROPERTIES AUTOMOC OFF MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShunTools PROPERTIES OUTPUT_NAME "LumaTools")

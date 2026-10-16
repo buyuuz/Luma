@@ -6,12 +6,12 @@
 namespace ws {
 
 // Whether a double Ctrl should leave the window in front alone. Games use
-// Ctrl to crouch, and players press it twice in a row; opening Win顺 then
+// Ctrl to crouch, and players press it twice in a row; opening Luma then
 // takes the keyboard from the game, and one in exclusive full screen drops
 // out of it. Pure logic (the facts come from platform/Foreground), so it is
 // unit-tested.
 struct ForegroundFacts {
-    QString program; // "TheFinals.exe"; empty for Win顺's own windows and the desktop
+    QString program; // "TheFinals.exe"; empty for Luma's own windows and the desktop
     bool coversMonitor = false; // all of the monitor it is on, and not just maximized
     bool exclusiveFullScreen = false; // Direct3D's own full screen
     bool cursorHidden = false; // by the program (not by Windows, for touch)

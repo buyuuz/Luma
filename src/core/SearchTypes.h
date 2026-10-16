@@ -69,7 +69,7 @@ struct PluginRow {
     QString autocomplete; // Tab puts this in the box
     QString copy; // Ctrl+C; empty: the title
     QString preview;
-    // Done by Win顺 without asking the plugin (the default action).
+    // Done by Luma without asking the plugin (the default action).
     enum class OpenKind : quint8 { None, Path, Url };
     OpenKind openKind = OpenKind::None;
     QString openTarget;

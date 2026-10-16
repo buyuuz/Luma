@@ -46,3 +46,6 @@ target_include_directories(wsplugin PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_C
 # miniz: archives of plugins (Install.cpp); the Credential Manager keeps
 # their passwords (Secrets.cpp).
 target_link_libraries(wsplugin PUBLIC wscore wsmcp wsmcp_proto PRIVATE miniz advapi32 userenv user32)
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShunPluginHost PROPERTIES OUTPUT_NAME "LumaPluginHost")

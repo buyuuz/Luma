@@ -873,7 +873,7 @@ bool IndexService::syncFromMft(
     if (lowPriority)
         ::SetThreadPriority(::GetCurrentThread(), THREAD_MODE_BACKGROUND_END);
     if (!read) {
-        qWarning("WinShun: cannot read the MFT of %ls: %ls", volume.root.c_str(), error.c_str());
+        qWarning("Luma: cannot read the MFT of %ls: %ls", volume.root.c_str(), error.c_str());
         return false;
     }
     // The listings are in memory: one thread does.
@@ -1120,7 +1120,7 @@ IndexService::Save IndexService::writeSnapshot(const QString& path, std::vector<
     if (saved)
         return Save::Written;
     m_dirty = true;
-    qWarning("WinShun: cannot save the index to %ls", qUtf16Printable(QDir::toNativeSeparators(path)));
+    qWarning("Luma: cannot save the index to %ls", qUtf16Printable(QDir::toNativeSeparators(path)));
     return Save::Failed;
 }
 
@@ -1133,7 +1133,7 @@ void IndexService::moveTo(const QString& folder)
     m_mover = std::jthread([this, to = QDir::cleanPath(QDir::fromNativeSeparators(folder))](std::stop_token stop) {
         const std::error_code error = moveFiles(to, stop);
         if (error && error.value() != ERROR_CANCELLED)
-            qWarning("WinShun: cannot move the index to %ls (error %d)", qUtf16Printable(QDir::toNativeSeparators(to)),
+            qWarning("Luma: cannot move the index to %ls (error %d)", qUtf16Printable(QDir::toNativeSeparators(to)),
                 error.value());
         m_moving = false;
         if (!error)

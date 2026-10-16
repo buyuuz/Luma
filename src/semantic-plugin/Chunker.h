@@ -2,7 +2,7 @@
 
 // A file's text in passages for the model: whole lines, about kTarget
 // characters each, never more than kMost; a page, slide or sheet mark
-// ("[page 3]", from Win顺's read_file_text) is noted as where the passage is.
+// ("[page 3]", from Luma's read_file_text) is noted as where the passage is.
 
 #include <string>
 #include <vector>

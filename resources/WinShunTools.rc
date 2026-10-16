@@ -1,8 +1,8 @@
 #pragma code_page(65001)
 #include <winver.h>
 
-// WinShunTools.exe (src/tools-plugin): the winshun.tools plugin that comes
-// with Win顺 -- calculator, units, colours, timestamps, UUIDs, Base64, hashes.
+// LumaTools.exe (src/tools-plugin): the winshun.tools plugin that comes
+// with Luma -- calculator, units, colours, timestamps, UUIDs, Base64, hashes.
 IDI_ICON1 ICON "app.ico"
 
 VS_VERSION_INFO VERSIONINFO
@@ -18,12 +18,12 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "CompanyName", "WinShun"
-            VALUE "FileDescription", "Win顺 小工具插件 · WinShun tools plugin"
+            VALUE "CompanyName", "Luma"
+            VALUE "FileDescription", "Luma 小工具插件 · Luma tools plugin"
             VALUE "FileVersion", WINSHUN_VERSION
-            VALUE "InternalName", "WinShunTools"
-            VALUE "OriginalFilename", "WinShunTools.exe"
-            VALUE "ProductName", "Win顺 · WinShun"
+            VALUE "InternalName", "LumaTools"
+            VALUE "OriginalFilename", "LumaTools.exe"
+            VALUE "ProductName", "Luma · Luma"
             VALUE "ProductVersion", WINSHUN_VERSION
         END
     END

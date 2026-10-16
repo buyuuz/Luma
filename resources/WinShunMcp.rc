@@ -1,8 +1,8 @@
 #pragma code_page(65001)
 #include <winver.h>
 
-// WinShunMcp.exe (src/mcp/relay): the MCP server AI clients start over stdio,
-// which hands everything to the running Win顺 over a named pipe.
+// LumaMcp.exe (src/mcp/relay): the MCP server AI clients start over stdio,
+// which hands everything to the running Luma over a named pipe.
 IDI_ICON1 ICON "app.ico"
 
 VS_VERSION_INFO VERSIONINFO
@@ -18,12 +18,12 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "CompanyName", "WinShun"
-            VALUE "FileDescription", "Win顺 MCP 服务器 · WinShun MCP server"
+            VALUE "CompanyName", "Luma"
+            VALUE "FileDescription", "Luma MCP 服务器 · Luma MCP server"
             VALUE "FileVersion", WINSHUN_VERSION
-            VALUE "InternalName", "WinShunMcp"
-            VALUE "OriginalFilename", "WinShunMcp.exe"
-            VALUE "ProductName", "Win顺 · WinShun"
+            VALUE "InternalName", "LumaMcp"
+            VALUE "OriginalFilename", "LumaMcp.exe"
+            VALUE "ProductName", "Luma · Luma"
             VALUE "ProductVersion", WINSHUN_VERSION
         END
     END

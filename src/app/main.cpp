@@ -39,9 +39,9 @@ void logToFile(QtMsgType type, const QMessageLogContext& context, const QString&
     if (type != QtDebugMsg && type != QtInfoMsg) {
         static std::mutex mutex; // messages come from every thread
         const std::lock_guard lock(mutex);
-        const QString path = ws::Settings::dataDir() + u"\\WinShun.log"_s;
+        const QString path = ws::Settings::dataDir() + u"\\Luma.log"_s;
         if (QFile::exists(path) && QFile(path).size() > (1 << 20)) {
-            const QString old = ws::Settings::dataDir() + u"\\WinShun.old.log"_s;
+            const QString old = ws::Settings::dataDir() + u"\\Luma.old.log"_s;
             QFile::remove(old);
             QFile::rename(path, old);
         }
@@ -114,7 +114,7 @@ std::wstring commandLine(const QStringList& arguments)
 }
 
 // Starts the new copy once this one has let go (see main): as this one ran,
-// as administrator (UAC asks; declined, as this one ran, so that Win顺 is
+// as administrator (UAC asks; declined, as this one ran, so that Luma is
 // back at all), or with the user's normal rights (through the desktop
 // shell's token while this one is elevated; without a shell, as this one
 // ran, and the log says so).
@@ -128,7 +128,7 @@ void startAgain(const QStringList& arguments, ws::App::Elevation elevation)
     if (elevation == ws::App::Elevation::Unelevated) {
         if (ws::shell::startUnelevated(program, commandLine(arguments), folder).valid())
             return;
-        qWarning() << "Restart: no shell to start Win顺 with normal rights; started as before";
+        qWarning() << "Restart: no shell to start Luma with normal rights; started as before";
     }
     if (!QProcess::startDetached(exe, arguments))
         qWarning() << "Restart: could not start" << exe;
@@ -169,8 +169,7 @@ int main(int argc, char* argv[])
     const bool preview = ws::preview::wanted(wideArgs);
     if (preview)
         ws::preview::prepare(wideArgs);
-    if (ws::Settings::profile().isEmpty())
-        ws::migrateFromQuickFind(); // before anything reads the settings
+    // Luma is separate: do not migrate QuickFind or WinShun profiles.
 
     // Font engine. The UI font (Alibaba PuHuiTi, below) has no hinting, so GDI
     // and DirectWrite smear its horizontal strokes across two pixel rows;
@@ -187,11 +186,11 @@ int main(int argc, char* argv[])
         // A picture of a settings page, and nothing else: before the single
         // instance below, which would hand the arguments to the running copy.
         ws::preview::note(u"making the application"_s);
-        QCoreApplication::setOrganizationName(u"WinShun"_s);
-        QCoreApplication::setApplicationName(u"WinShun"_s);
+        QCoreApplication::setOrganizationName(u"Luma"_s);
+        QCoreApplication::setApplicationName(u"Luma"_s);
         QCoreApplication::setApplicationVersion(QStringLiteral(WINSHUN_VERSION)); // the version the window shows
         QGuiApplication previewApp(argc, argv);
-        QGuiApplication::setApplicationDisplayName(u"Win顺"_s);
+        QGuiApplication::setApplicationDisplayName(u"Luma"_s);
         ws::preview::note(u"loading the font"_s);
         applyUiFont();
         return ws::preview::run(wideArgs);
@@ -204,13 +203,13 @@ int main(int argc, char* argv[])
     // threads keep their pace by presenting.
     qputenv("QT_D3D_NO_VBLANK_THREAD", "1");
 
-    QCoreApplication::setOrganizationName(u"WinShun"_s);
-    QCoreApplication::setApplicationName(u"WinShun"_s);
+    QCoreApplication::setOrganizationName(u"Luma"_s);
+    QCoreApplication::setApplicationName(u"Luma"_s);
     QCoreApplication::setApplicationVersion(QStringLiteral(WINSHUN_VERSION));
     QGuiApplication app(argc, argv);
     if (setPlatform)
         qunsetenv("QT_QPA_PLATFORM"); // programs we launch must not inherit it
-    QGuiApplication::setApplicationDisplayName(u"Win顺"_s); // in English "WinShun" (App::applyAppearance)
+    QGuiApplication::setApplicationDisplayName(u"Luma"_s); // in English "Luma" (App::applyAppearance)
     QGuiApplication::setQuitOnLastWindowClosed(false);
     // On every clipboard change each Qt Quick text field reads the clipboard's
     // whole text, only to update its canPaste (unused here): on the GUI
@@ -220,7 +219,7 @@ int main(int argc, char* argv[])
     QGuiApplication::clipboard()->blockSignals(true);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(u"Win顺 · WinShun — 文件、文件夹与文本内容搜索"_s);
+    parser.setApplicationDescription(u"Luma · Luma — 文件、文件夹与文本内容搜索"_s);
     parser.addHelpOption();
     parser.addVersionOption();
     const QCommandLineOption background(u"background"_s, u"Start in the tray without showing the window."_s);
@@ -229,7 +228,7 @@ int main(int argc, char* argv[])
     const QCommandLineOption quit(u"quit"_s, u"Exit the running instance (saves its index)."_s);
     const QCommandLineOption settings(u"settings"_s, u"Open the settings window."_s);
     const QCommandLineOption takeAutostart(u"take-autostart"_s,
-        u"If WinShun starts at login, start this copy instead, then exit (run by the installer)."_s);
+        u"If Luma starts at login, start this copy instead, then exit (run by the installer)."_s);
     // With --take-autostart: the installer removed this copy's task (it may
     // have been another user's: the administrator who answered UAC for a
     // standard user's install), so one is written whether or not one is left.
@@ -247,7 +246,7 @@ int main(int argc, char* argv[])
     // a portable copy (or the version before) now starts it. Through the
     // Task Scheduler API like the switch in the app; schtasks /Change would
     // ask for the user's password. Run as the user who started Setup, with
-    // normal rights (GitHub #21): the task is theirs and runs Win顺 so (a
+    // normal rights (GitHub #21): the task is theirs and runs Luma so (a
     // process without administrator rights may not register a task that has
     // them: writeTask). The 管理员直读 mode's elevated task is written again
     // by the copy that runs as administrator, when it next starts.
@@ -266,7 +265,7 @@ int main(int argc, char* argv[])
     // it ever be closed to it, access denied means one runs as well. The
     // command gets through to an elevated copy too (MessageWindow lets
     // WM_COPYDATA in).
-    const HANDLE instanceMutex = ::CreateMutexW(nullptr, FALSE, L"Local\\WinShun.Instance");
+    const HANDLE instanceMutex = ::CreateMutexW(nullptr, FALSE, L"Local\\Luma.Instance");
     const DWORD mutexError = ::GetLastError();
     if ((instanceMutex && mutexError == ERROR_ALREADY_EXISTS) || (!instanceMutex && mutexError == ERROR_ACCESS_DENIED)) {
         QString command = u"show"_s;

@@ -185,7 +185,7 @@ int runPlugins(const QStringList& args)
         editor->setMcpStatus(u"已连接：Claude Desktop（12 次调用）"_s);
     say(u"loading the page"_s);
 
-    QQmlComponent component(&engine, u"WinShun"_s, u"PluginsPreview"_s);
+    QQmlComponent component(&engine, u"Luma"_s, u"PluginsPreview"_s);
     QObject* object = component.createWithInitialProperties({
         {u"plugins"_s, QVariant::fromValue(editor->plugins())},
         {u"editor"_s, QVariant::fromValue(editor)},
@@ -320,7 +320,7 @@ int runSettings(const QStringList& args)
         shareStatus(shareSignIn, ShareIndexer::State::Problem, share::Problem::NeedsSignIn, 0),
     });
     SettingsEditor::IndexFolderState indexState;
-    indexState.folder = u"C:\\Users\\me\\AppData\\Local\\WinShun"_s;
+    indexState.folder = u"C:\\Users\\me\\AppData\\Local\\Luma"_s;
     indexState.size = u"112 MB"_s;
     editor->setIndexFolderState(indexState);
     editor->setContentIndexStatus(u"已收录 337,215 个文件，其中 5,815 个文档"_s);
@@ -343,7 +343,7 @@ int runSettings(const QStringList& args)
     editor->favorites()->setStore(&favorites);
     say(u"loading SettingsWindow.qml"_s);
 
-    QQmlComponent component(&engine, u"WinShun"_s, u"SettingsWindow"_s);
+    QQmlComponent component(&engine, u"Luma"_s, u"SettingsWindow"_s);
     QObject* object = component.createWithInitialProperties({
         {u"editor"_s, QVariant::fromValue(editor)},
         {u"frame"_s, QVariant::fromValue(frame)},
@@ -526,15 +526,15 @@ void prepare(const QStringList& args)
     qputenv("QT_QUICK_BACKEND", "software"); // renders without a window on screen
     qputenv("QT_QPA_PLATFORM", "windows:fontengine=freetype");
     // Nothing of the user's is read or written: a profile folder of its own.
-    Settings::useProfile(QDir::temp().filePath(u"WinShun-preview-"_s + QUuid::createUuid().toString(QUuid::WithoutBraces).left(8)));
+    Settings::useProfile(QDir::temp().filePath(u"Luma-preview-"_s + QUuid::createUuid().toString(QUuid::WithoutBraces).left(8)));
 }
 
 int run(const QStringList& args)
 {
     const bool settingsMode = args.contains(kSettingsFlag);
     if (valueAfter(args, settingsMode ? kSettingsFlag : kFlag).isEmpty()) {
-        std::fprintf(stderr, "usage: WinShun --preview-plugins <file.png> [--dark] [--scale 1.5] [--dialog] [--page ai]\n"
-                             "       WinShun --preview-settings <folder> [--dark] [--scale 1.5] [--tree]\n");
+        std::fprintf(stderr, "usage: Luma --preview-plugins <file.png> [--dark] [--scale 1.5] [--dialog] [--page ai]\n"
+                             "       Luma --preview-settings <folder> [--dark] [--scale 1.5] [--tree]\n");
         return 2;
     }
     g_previous = qInstallMessageHandler(countWarnings);

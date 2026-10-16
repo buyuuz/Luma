@@ -1,22 +1,22 @@
 // WinShunMcp.exe: the MCP server AI clients (Claude Desktop, Claude Code,
 // Cursor, VS Code …) start over stdio. It carries the JSON-RPC messages to
-// the running Win顺 over its named pipe (Pipe.h), where the protocol and the
+// the running Luma over its named pipe (Pipe.h), where the protocol and the
 // tools live (McpServer), and brings the answers back. Of its own it does
 // three things:
 //
-//   - connects when first needed and again whenever the pipe is gone: Win顺
+//   - connects when first needed and again whenever the pipe is gone: Luma
 //     may start after the AI client, or be restarted, without the client
 //     noticing anything but a moment's wait;
-//   - while Win顺 is not running, still answers initialize (so the client
+//   - while Luma is not running, still answers initialize (so the client
 //     does not give the server up), lists the tools it last saw, and answers
 //     tool calls with an error the model can tell the user about; with
-//     --start-winshun, the first tool call also starts Win顺 through its
+//     --start-winshun, the first tool call also starts Luma through its
 //     autostart task (no UAC prompt) when it is not running at all;
 //   - logs to stderr, which the clients keep (Claude Desktop: mcp-server-*.log).
 //
 //   WinShunMcp.exe [--pipe <name>] [--start-winshun]
 //       --pipe: the pipe's name, for tests (default: Pipe.h's);
-//       --start-winshun: a tool call may start Win顺 when it is not running
+//       --start-winshun: a tool call may start Luma when it is not running
 
 #include "JsonRpc.h"
 #include "Pipe.h"
@@ -54,21 +54,21 @@ namespace {
 constexpr const char* kProtocolVersions[] = {"2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05"};
 constexpr DWORD kConnectTimeoutMs = 2000; // for a free instance of a busy pipe
 constexpr DWORD kHandshakeTimeoutMs = 5000;
-constexpr int kStartWaitMs = 12000; // for Win顺 to come up after its task was run
+constexpr int kStartWaitMs = 12000; // for Luma to come up after its task was run
 const QLatin1StringView kRelayIdPrefix("winshun-relay-");
 
 void logLine(const char* format, ...)
 {
     std::va_list args;
     va_start(args, format);
-    std::fputs("[WinShunMcp] ", stderr);
+    std::fputs("[LumaMcp] ", stderr);
     std::vfprintf(stderr, format, args);
     std::fputc('\n', stderr);
     std::fflush(stderr);
     va_end(args);
 }
 
-// %LOCALAPPDATA%\WinShun\mcp-tools.json: the tools Win顺 last listed, for
+// %LOCALAPPDATA%\WinShun\mcp-tools.json: the tools Luma last listed, for
 // answering tools/list while it is not running. In a portable copy, in the
 // "data" folder beside the program (Settings::portableFolder).
 QString cachePath()
@@ -84,15 +84,15 @@ QString cachePath()
     const QString local = qEnvironmentVariable("LOCALAPPDATA");
     if (local.isEmpty())
         return {};
-    return QDir::toNativeSeparators(local + u"\\WinShun\\mcp-tools.json"_s);
+    return QDir::toNativeSeparators(local + u"\\Luma\\mcp-tools.json"_s);
 }
 
-// Whether Win顺 is running at all (its single-instance mutex exists),
+// Whether Luma is running at all (its single-instance mutex exists),
 // whatever it serves: one that runs without the pipe has the AI connection
 // turned off, or is a version without it.
 bool winShunRunning()
 {
-    if (const HANDLE mutex = ::OpenMutexW(SYNCHRONIZE, FALSE, L"Local\\WinShun.Instance")) {
+    if (const HANDLE mutex = ::OpenMutexW(SYNCHRONIZE, FALSE, L"Local\\Luma.Instance")) {
         ::CloseHandle(mutex);
         return true;
     }
@@ -102,16 +102,16 @@ bool winShunRunning()
 QString offlineText()
 {
     if (winShunRunning()) {
-        return u"Win顺 (WinShun) is running, but its AI connection is off (or this version of Win顺 has none), so "
+        return u"Luma (Luma) is running, but its AI connection is off (or this version of Luma has none), so "
                "this tool cannot answer. Ask the user to turn on 允许 AI 连接 (Allow AI assistants to connect) in "
-               "Win顺's settings › AI 助手, or to update Win顺; then call the tool again. "
-               "／Win顺 在运行，但没有开放 AI 连接（或这个版本还没有这个功能）。请在 Win顺 的设置 → AI 助手 里打开"
-               "“允许 AI 连接”，或者更新 Win顺，然后再试一次。"_s;
+               "Luma's settings › AI 助手, or to update Luma; then call the tool again. "
+               "／Luma 在运行，但没有开放 AI 连接（或这个版本还没有这个功能）。请在 Luma 的设置 → AI 助手 里打开"
+               "“允许 AI 连接”，或者更新 Luma，然后再试一次。"_s;
     }
-    return u"Win顺 (WinShun) is not running on this PC, so this tool cannot answer right now. "
-           "Ask the user to start Win顺 (Start menu › Win顺, or the tray icon), then call the tool again: "
+    return u"Luma (Luma) is not running on this PC, so this tool cannot answer right now. "
+           "Ask the user to start Luma (Start menu › Luma, or the tray icon), then call the tool again: "
            "there is no need to restart the AI client. "
-           "／Win顺 没有运行，这个工具暂时用不了。请启动 Win顺（开始菜单里的 Win顺），然后再试一次，不用重启 AI 客户端。"_s;
+           "／Luma 没有运行，这个工具暂时用不了。请启动 Luma（开始菜单里的 Luma），然后再试一次，不用重启 AI 客户端。"_s;
 }
 
 QJsonObject toolError(const QString& text)
@@ -126,24 +126,24 @@ QJsonObject toolValue(const QJsonObject& structured)
         {u"structuredContent"_s, structured}, {u"isError"_s, false}};
 }
 
-// The one tool answered here while Win顺 is away: index_status, saying so.
+// The one tool answered here while Luma is away: index_status, saying so.
 QJsonObject statusTool()
 {
-    return {{u"name"_s, u"index_status"_s}, {u"title"_s, u"Win顺 status"_s},
-        {u"description"_s, u"Whether Win顺 (WinShun) is running and its index is ready."_s},
+    return {{u"name"_s, u"index_status"_s}, {u"title"_s, u"Luma status"_s},
+        {u"description"_s, u"Whether Luma (Luma) is running and its index is ready."_s},
         {u"inputSchema"_s, QJsonObject {{u"type"_s, u"object"_s}, {u"additionalProperties"_s, false}}},
         {u"annotations"_s,
             QJsonObject {{u"readOnlyHint"_s, true}, {u"destructiveHint"_s, false}, {u"idempotentHint"_s, true}, {u"openWorldHint"_s, false}}}};
 }
 
-// Runs Win顺's autostart task, which starts it elevated without a UAC prompt
+// Runs Luma's autostart task, which starts it elevated without a UAC prompt
 // (the taskbar button does the same). False when there is no such task.
 bool startWinShun()
 {
     wchar_t system[MAX_PATH] {};
     if (!::GetSystemDirectoryW(system, MAX_PATH))
         return false;
-    std::wstring command = L"\"" + std::wstring(system) + L"\\schtasks.exe\" /Run /TN WinShun";
+    std::wstring command = L"\"" + std::wstring(system) + L"\\schtasks.exe\" /Run /TN Luma";
     STARTUPINFOW startup {};
     startup.cb = sizeof startup;
     PROCESS_INFORMATION process {};
@@ -235,7 +235,7 @@ private:
                 logLine("cannot open the pipe (%lu)", error);
             return false;
         }
-        logLine("connected to Win顺");
+        logLine("connected to Luma");
         {
             const std::lock_guard lock(m_mutex);
             m_online = true;
@@ -246,7 +246,7 @@ private:
             m_reader.join(); // the previous connection's reader has ended
         m_reader = std::thread([this] { readPipe(); });
         if (m_clientInitialized && !handshake()) {
-            logLine("Win顺 did not answer initialize");
+            logLine("Luma did not answer initialize");
             disconnect();
             return false;
         }
@@ -286,7 +286,7 @@ private:
             m_reader.join();
     }
 
-    // Everything Win顺 sends: answers to the client's requests go to stdout;
+    // Everything Luma sends: answers to the client's requests go to stdout;
     // the relay's own are taken care of. On a broken pipe, what was still
     // pending is answered here.
     void readPipe()
@@ -295,7 +295,7 @@ private:
         while (m_client.readLine(line)) {
             const std::optional<jsonrpc::Message> message = jsonrpc::parse(line);
             if (!message) {
-                logLine("unreadable line from Win顺 (%lld bytes)", static_cast<long long>(line.size()));
+                logLine("unreadable line from Luma (%lld bytes)", static_cast<long long>(line.size()));
                 continue;
             }
             if (message->isResponse()) {
@@ -329,15 +329,15 @@ private:
             pending.swap(m_pending);
         }
         m_handshakeCv.notify_all();
-        logLine("Win顺 went away (%zu requests pending)", pending.size());
+        logLine("Luma went away (%zu requests pending)", pending.size());
         for (const auto& [key, method] : pending) {
             const QJsonValue id = QJsonDocument::fromJson((u"["_s + key + u"]"_s).toUtf8()).array().at(0);
             if (method == u"initialize")
                 writeOut(jsonrpc::response(id, localInitialize()));
             else if (method == u"tools/call")
-                writeOut(jsonrpc::response(id, toolError(u"Win顺 (WinShun) stopped while answering. "_s + offlineText())));
+                writeOut(jsonrpc::response(id, toolError(u"Luma (Luma) stopped while answering. "_s + offlineText())));
             else
-                writeOut(jsonrpc::errorResponse(id, jsonrpc::kUnavailable, u"Win顺 (WinShun) stopped while answering"_s));
+                writeOut(jsonrpc::errorResponse(id, jsonrpc::kUnavailable, u"Luma (Luma) stopped while answering"_s));
         }
     }
 
@@ -370,11 +370,11 @@ private:
         }
         return {{u"protocolVersion"_s, version}, {u"capabilities"_s, QJsonObject {{u"tools"_s, QJsonObject {{u"listChanged"_s, true}}}}},
             {u"serverInfo"_s,
-                QJsonObject {{u"name"_s, u"winshun"_s}, {u"title"_s, u"Win顺 · WinShun"_s}, {u"version"_s, QStringLiteral(WINSHUN_VERSION)},
-                    {u"description"_s, u"Search files, folders and text on this PC with Win顺"_s}}},
+                QJsonObject {{u"name"_s, u"winshun"_s}, {u"title"_s, u"Luma · Luma"_s}, {u"version"_s, QStringLiteral(WINSHUN_VERSION)},
+                    {u"description"_s, u"Search files, folders and text on this PC with Luma"_s}}},
             {u"instructions"_s,
-                u"Win顺 (WinShun) searches the files, folders and text on this PC. It is not running at the moment: "
-                "its tools answer with an error until the user starts it (Start menu › Win顺); then they work again "
+                u"Luma (Luma) searches the files, folders and text on this PC. It is not running at the moment: "
+                "its tools answer with an error until the user starts it (Start menu › Luma); then they work again "
                 "without restarting this client. index_status tells whether it is running."_s}};
     }
 
@@ -442,14 +442,14 @@ private:
             m_clientInit = message->params;
             const QJsonObject client = message->params.value(u"clientInfo"_s).toObject();
             logLine("client: %s %s", qUtf8Printable(client.value(u"name"_s).toString()), qUtf8Printable(client.value(u"version"_s).toString()));
-            // The client's own initialize goes to Win顺 as it is (so Win顺's
+            // The client's own initialize goes to Luma as it is (so Luma's
             // answer, instructions and all, is the client's): the connection
             // made here must not initialize on its behalf first.
             m_clientInitialized = false;
             const bool online = ensureConnected();
             m_clientInitialized = true;
             if (online && !m_handshakeDone && forward(line, id, method))
-                return; // Win顺 answers; readPipe() notes the session is up
+                return; // Luma answers; readPipe() notes the session is up
             writeOut(jsonrpc::response(id, localInitialize()));
             return;
         }
@@ -460,25 +460,25 @@ private:
         if (method == u"tools/call") {
             const QString tool = message->params.value(u"name"_s).toString();
             if (!ensureConnected() && m_mayStart && !m_triedStart && !winShunRunning()) {
-                // The first call with Win顺 not running at all: start it, as
+                // The first call with Luma not running at all: start it, as
                 // the taskbar button would, and wait a little for it. Never
                 // for one that runs without the pipe: its task would only
                 // hand the running copy a "show", and the launcher would pop up.
                 m_triedStart = true;
                 if (startWinShun()) {
-                    logLine("started Win顺 through its autostart task; waiting for it");
+                    logLine("started Luma through its autostart task; waiting for it");
                     const ULONGLONG until = ::GetTickCount64() + kStartWaitMs;
                     while (!ensureConnected() && ::GetTickCount64() < until)
                         ::Sleep(300);
                 } else {
-                    logLine("Win顺 is not running and its autostart task could not be run");
+                    logLine("Luma is not running and its autostart task could not be run");
                 }
             }
             if (connected() && forward(line, id, method))
                 return;
             if (tool == u"index_status") {
                 // `running` is the truth (the model reads the field, not
-                // only the hint): a Win顺 that runs without the pipe is running.
+                // only the hint): a Luma that runs without the pipe is running.
                 writeOut(jsonrpc::response(id,
                     toolValue({{u"running"_s, winShunRunning()}, {u"connected"_s, false}, {u"hint"_s, offlineText()}})));
             } else {
@@ -488,7 +488,7 @@ private:
         }
         if (ensureConnected() && forward(line, id, method))
             return;
-        // Offline: what can be answered without Win顺.
+        // Offline: what can be answered without Luma.
         if (method == u"tools/list")
             writeOut(jsonrpc::response(id, QJsonObject {{u"tools"_s, offlineTools()}}));
         else if (method == u"resources/list")
@@ -538,13 +538,13 @@ int main()
             } else if (arg == L"--start-winshun") {
                 mayStart = true;
             } else if (arg == L"--version") {
-                std::printf("WinShunMcp %s\n", WINSHUN_VERSION);
+                std::printf("LumaMcp %s\n", WINSHUN_VERSION);
                 ::LocalFree(args);
                 return 0;
             } else if (arg == L"--help" || arg == L"-h" || arg == L"/?") {
-                std::printf("WinShunMcp.exe [--pipe <name>] [--start-winshun]\n"
-                            "The MCP server (stdio) of Win顺 · WinShun; add it to your AI client.\n"
-                            "  --start-winshun   a tool call may start Win顺 (through its autostart task) when it is not running\n");
+                std::printf("LumaMcp.exe [--pipe <name>] [--start-winshun]\n"
+                            "The MCP server (stdio) of Luma · Luma; add it to your AI client.\n"
+                            "  --start-winshun   a tool call may start Luma (through its autostart task) when it is not running\n");
                 ::LocalFree(args);
                 return 0;
             }

@@ -25,7 +25,7 @@ bool onlyIndexFiles(const QString& folder);
 
 // The disk `folder` is on can be unplugged while Windows runs (外接), which
 // the index cannot live with: its files stay open, so the disk cannot be
-// ejected, and pulling it out under the mapped content index would bring Win顺
+// ejected, and pulling it out under the mapped content index would bring Luma
 // down. That is a USB, SD or FireWire disk, whatever the plug (U 盘, 移动硬盘,
 // Type-C), and one behind a controller that can be unplugged (Thunderbolt and
 // USB4 enclosures). A disk on a fixed controller counts as internal even if

@@ -1,8 +1,10 @@
+> **Luma** is a name-and-icon rebrand of [LingCore/WinShun](https://github.com/LingCore/WinShun). Core functionality is upstream. The original MIT license and copyright are retained. Screenshots may still show upstream branding. Build from source until Luma releases are published.
+
 <p align="center">
-  <img src="docs/images/icon.png" width="128" height="128" alt="Win顺 app icon">
+  <img src="resources/luma-preview.png" width="128" height="128" alt="Luma app icon">
 </p>
 
-<h1 align="center">Win顺 · WinShun</h1>
+<h1 align="center">Luma · Luma</h1>
 
 <p align="center">
   <b>双击 Ctrl，搜遍整台电脑</b> —— 免费开源的 Windows 文件搜索、快速启动器<br>
@@ -10,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/LingCore/WinShun/releases/latest"><img src="https://img.shields.io/github/v/release/LingCore/WinShun?label=%E4%B8%8B%E8%BD%BD%20Download" alt="Download"></a>
+  <a href="https://github.com/buyuuz/Luma/releases/latest"><img src="https://img.shields.io/github/v/release/LingCore/Luma?label=%E4%B8%8B%E8%BD%BD%20Download" alt="Download"></a>
   <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4" alt="Windows 10 | 11">
   <img src="https://img.shields.io/badge/x64-64--bit-blue" alt="x64">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT"></a>
@@ -22,7 +24,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/cover.jpg" width="640" alt="Win顺 WinShun：让你的电脑更好用，11 合 1，双击 Ctrl 全搞定，免费开源 / a free Windows search launcher, eleven tools in one, press Ctrl twice">
+  <img src="docs/images/cover.jpg" width="640" alt="Luma Luma：让你的电脑更好用，11 合 1，双击 Ctrl 全搞定，免费开源 / a free Windows search launcher, eleven tools in one, press Ctrl twice">
 </p>
 
 <p align="center">
@@ -66,7 +68,7 @@
 
 ## 中文
 
-**Win顺** 是 Windows 上免费开源的快速搜索启动器：连按两下 Ctrl 弹出搜索框，边打字边出结果。按文件名或拼音秒找文件，搜 Word、Excel、PDF 里的文字，打开应用和系统设置，还有剪贴板历史、对话框搜索、任务栏搜索框、插件和给 AI 用的 MCP 搜索。
+**Luma** 是 Windows 上免费开源的快速搜索启动器：连按两下 Ctrl 弹出搜索框，边打字边出结果。按文件名或拼音秒找文件，搜 Word、Excel、PDF 里的文字，打开应用和系统设置，还有剪贴板历史、对话框搜索、任务栏搜索框、插件和给 AI 用的 MCP 搜索。
 
 它直接读 NTFS 主文件表（MFT）建索引，三百多万个文件几秒建好，增删改名实时跟上，**不用装 Everything**。不需要账号，不上传数据。界面有简体中文和英文。
 
@@ -137,7 +139,7 @@
 
 - **双击空白处**：在资源管理器或桌面的空白处双击，弹出收藏的、最近的、别的窗口里开着的文件夹，选一个就在这个窗口里转过去（桌面上开新窗口），和 Listary 一样；还能在当前文件夹里搜、把它加进收藏。
 - 菜单不抢焦点，方向键、回车、Esc、首字母都能用；点别处或再双击就关。Listary 在运行时让给它。
-- **右键“用 Win顺 搜索此处”**：文件夹、文件夹的空白处和磁盘的右键菜单里都有（Windows 11 在“显示更多选项”里），搜索框带着这个文件夹打开，接着打字就在里面找。设置里可以关。
+- **右键“用 Luma 搜索此处”**：文件夹、文件夹的空白处和磁盘的右键菜单里都有（Windows 11 在“显示更多选项”里），搜索框带着这个文件夹打开，接着打字就在里面找。设置里可以关。
 
 #### 📋 剪贴板历史（代替 Win+V）
 
@@ -152,13 +154,13 @@
 
 #### 🔎 任务栏搜索框（代替 Windows 搜索）
 
-- 在 Windows 11 任务栏上放 Win顺 自己的搜索框（Windows 10 是固定一个按钮），结果从任务栏上方滑出。
+- 在 Windows 11 任务栏上放 Luma 自己的搜索框（Windows 10 是固定一个按钮），结果从任务栏上方滑出。
 - 可以像 Windows 自带的搜索框一样放在开始按钮右边，图标往右让出位置（设置里打开，默认关）。
-- 可以接管 `Win+S`，开始菜单里打字也用 Win顺 搜。
+- 可以接管 `Win+S`，开始菜单里打字也用 Luma 搜。
 
 #### 🤖 AI 助手（MCP）
 
-- **能做什么**：Win顺 是一个 MCP 服务器，AI 能用它搜文件名、文件内容和最近修改的文件。
+- **能做什么**：Luma 是一个 MCP 服务器，AI 能用它搜文件名、文件内容和最近修改的文件。
 - **怎么连**：Claude Desktop、Claude Code、Cursor、VS Code 在设置里一键连接。
 - **安全**：
   - 默认只读，只看得到 AI 客户端自己有权限看的文件；
@@ -170,7 +172,7 @@
 - **外观**：浅色、深色跟随系统，Windows 11 云母（Mica）效果和圆角；图标在 150% 缩放下也清晰。界面大小有紧凑、标准、宽松三档，托盘和任务栏的图标可以换成单色。
 - **设置**：可以搜索（`Ctrl+F`，`kjj` 找到“快捷键”），改了立即生效。
 - **备份**：设置 → 高级里选一个文件夹（放在同步盘里就是云备份），设置、收藏、对话框的固定项、自己加的网页图标和插件会自动备份，保留最近 10 份，随时恢复。
-- **更新**：有新版本时在托盘提醒，Win顺 不会自己下载、替换程序文件。
+- **更新**：有新版本时在托盘提醒，Luma 不会自己下载、替换程序文件。
 
 | 按键 | 作用 |
 |---|---|
@@ -186,44 +188,44 @@
 
 ### 下载安装
 
-1. 到 [Releases 页面](https://github.com/LingCore/WinShun/releases/latest) 下载 `WinShun-版本号-x64-setup.exe`，双击安装。Windows 提示“已保护你的电脑”时，点 **更多信息 → 仍要运行**（还没有代码签名证书）。
-2. 装完托盘里出现 Win顺 的图标，索引几秒就建好。连按两下 Ctrl 开始搜索。
+1. 到 [Releases 页面](https://github.com/buyuuz/Luma/releases/latest) 下载 `Luma-版本号-x64-setup.exe`，双击安装。Windows 提示“已保护你的电脑”时，点 **更多信息 → 仍要运行**（还没有代码签名证书）。
+2. 装完托盘里出现 Luma 的图标，索引几秒就建好。连按两下 Ctrl 开始搜索。
 3. 升级时运行新的安装程序，设置和索引都保留。卸载在 Windows 的“设置 → 应用”里。
 
-不想安装的话，下载 `WinShun-版本号-x64-portable.zip`，解压到任意文件夹，运行里面的 `WinShun.exe` 就行。设置、记录、剪贴板历史和索引都存在它旁边的 `data` 文件夹里，整个文件夹可以拷到 U 盘或别的电脑；第一次启动时，这台电脑上原来的设置和数据（`%APPDATA%\WinShun`、`%LOCALAPPDATA%\WinShun`）会复制过来，原处的不动。升级时把新版解压到同一个位置覆盖，`data` 留着。删掉 `data` 文件夹（先退出 Win顺），就和安装版一样存在原来的地方。
+不想安装的话，下载 `Luma-版本号-x64-portable.zip`，解压到任意文件夹，运行里面的 `Luma.exe` 就行。设置、记录、剪贴板历史和索引都存在它旁边的 `data` 文件夹里，整个文件夹可以拷到 U 盘或别的电脑；第一次启动时，这台电脑上原来的设置和数据（`%APPDATA%\Luma`、`%LOCALAPPDATA%\Luma`）会复制过来，原处的不动。升级时把新版解压到同一个位置覆盖，`data` 留着。删掉 `data` 文件夹（先退出 Luma），就和安装版一样存在原来的地方。
 
 系统要求：Windows 10 或 11，64 位。
 
 ### 管理员权限
 
-- **平时不用**：Win顺 以普通权限运行。安装版带一个很小的“Win顺 索引服务”，由它读 NTFS 主文件表（MFT）和 USN 变更日志，所以照样几秒建好索引、实时跟上改动。安装时要管理员同意一次，之后登录和打开都不弹 UAC。
+- **平时不用**：Luma 以普通权限运行。安装版带一个很小的“Luma 索引服务”，由它读 NTFS 主文件表（MFT）和 USN 变更日志，所以照样几秒建好索引、实时跟上改动。安装时要管理员同意一次，之后登录和打开都不弹 UAC。
 - **能看到哪些文件**：和 Everything 一样，索引里有整块盘的文件名，包括这台电脑上其他用户的；没有权限的文件照样打不开。
 - **便携版**：默认一个个文件夹走一遍来建索引，第一次慢一些，之后实时跟上改动。在设置 → 索引方式里可以装上索引服务，或以管理员身份重新启动。
 - **管理员直读**：管理员账户可以在设置 → 索引方式里选“管理员直读”，像旧版一样整个程序以管理员身份运行、直接读盘。
-- **以管理员身份运行的程序**：Windows 不让普通权限的程序往它们里面打字。往这样的窗口里粘贴时，Win顺 只复制，提示你按 `Ctrl+V`；对话框旁的搜索框也不出现在这些程序上。
-- **打开的东西是普通权限**：从 Win顺 打开的文件和应用都以普通权限运行，只有 `Ctrl+Shift+Enter` 才以管理员身份运行。
+- **以管理员身份运行的程序**：Windows 不让普通权限的程序往它们里面打字。往这样的窗口里粘贴时，Luma 只复制，提示你按 `Ctrl+V`；对话框旁的搜索框也不出现在这些程序上。
+- **打开的东西是普通权限**：从 Luma 打开的文件和应用都以普通权限运行，只有 `Ctrl+Shift+Enter` 才以管理员身份运行。
 
 ### 常见问题
 
 **和 Everything、Listary 有什么区别？**
-Win顺 自己建索引，不用装 Everything。文件名、拼音、应用和文件内容在一个框里搜，针对中文做了优化。对话框里有和 Listary 一样的 `Ctrl+G` 和搜索框，但不嵌进资源管理器窗口。
+Luma 自己建索引，不用装 Everything。文件名、拼音、应用和文件内容在一个框里搜，针对中文做了优化。对话框里有和 Listary 一样的 `Ctrl+G` 和搜索框，但不嵌进资源管理器窗口。
 
 **双击 Ctrl 和别的软件冲突？**
-Listary、PowerToys 的“查找鼠标”默认也用双击 Ctrl，关掉其中一边就行。也可以在 Win顺 里改用别的组合键。游戏全屏、藏起鼠标时，Win顺 默认不响应双击 Ctrl。
+Listary、PowerToys 的“查找鼠标”默认也用双击 Ctrl，关掉其中一边就行。也可以在 Luma 里改用别的组合键。游戏全屏、藏起鼠标时，Luma 默认不响应双击 Ctrl。
 
-**AutoHotkey 改的键在 Win顺 里不起作用？**
-选了“管理员直读”时，Win顺 以管理员身份运行，Windows 不让普通权限的程序拦截发给它的按键。换回别的索引方式，或用 AutoHotkey 的 UI Access 模式、以管理员身份运行脚本。
+**AutoHotkey 改的键在 Luma 里不起作用？**
+选了“管理员直读”时，Luma 以管理员身份运行，Windows 不让普通权限的程序拦截发给它的按键。换回别的索引方式，或用 AutoHotkey 的 UI Access 模式、以管理员身份运行脚本。
 
 **占多少内存？索引能不放 C 盘吗？**
 - **内存**：每 100 万个文件约 30 MB，用着的时候整个程序一般 120～140 MB；不用它一分钟后，任务管理器里降到十几 MB。
 - **索引位置**：在设置 → 高级 → 索引位置里，可以移到其他内置硬盘。
 
 **收费吗？会上传数据吗？**
-完全免费，MIT 开源。只在这些时候联网：到 GitHub 检查新版本（可以关掉）；第一次显示某个网页搜索或书签时取一次那个网站的图标；你自己打开“按意思找”插件并选了云服务时，把文档的文字发给你选的服务商。索引和历史只存在本机（`%LOCALAPPDATA%\WinShun`）。
+完全免费，MIT 开源。只在这些时候联网：到 GitHub 检查新版本（可以关掉）；第一次显示某个网页搜索或书签时取一次那个网站的图标；你自己打开“按意思找”插件并选了云服务时，把文档的文字发给你选的服务商。索引和历史只存在本机（`%LOCALAPPDATA%\Luma`）。
 
 ### 反馈
 
-遇到问题或有建议，欢迎在 [Issues](https://github.com/LingCore/WinShun/issues) 里提出。
+遇到问题或有建议，欢迎在 [Issues](https://github.com/buyuuz/Luma/issues) 里提出。
 
 ### 从源码编译
 
@@ -232,7 +234,7 @@ Listary、PowerToys 的“查找鼠标”默认也用双击 Ctrl，关掉其中�
 ```powershell
 ./scripts/build.ps1                                # 编译 + 运行单元测试
 ./scripts/build.ps1 -QtDir C:\Qt\6.12.0\msvc2022_64 # 指定 Qt（默认用 QTDIR 或 C:\Qt 下最新的版本）
-./scripts/build.ps1 -Deploy                        # 生成可分发的文件夹 dist\WinShun
+./scripts/build.ps1 -Deploy                        # 生成可分发的文件夹 dist\Luma
 ./scripts/release.ps1                              # 打包安装程序和 SHA256SUMS.txt（需要 Inno Setup 6.5+）；加 -Publish 发布到 GitHub
 ```
 
@@ -244,7 +246,7 @@ Listary、PowerToys 的“查找鼠标”默认也用双击 Ctrl，关掉其中�
 
 ## English
 
-**WinShun** (Win顺, "Windows made smooth") is a free, open-source search launcher for Windows. Press Ctrl twice and a search bar pops up, with results as you type:
+**Luma** (Luma, "Windows made smooth") is a free, open-source search launcher for Windows. Press Ctrl twice and a search bar pops up, with results as you type:
 
 - find files and folders by name or by pinyin;
 - search the text inside Word, Excel and PDF files;
@@ -287,7 +289,7 @@ It reads the NTFS master file table (MFT) directly, indexing three million files
 - 🗂️ **In File Explorer: a double click, a right-click**
   - **Folder menu**: double-click the blank space of a File Explorer folder or of the desktop: favorite, recent and open folders; pick one and the same window goes there (the desktop opens a new one), like Listary. Also: search this folder, add it to the favorites.
   - It never takes the focus: arrows, Enter, Esc and first letters work; a click elsewhere or another double click closes it. It stays out of the way while Listary runs.
-  - **“Search here with WinShun”** on the right-click menu of folders, a folder's blank space and drives (under “Show more options” on Windows 11): the search window opens with that folder typed. It can be turned off.
+  - **“Search here with Luma”** on the right-click menu of folders, a folder's blank space and drives (under “Show more options” on Windows 11): the search window opens with that folder typed. It can be turned off.
 - 📋 **Clipboard history (replaces Win+V)**
   - **What**: text, pictures and files, opened with `Win+V` or your own shortcut, by the text cursor, without taking the focus.
   - **Search**: pinyin, `@app` filters, and **words in copied pictures** (PaddleOCR text recognition, on your PC and offline, good with numbers and small print in screenshots).
@@ -295,15 +297,15 @@ It reads the NTFS master file table (MFT) directly, indexing three million files
   - **Drag pictures out**: hold a picture and drop it on a folder to save it as a PNG file.
   - **Organize**: pins, groups, multi-paste in order, and `Alt+1`…`Alt+9`; pinned items can come first, and the order is yours to drag or move with `Ctrl+↑`/`↓`.
   - **Privacy**: passwords from password managers are not kept, and the history stays on your PC.
-- 🔎 **Taskbar search box (replaces Windows search)**: WinShun's own search box on the Windows 11 taskbar (a pinned button on Windows 10), optionally right of Start where Windows' own box sits; it can take over `Win+S` and typing in the Start menu.
+- 🔎 **Taskbar search box (replaces Windows search)**: Luma's own search box on the Windows 11 taskbar (a pinned button on Windows 10), optionally right of Start where Windows' own box sits; it can take over `Win+S` and typing in the Start menu.
 - 🤖 **AI assistants (MCP)**
-  - **What**: WinShun is an MCP server. Claude Desktop, Claude Code, Cursor and VS Code connect in one click and search file names, file contents and recent changes.
+  - **What**: Luma is an MCP server. Claude Desktop, Claude Code, Cursor and VS Code connect in one click and search file names, file contents and recent changes.
   - **Safety**: read-only by default, limited to what the AI client may see, with folders kept from AI and a call log.
 - 🎨 **Looks and settings**
   - **Looks**: light and dark themes following Windows, Windows 11 Mica and rounded corners, sharp icons at any scaling; compact, standard or roomy sizes, and a monochrome tray and taskbar icon if you like.
   - **Settings**: searchable (`Ctrl+F`).
   - **Backup**: choose a folder under Settings → Advanced (a synced folder makes it a cloud backup); settings, favorites, dialog pins, your own web icons and plugins are backed up as they change, the last 10 kept, ready to restore.
-  - **Updates**: announced in the tray; WinShun never replaces its own files.
+  - **Updates**: announced in the tray; Luma never replaces its own files.
 
 | Key | Action |
 |---|---|
@@ -319,44 +321,44 @@ It reads the NTFS master file table (MFT) directly, indexing three million files
 
 ### Download and install
 
-1. Download `WinShun-<version>-x64-setup.exe` from the [Releases page](https://github.com/LingCore/WinShun/releases/latest) and run it. If Windows says “Windows protected your PC”, click **More info → Run anyway**: the app is not code-signed yet.
-2. When the WinShun icon appears in the notification area, it is running; the first index takes a few seconds. Press Ctrl twice and type.
+1. Download `Luma-<version>-x64-setup.exe` from the [Releases page](https://github.com/buyuuz/Luma/releases/latest) and run it. If Windows says “Windows protected your PC”, click **More info → Run anyway**: the app is not code-signed yet.
+2. When the Luma icon appears in the notification area, it is running; the first index takes a few seconds. Press Ctrl twice and type.
 3. To upgrade, run a newer installer: your settings and index are kept. Uninstall from Windows Settings → Apps.
 
-To skip the installer, download `WinShun-<version>-x64-portable.zip`, unzip it anywhere and run `WinShun.exe` in it. Settings, history, clipboard and index are kept in the `data` folder beside it, so the whole folder can go on a USB stick or another PC; on the first start, what this PC already has (`%APPDATA%\WinShun`, `%LOCALAPPDATA%\WinShun`) is copied in, the originals left in place. To upgrade, unzip the newer one over it and keep `data`. Without the `data` folder (quit WinShun first), it keeps them where the installed copy does.
+To skip the installer, download `Luma-<version>-x64-portable.zip`, unzip it anywhere and run `Luma.exe` in it. Settings, history, clipboard and index are kept in the `data` folder beside it, so the whole folder can go on a USB stick or another PC; on the first start, what this PC already has (`%APPDATA%\Luma`, `%LOCALAPPDATA%\Luma`) is copied in, the originals left in place. To upgrade, unzip the newer one over it and keep `data`. Without the `data` folder (quit Luma first), it keeps them where the installed copy does.
 
 Requires Windows 10 or 11, 64-bit.
 
 ### Administrator rights
 
-- **Not needed day to day**: WinShun runs with your normal rights. The installed version comes with a small “WinShun Index Service” that reads the NTFS master file table (MFT) and change journal (USN) for it, so millions of files are still indexed in seconds and changes followed live. An administrator approves the install once; after that there is no UAC prompt at login or when you open it.
+- **Not needed day to day**: Luma runs with your normal rights. The installed version comes with a small “Luma Index Service” that reads the NTFS master file table (MFT) and change journal (USN) for it, so millions of files are still indexed in seconds and changes followed live. An administrator approves the install once; after that there is no UAC prompt at login or when you open it.
 - **Which files you see**: as with Everything, the index holds the file names of whole drives, other users' on this PC included; files you have no rights to still won't open.
 - **Portable version**: by default it walks the folders one by one, so the first index is slower; changes are followed live after that. Settings → Index access can install the index service or restart it as administrator.
 - **Direct as administrator**: on an administrator account, Settings → Index access → “Direct (administrator)” runs the whole app as administrator and reads the drives itself, as earlier versions did.
-- **Programs running as administrator**: Windows doesn't let normal-rights programs type into them. Pasting into such a window only copies, and WinShun tells you to press `Ctrl+V`; the search bar beside file dialogs doesn't appear on them either.
-- **What you open is not elevated**: files and apps you open from WinShun run with your normal rights; only `Ctrl+Shift+Enter` runs one as administrator.
+- **Programs running as administrator**: Windows doesn't let normal-rights programs type into them. Pasting into such a window only copies, and Luma tells you to press `Ctrl+V`; the search bar beside file dialogs doesn't appear on them either.
+- **What you open is not elevated**: files and apps you open from Luma run with your normal rights; only `Ctrl+Shift+Enter` runs one as administrator.
 
 ### FAQ
 
 **How is it different from Everything or Listary?**
-WinShun builds its own index, so Everything is not needed. File names, pinyin, apps and file contents are searched from one box, tuned for Chinese. File dialogs get Listary's `Ctrl+G` and a search bar, but WinShun does not embed itself in Explorer windows.
+Luma builds its own index, so Everything is not needed. File names, pinyin, apps and file contents are searched from one box, tuned for Chinese. File dialogs get Listary's `Ctrl+G` and a search bar, but Luma does not embed itself in Explorer windows.
 
 **Ctrl twice clashes with another program?**
-Listary and PowerToys' Find My Mouse use it too: turn it off on one side, or give WinShun another shortcut. Full-screen games and games that hide the mouse are ignored by default.
+Listary and PowerToys' Find My Mouse use it too: turn it off on one side, or give Luma another shortcut. Full-screen games and games that hide the mouse are ignored by default.
 
-**AutoHotkey remaps don't work in WinShun?**
-With “Direct (administrator)” chosen, WinShun runs as administrator, and Windows keeps normal-rights programs from intercepting keys sent to it. Pick another index access, or run the script with UI Access or as administrator.
+**AutoHotkey remaps don't work in Luma?**
+With “Direct (administrator)” chosen, Luma runs as administrator, and Windows keeps normal-rights programs from intercepting keys sent to it. Pick another index access, or run the script with UI Access or as administrator.
 
 **Memory? Index location?**
 - **Memory**: about 30 MB of index per million files; the whole app is usually 120–140 MB while in use, and drops to about 15 MB in Task Manager a minute after you stop using it.
 - **Index location**: the index can move to another built-in drive under Settings → Advanced.
 
 **Is it free? Does it collect data?**
-Free and MIT-licensed. It goes online only to check GitHub for new versions (you can turn that off), to fetch a web shortcut's or bookmark's site icon once, and, if you turn on the “Search by meaning” plugin with a cloud service, to send document text to the service you chose. The index and history stay on your PC (`%LOCALAPPDATA%\WinShun`).
+Free and MIT-licensed. It goes online only to check GitHub for new versions (you can turn that off), to fetch a web shortcut's or bookmark's site icon once, and, if you turn on the “Search by meaning” plugin with a cloud service, to send document text to the service you chose. The index and history stay on your PC (`%LOCALAPPDATA%\Luma`).
 
 ### Feedback
 
-Bug reports and suggestions are welcome in [Issues](https://github.com/LingCore/WinShun/issues).
+Bug reports and suggestions are welcome in [Issues](https://github.com/buyuuz/Luma/issues).
 
 ### Build from source
 
@@ -365,7 +367,7 @@ Needs Visual Studio 2022 (Desktop development with C++), Qt 6.8 or later (6.12 r
 ```powershell
 ./scripts/build.ps1                                # build and run the unit tests
 ./scripts/build.ps1 -QtDir C:\Qt\6.12.0\msvc2022_64 # pick a Qt kit (default: QTDIR or the newest under C:\Qt)
-./scripts/build.ps1 -Deploy                        # make the distributable folder dist\WinShun
+./scripts/build.ps1 -Deploy                        # make the distributable folder dist\Luma
 ./scripts/release.ps1                              # package the installer and SHA256SUMS.txt (needs Inno Setup 6.5+); -Publish makes the GitHub release
 ```
 
@@ -377,13 +379,13 @@ Architecture, design notes and benchmarks (in Chinese) are in [docs/architecture
 
 本项目积极参与并认可 [LINUX DO 社区](https://linux.do)。
 
-WinShun is proud to be part of the [LINUX DO community](https://linux.do).
+Luma is proud to be part of the [LINUX DO community](https://linux.do).
 
 ## 许可证 · License
 
-Win顺 以 [MIT 许可证](LICENSE) 发布。Copyright © 2026 LingCore.
+Luma 以 [MIT 许可证](LICENSE) 发布。Copyright © 2026 LingCore.
 
-WinShun is released under the [MIT License](LICENSE). Copyright © 2026 LingCore.
+Luma is released under the [MIT License](LICENSE). Copyright © 2026 LingCore.
 
 随附的第三方内容按各自的许可使用，不在 MIT 许可范围内 · Bundled third-party content keeps its own license:
 

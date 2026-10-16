@@ -542,7 +542,7 @@ bool ShareIndexer::pass(std::stop_token stop, Share& share, bool building)
             problem = share::Problem::Smb1Only;
             error = ERROR_SMB1_NOT_AVAILABLE;
         }
-        qWarning("WinShun: cannot read %ls (error %lu)", path.c_str(), error);
+        qWarning("Luma: cannot read %ls (error %lu)", path.c_str(), error);
         setStatus(share, [&](Status& s) {
             s.state = State::Problem;
             s.problem = problem;
@@ -580,7 +580,7 @@ bool ShareIndexer::pass(std::stop_token stop, Share& share, bool building)
         }
     }
     if (!accept) {
-        qWarning("WinShun: %ls has %zu of %zu items no more: not believed yet", path.c_str(), missing, live);
+        qWarning("Luma: %ls has %zu of %zu items no more: not believed yet", path.c_str(), missing, live);
         setStatus(share, [&](Status& s) {
             s.state = State::Suspect;
             s.problem = share::Problem::None;

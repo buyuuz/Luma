@@ -81,7 +81,7 @@ WebShortcuts defaultWebShortcuts()
         {u"taobao"_s, u"淘宝"_s, u"https://s.taobao.com/search?q=%s"_s, u"https://www.taobao.com/"_s},
         {u"jingdong"_s, u"京东"_s, u"https://search.jd.com/Search?keyword=%s&enc=utf-8"_s, u"https://www.jd.com/"_s},
         {u"fanyi"_s, u"百度翻译"_s, u"https://fanyi.baidu.com/mtpe-individual/multimodal?query=%s"_s, u"https://fanyi.baidu.com/"_s},
-        {u"winshun"_s, u"WinShun"_s, u"https://github.com/LingCore/WinShun"_s, {}},
+        {u"winshun"_s, u"Luma"_s, u"https://github.com/buyuuz/Luma"_s, {}},
     };
 }
 

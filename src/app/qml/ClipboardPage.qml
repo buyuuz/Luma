@@ -9,7 +9,7 @@ import WinShun
 // of the search), and again the next time if left open. A row's paste
 // button or a double click pastes it into the program that was in front,
 // as Enter does; Shift+Enter as plain text, Alt+1…9 the first nine rows, Ctrl/Shift pick
-// several, Tab switches categories. Opened from a field of Win顺's own (a
+// several, Tab switches categories. Opened from a field of Luma's own (a
 // search box, which it drops down under), it pastes into that field, and Esc
 // goes back to it (Clipboard). Over another program that keeps the focus,
 // the keys come from App (KeyRouter) to the item with the focus here, as the
@@ -27,7 +27,7 @@ Item {
 
     readonly property int rowHeight: Theme.rowHeight // what the window's height is counted in
     readonly property int pictureRowHeight: 80 // a picture's row: its thumbnail larger (ClipRow)
-    // Opened from a field of Win顺's own: Enter pastes there, Esc goes back.
+    // Opened from a field of Luma's own: Enter pastes there, Esc goes back.
     readonly property bool intoField: clipboard.fieldName.length > 0
     readonly property string pasteLabel: intoField ? qsTr("粘贴到%1").arg(clipboard.fieldName) : qsTr("粘贴")
     // Everything but the rows.
@@ -409,7 +409,7 @@ Item {
             }
 
             // Pinned: stays up, on top, through pastes and clicks elsewhere
-            // (Clipboard.pinned). Not while pasting into a field of Win顺's.
+            // (Clipboard.pinned). Not while pasting into a field of Luma's.
             RowAction {
                 id: pinButton
                 visible: !page.intoField

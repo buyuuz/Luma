@@ -40,7 +40,7 @@ const char* kindName(Match::Kind kind)
     return "keyword";
 }
 
-// Which permission a tool of Win顺's needs (the plugin design, §6.3).
+// Which permission a tool of Luma's needs (the plugin design, §6.3).
 std::optional<Permission> permissionFor(const QString& tool)
 {
     if (tool == u"search_files" || tool == u"search_content" || tool == u"recent_files" || tool == u"list_folder"
@@ -834,7 +834,7 @@ void Host::onStarted(std::uint64_t instance, quint32 pid)
         }
         const QString version = response.result.toObject().value(u"protocolVersion"_s).toString();
         if (!version.isEmpty() && version != QLatin1StringView(kProtocolVersion))
-            log(u"%1: 插件说的协议版本是 %2，Win顺 的是 %3"_s.arg(id, version, QLatin1StringView(kProtocolVersion)));
+            log(u"%1: 插件说的协议版本是 %2，Luma 的是 %3"_s.arg(id, version, QLatin1StringView(kProtocolVersion)));
         q.phase = Plugin::Phase::Ready;
         q.error.clear();
         touch(q);
@@ -1084,7 +1084,7 @@ void Host::onToolCall(const QString& id, const QJsonValue& requestId, const QStr
     const Entry* e = entry(id);
     const std::optional<Permission> needed = permissionFor(tool);
     if (!m_bridge.call || !m_bridge.known) {
-        p.session->respondError(requestId, jsonrpc::kUnavailable, u"Win顺's tools are not available here"_s);
+        p.session->respondError(requestId, jsonrpc::kUnavailable, u"Luma's tools are not available here"_s);
         return;
     }
     switch (m_bridge.known(tool)) {
@@ -1092,7 +1092,7 @@ void Host::onToolCall(const QString& id, const QJsonValue& requestId, const QStr
         p.session->respondError(requestId, jsonrpc::kInvalidParams, u"Unknown tool: "_s + tool);
         return;
     case mcp::ToolHost::Known::Off:
-        p.session->respondError(requestId, jsonrpc::kUnavailable, u"The tool '%1' is turned off in Win顺's settings"_s.arg(tool));
+        p.session->respondError(requestId, jsonrpc::kUnavailable, u"The tool '%1' is turned off in Luma's settings"_s.arg(tool));
         return;
     case mcp::ToolHost::Known::Yes:
         break;
@@ -1518,7 +1518,7 @@ void Host::shutdown(bool grace)
         p->runs.clear();
     }
     m_owners.clear();
-    failCommandCalls({}, u"Win顺 正在退出"_s);
+    failCommandCalls({}, u"Luma 正在退出"_s);
 }
 
 Host::State Host::state(const QString& id) const

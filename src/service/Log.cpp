@@ -19,7 +19,7 @@ std::wstring folder()
 {
     wchar_t data[MAX_PATH] {};
     const DWORD n = ::GetEnvironmentVariableW(L"ProgramData", data, MAX_PATH);
-    return (n > 0 && n < MAX_PATH ? std::wstring(data, n) : std::wstring(L"C:\\ProgramData")) + L"\\WinShun";
+    return (n > 0 && n < MAX_PATH ? std::wstring(data, n) : std::wstring(L"C:\\ProgramData")) + L"\\Luma";
 }
 
 std::string utf8(const std::wstring& s)
@@ -84,7 +84,7 @@ void write(const wchar_t* format, ...)
 
 void toEventLog(const std::wstring& message)
 {
-    const HANDLE source = ::RegisterEventSourceW(nullptr, L"WinShun");
+    const HANDLE source = ::RegisterEventSourceW(nullptr, L"Luma");
     if (!source)
         return;
     const wchar_t* strings[] {message.c_str()};

@@ -1,8 +1,8 @@
 #pragma code_page(65001)
 #include <winver.h>
 
-// WinShunService.exe (src/service): the index service, which reads the NTFS
-// volumes' master file tables and change journals for a Win顺 that runs
+// LumaService.exe (src/service): the index service, which reads the NTFS
+// volumes' master file tables and change journals for a Luma that runs
 // with the user's normal rights.
 IDI_ICON1 ICON "app.ico"
 
@@ -19,12 +19,12 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "CompanyName", "WinShun"
-            VALUE "FileDescription", "Win顺 索引服务 · WinShun Index Service"
+            VALUE "CompanyName", "Luma"
+            VALUE "FileDescription", "Luma 索引服务 · Luma Index Service"
             VALUE "FileVersion", WINSHUN_VERSION
-            VALUE "InternalName", "WinShunService"
-            VALUE "OriginalFilename", "WinShunService.exe"
-            VALUE "ProductName", "Win顺 · WinShun"
+            VALUE "InternalName", "LumaService"
+            VALUE "OriginalFilename", "LumaService.exe"
+            VALUE "ProductName", "Luma · Luma"
             VALUE "ProductVersion", WINSHUN_VERSION
         END
     END

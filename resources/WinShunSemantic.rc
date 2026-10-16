@@ -1,8 +1,8 @@
 #pragma code_page(65001)
 #include <winver.h>
 
-// WinShunSemantic.exe (src/semantic-plugin): the winshun.semantic plugin that comes
-// with Win顺 -- find files by what they are about (按意思找).
+// LumaSemantic.exe (src/semantic-plugin): the winshun.semantic plugin that comes
+// with Luma -- find files by what they are about (按意思找).
 IDI_ICON1 ICON "app.ico"
 
 VS_VERSION_INFO VERSIONINFO
@@ -18,12 +18,12 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "CompanyName", "WinShun"
-            VALUE "FileDescription", "Win顺 按意思找插件 · WinShun semantic search plugin"
+            VALUE "CompanyName", "Luma"
+            VALUE "FileDescription", "Luma 按意思找插件 · Luma semantic search plugin"
             VALUE "FileVersion", WINSHUN_VERSION
-            VALUE "InternalName", "WinShunSemantic"
-            VALUE "OriginalFilename", "WinShunSemantic.exe"
-            VALUE "ProductName", "Win顺 · WinShun"
+            VALUE "InternalName", "LumaSemantic"
+            VALUE "OriginalFilename", "LumaSemantic.exe"
+            VALUE "ProductName", "Luma · Luma"
             VALUE "ProductVersion", WINSHUN_VERSION
         END
     END

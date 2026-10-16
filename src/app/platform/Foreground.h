@@ -11,7 +11,7 @@ namespace ws::foreground {
 // The program file of the window, "notepad.exe"; empty when it cannot be told.
 QString programOf(HWND hwnd);
 
-// About the window in front right now (see GameGuard). Nothing for Win顺's
+// About the window in front right now (see GameGuard). Nothing for Luma's
 // own windows and the desktop.
 ForegroundFacts facts();
 

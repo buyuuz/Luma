@@ -9,7 +9,7 @@
 
 namespace ws {
 
-// Hands Win顺's memory back to Windows while nobody uses it. Unused, the app
+// Hands Luma's memory back to Windows while nobody uses it. Unused, the app
 // touches ~5 MB, yet everything it ever touched (the file index, the windows'
 // graphics) stays in its working set: Windows trims a process only when memory
 // runs short, so Task Manager shows ~230 MB. A while after the last window
@@ -33,7 +33,7 @@ public:
 
 private:
     void check();
-    static bool inUse(); // a window of Win顺's has the focus
+    static bool inUse(); // a window of Luma's has the focus
     void startAfter(int ms);
 
     std::function<const char*()> m_busy;

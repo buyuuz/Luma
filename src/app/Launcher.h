@@ -96,7 +96,7 @@ class Launcher : public QObject {
     // Bits 1 << n of the digits n left to another program's global hotkey
     // (numberkeys::heldMask): their rows show the chord struck through.
     Q_PROPERTY(int numberKeysLeft READ numberKeysLeft NOTIFY resultOptionsChanged FINAL)
-    // Opened over Win顺's search box on the taskbar (taskbar::SearchBox):
+    // Opened over Luma's search box on the taskbar (taskbar::SearchBox):
     // what is typed shows there, its own field is out of sight (SearchBar.qml
     // reports the field, the app draws it in the box).
     Q_PROPERTY(bool inTaskbarBox READ inTaskbarBox NOTIFY inTaskbarBoxChanged FINAL)

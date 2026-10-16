@@ -4,7 +4,7 @@
 
 class QQuickItem;
 
-// Win顺's text fields (QML TextInput, or anything that takes text the way an
+// Luma's text fields (QML TextInput, or anything that takes text the way an
 // input method types it): what goes into them, and how.
 namespace ws::textfield {
 

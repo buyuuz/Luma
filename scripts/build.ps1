@@ -1,19 +1,19 @@
 <#
 .SYNOPSIS
-    Configure, build, test and (optionally) package WinShun.
+    Configure, build, test and (optionally) package Luma.
 
 .EXAMPLE
     ./scripts/build.ps1                      # Release build + tests
     ./scripts/build.ps1 -Config Debug
-    ./scripts/build.ps1 -Deploy              # also produce dist/WinShun with all Qt DLLs
-    ./scripts/build.ps1 -DeployDir F:\wsstage\WinShun   # the same, into that folder (dist\WinShun untouched)
+    ./scripts/build.ps1 -Deploy              # also produce dist/Luma with all Qt DLLs
+    ./scripts/build.ps1 -DeployDir F:\wsstage\Luma   # the same, into that folder (dist\Luma untouched)
     ./scripts/build.ps1 -QtDir C:\Qt\6.12.0\msvc2022_64
 #>
 param(
     [ValidateSet('Debug', 'Release')] [string] $Config = 'Release',
     [string] $QtDir = $env:QTDIR,
     [switch] $Deploy,
-    # Where to deploy (implies -Deploy); default dist\WinShun. For a staged
+    # Where to deploy (implies -Deploy); default dist\Luma. For a staged
     # copy to compare with, or test from, while the deployed one is running.
     [string] $DeployDir,
     [switch] $SkipTests
@@ -53,6 +53,8 @@ if (-not (Get-Command cl.exe -ErrorAction SilentlyContinue)) {
 $preset = $Config.ToLower()
 Push-Location $root
 try {
+    python "$root\tools\make_icon.py"
+    if ($LASTEXITCODE -ne 0) { throw "Luma icon generation failed" }
     cmake --preset $preset
     if ($LASTEXITCODE) { throw 'configure failed' }
     cmake --build --preset $preset
@@ -62,28 +64,28 @@ try {
         if ($LASTEXITCODE) { throw 'tests failed' }
     }
     if ($Deploy) {
-        $dist = if ($DeployDir) { [IO.Path]::GetFullPath($DeployDir) } else { Join-Path $root 'dist\WinShun' }
+        $dist = if ($DeployDir) { [IO.Path]::GetFullPath($DeployDir) } else { Join-Path $root 'dist\Luma' }
         if (Test-Path $dist) { Remove-Item $dist -Recurse -Force }
         New-Item -ItemType Directory -Force $dist | Out-Null
-        Copy-Item "$root\build\$preset\WinShun.exe" $dist
+        Copy-Item "$root\build\$preset\Luma.exe" $dist
         Copy-Item "$root\build\$preset\fonts" $dist -Recurse # UI font (see main.cpp)
         # The button users pin to the taskbar (src/stub).
-        Copy-Item "$root\build\$preset\WinShunSearch.exe" $dist
-        # The MCP server AI clients start (src/mcp); it relays to WinShun over a pipe.
-        Copy-Item "$root\build\$preset\WinShunMcp.exe" $dist
-        # Plugin processes are started by WinShunPluginHost.exe (src/plugin/runner), with the user's normal rights.
-        Copy-Item "$root\build\$preset\WinShunPluginHost.exe" $dist
-        # The index service (src/service): reads the MFT and change journals for a Win顺 with normal rights.
-        Copy-Item "$root\build\$preset\WinShunService.exe" $dist
-        # The plugins that come with Win顺 (plugins\, staged by the build with
-        # their SDK files and WinShunTools.exe): installed off by default.
+        Copy-Item "$root\build\$preset\LumaSearch.exe" $dist
+        # The MCP server AI clients start (src/mcp); it relays to Luma over a pipe.
+        Copy-Item "$root\build\$preset\LumaMcp.exe" $dist
+        # Plugin processes are started by LumaPluginHost.exe (src/plugin/runner), with the user's normal rights.
+        Copy-Item "$root\build\$preset\LumaPluginHost.exe" $dist
+        # The index service (src/service): reads the MFT and change journals for a Luma with normal rights.
+        Copy-Item "$root\build\$preset\LumaService.exe" $dist
+        # The plugins that come with Luma (plugins\, staged by the build with
+        # their SDK files and LumaTools.exe): installed off by default.
         Copy-Item "$root\build\$preset\plugins" "$dist\plugins" -Recurse
-        # Documents are read by WinShunExtract.exe (src/extract), PDFs with
+        # Documents are read by LumaExtract.exe (src/extract), PDFs with
         # PDFium; their licenses go along.
-        Copy-Item "$root\build\$preset\WinShunExtract.exe", "$root\build\$preset\pdfium.dll" $dist
-        # The room right of Start (src/tap): WinShun copies it to ProgramData
+        Copy-Item "$root\build\$preset\LumaExtract.exe", "$root\build\$preset\pdfium.dll" $dist
+        # The room right of Start (src/tap): Luma copies it to ProgramData
         # and Explorer loads it from there, never from the install folder.
-        Copy-Item "$root\build\$preset\WinShunTap.dll" $dist
+        Copy-Item "$root\build\$preset\LumaTap.dll" $dist
         $pdfium = Get-ChildItem "$root\build\$preset\_deps" -Directory -Filter 'pdfium-*' | Sort-Object Name | Select-Object -Last 1
         New-Item -ItemType Directory -Force "$dist\licenses\pdfium" | Out-Null
         Copy-Item "$($pdfium.FullName)\LICENSE" "$dist\licenses\pdfium\LICENSE.txt"
@@ -105,7 +107,7 @@ try {
             --no-system-dxc-compiler --no-opengl-sw --no-compiler-runtime `
             --skip-plugin-types qmltooling,generic,networkinformation,tls,iconengines,imageformats `
             --exclude-plugins qsqlibase,qsqlmimer,qsqloci,qsqlodbc,qsqlpsql `
-            "--$preset" "$dist\WinShun.exe"
+            "--$preset" "$dist\Luma.exe"
         if ($LASTEXITCODE) { throw 'windeployqt failed' }
         # App-local C++ runtime, so users need no VC++ redistributable installed
         # (msvcp140_1: onnxruntime.dll).

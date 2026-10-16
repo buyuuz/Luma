@@ -1,6 +1,6 @@
 #pragma once
 
-// Win顺's end of the runner (WinShunPluginHost.exe, src/plugin/runner):
+// Luma's end of the runner (WinShunPluginHost.exe, src/plugin/runner):
 // starts it once with the user's normal rights, serves the pipe it
 // connects to, and multiplexes plugin processes over it by instance
 // number. Everything here runs on the thread that owns the object (the

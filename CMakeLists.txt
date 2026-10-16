@@ -63,8 +63,8 @@ add_custom_target(bundled_plugins ALL
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/src/plugins-sdk/WinShun.psm1" "${bundled_plugins_dir}/winshun.kill/WinShun.psm1"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/src/plugins-sdk/winshun.py" "${bundled_plugins_dir}/winshun.bookmarks/winshun.py"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/src/plugins-sdk/winshun.py" "${bundled_plugins_dir}/winshun.translate/winshun.py"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:WinShunTools>" "${bundled_plugins_dir}/winshun.tools/WinShunTools.exe"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:WinShunSemantic>" "${bundled_plugins_dir}/winshun.semantic/WinShunSemantic.exe"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:WinShunTools>" "${bundled_plugins_dir}/winshun.tools/LumaTools.exe"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:WinShunSemantic>" "${bundled_plugins_dir}/winshun.semantic/LumaSemantic.exe"
     DEPENDS WinShunTools WinShunSemantic
     COMMENT "Staging the bundled plugins into ${bundled_plugins_dir}"
     VERBATIM)

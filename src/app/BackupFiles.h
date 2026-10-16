@@ -6,8 +6,8 @@
 #include <QString>
 
 // What a backup of the settings holds and how it is written (GitHub #17):
-// one zip a backup, "WinShun-2026-10-13-194700.zip", in a folder the user
-// chose. Inside, "WinShun.ini" (the settings), "data/…" (files of the data
+// one zip a backup, "Luma-2026-10-13-194700.zip", in a folder the user
+// chose. Inside, "Luma.ini" (the settings), "data/…" (files of the data
 // folder, below) and "backup.json" (when, which version, a hash of the rest).
 // Qt Core and miniz only: the backup service (Backup.h) and the tests use it.
 namespace ws::backupfiles {
@@ -16,7 +16,7 @@ inline constexpr int kKept = 10; // backups kept in the folder; older ones go
 inline constexpr qint64 kMaxFileBytes = 16 << 20; // a plugin's data file larger than this is left out
 
 struct File {
-    QString name; // in the zip: "WinShun.ini", "data/favorites.json"
+    QString name; // in the zip: "Luma.ini", "data/favorites.json"
     QString path; // on disk
     friend bool operator==(const File&, const File&) = default;
 };
@@ -45,7 +45,7 @@ struct Found {
 QList<Found> list(const QString& folder);
 // The hash the backup at `path` was written with; empty when it is no backup of ours.
 QString hashOf(const QString& path);
-// "WinShun-2026-10-13-194700.zip"
+// "Luma-2026-10-13-194700.zip"
 QString fileName(const QDateTime& when);
 
 // Writes `packed` into `folder` as the backup of `when` (through a ".part"
@@ -53,7 +53,7 @@ QString fileName(const QDateTime& when);
 // all but the newest kKept. Empty on success, else why.
 QString write(const QString& folder, const Packed& packed, const QDateTime& when);
 
-// Unpacks the backup at `path` into `folder` (made here): "WinShun.ini"
+// Unpacks the backup at `path` into `folder` (made here): "Luma.ini"
 // and "data\…". Only those names are taken; a path that leaves the folder
 // fails the whole backup. Empty on success, else why.
 QString unpack(const QString& path, const QString& folder);

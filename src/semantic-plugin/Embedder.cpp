@@ -105,7 +105,7 @@ struct Response {
 HINTERNET session()
 {
     // The system's proxy settings (WPAD and the user's), as a browser would.
-    static Handle s(::WinHttpOpen(L"WinShun-Semantic/1.0", WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY, WINHTTP_NO_PROXY_NAME,
+    static Handle s(::WinHttpOpen(L"Luma-Semantic/1.0", WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY, WINHTTP_NO_PROXY_NAME,
         WINHTTP_NO_PROXY_BYPASS, 0));
     return s.h;
 }

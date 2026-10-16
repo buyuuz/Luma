@@ -1,5 +1,5 @@
-// WinShunService.exe: the index service (GitHub #21). Win顺 itself runs with
-// the user's normal rights; this service (LocalSystem, "WinShun") does the
+// WinShunService.exe: the index service (GitHub #21). Luma itself runs with
+// the user's normal rights; this service (LocalSystem, "Luma") does the
 // two things those rights cannot: read the NTFS volumes' master file tables
 // and their change journals. It streams the parsed records over the pipe
 // \\.\pipe\WinShun.Volumes (src/core/VolumeProtocol.h) to any interactive
@@ -12,7 +12,7 @@
 //   WinShunService.exe --uninstall      stops and removes it
 //   WinShunService.exe --console [--pipe NAME] [--no-privileges]
 //                                       the same server in this console (administrator), for
-//                                       tests: Win顺 and tst_service reach it with WINSHUN_PIPE=NAME;
+//                                       tests: Luma and tst_service reach it with WINSHUN_PIPE=NAME;
 //                                       --no-privileges drops every privilege but
 //                                       SeChangeNotifyPrivilege first, as the service runs
 //
@@ -38,10 +38,10 @@ namespace {
 using ws::service::DeviceWatch;
 using ws::service::Server;
 
-constexpr wchar_t kDisplayName[] = L"Win顺 索引服务 (WinShun Index Service)";
+constexpr wchar_t kDisplayName[] = L"Luma 索引服务 (Luma Index Service)";
 constexpr wchar_t kDescription[]
-    = L"Reads the NTFS volumes' master file tables and change journals for Win顺 (WinShun), which runs with normal "
-      L"rights. 为以普通权限运行的 Win顺 读取 NTFS 磁盘的主文件表和变更日志。";
+    = L"Reads the NTFS volumes' master file tables and change journals for Luma (Luma), which runs with normal "
+      L"rights. 为以普通权限运行的 Luma 读取 NTFS 磁盘的主文件表和变更日志。";
 
 SERVICE_STATUS_HANDLE g_statusHandle = nullptr;
 HANDLE g_stopEvent = nullptr;
@@ -122,7 +122,7 @@ void WINAPI serviceMain(DWORD, wchar_t**)
     const DWORD error = serve(ws::volproto::kPipeName, g_stopEvent, g_statusHandle, DEVICE_NOTIFY_SERVICE_HANDLE,
         [] { report(SERVICE_RUNNING); });
     if (error)
-        ws::service::log::toEventLog(L"WinShun index service: cannot listen on \\\\.\\pipe\\WinShun.Volumes (error "
+        ws::service::log::toEventLog(L"Luma index service: cannot listen on \\\\.\\pipe\\Luma.Volumes (error "
             + std::to_wstring(error) + L")");
     report(SERVICE_STOPPED, error);
 }
@@ -171,7 +171,7 @@ int runConsole(const std::wstring& pipeName, bool noPrivileges)
     ::SetConsoleCtrlHandler(onConsoleControl, TRUE);
     return static_cast<int>(serve(pipeName, g_stopEvent, nullptr, 0, [&] {
         // "ready" on stdout: the tests wait for it.
-        std::fwprintf(stdout, L"ready: WinShun index service %hs on \\\\.\\pipe\\%ls; Ctrl+C stops it\n",
+        std::fwprintf(stdout, L"ready: Luma index service %hs on \\\\.\\pipe\\%ls; Ctrl+C stops it\n",
             WINSHUN_VERSION, pipeName.c_str());
         std::fflush(stdout);
     }));
@@ -219,7 +219,7 @@ int install()
         return fail(L"OpenSCManager");
     // LocalSystem: a virtual service account is not an administrator and
     // cannot open the volumes. Automatic start, not delayed: delayed would
-    // come up minutes after the user's Win顺, which would walk the disks
+    // come up minutes after the user's Luma, which would walk the disks
     // meanwhile.
     ScHandle service {::CreateServiceW(manager.value, ws::volproto::kServiceName, kDisplayName, SERVICE_ALL_ACCESS,
         SERVICE_WIN32_OWN_PROCESS, SERVICE_AUTO_START, SERVICE_ERROR_NORMAL, path.c_str(), nullptr, nullptr, nullptr,
@@ -283,7 +283,7 @@ int uninstall()
 int usage()
 {
     std::fwprintf(stderr,
-        L"WinShunService.exe: the index service of Win顺 (WinShun) %hs\n"
+        L"LumaService.exe: the index service of Luma (Luma) %hs\n"
         L"  --install              register and start the service (as administrator)\n"
         L"  --uninstall            stop and remove it\n"
         L"  --console [--pipe NAME] [--no-privileges]\n"

@@ -1,8 +1,8 @@
-// WinShunSemantic.exe: the winshun.semantic plugin that comes with Win顺
+// WinShunSemantic.exe: the winshun.semantic plugin that comes with Luma
 // ("按意思找"): find files by what they are about, not by their words.
 // "? 去年那份报销流程" finds 《费用管理办法.docx》 whose text says 差旅费用申请.
 //
-// It never reads a file itself: Win顺's content index already holds the
+// It never reads a file itself: Luma's content index already holds the
 // text of documents and text files (list_documents, read_file_text; the
 // winshun:content permission), so the disks are not read again. The text
 // goes, in passages, to a model the user chose (Embedder: an OpenAI-
@@ -88,7 +88,7 @@ std::string thousands(std::size_t n)
     return s;
 }
 
-// ---- the wire: lines out, and Win顺's tools from any thread -------------------------
+// ---- the wire: lines out, and Luma's tools from any thread -------------------------
 
 class Wire {
 public:
@@ -99,7 +99,7 @@ public:
         winshun::detail::writeLine(message.dump());
     }
 
-    // One of Win顺's tools; an object with "error" when it failed.
+    // One of Luma's tools; an object with "error" when it failed.
     Json tool(const std::string& name, Json arguments)
     {
         const long long id = m_nextId++;
@@ -137,7 +137,7 @@ public:
     }
 
 private:
-    static Json gone() { return Json::Object {{"error", Json::Object {{"code", -32000}, {"message", "Win顺 went away"}}}}; }
+    static Json gone() { return Json::Object {{"error", Json::Object {{"code", -32000}, {"message", "Luma went away"}}}}; }
 
     std::mutex m_out;
     std::mutex m_mutex;
@@ -147,7 +147,7 @@ private:
     bool m_closed = false;
 };
 
-// What came from Win顺 for the main thread: requests and notifications.
+// What came from Luma for the main thread: requests and notifications.
 class Inbox {
 public:
     void push(Json message)
@@ -349,7 +349,7 @@ private:
             break;
         case Phase::NoContentIndex:
             items.push_back(Item("status", zh("要先打开文件内容搜索", "Turn on file content search first"),
-                zh("按意思找用的是 Win顺 已经读出来的文档文字：设置 → 文件内容搜索", "It uses the text Win顺 already read out of documents: Settings → File content search"))
+                zh("按意思找用的是 Luma 已经读出来的文档文字：设置 → 文件内容搜索", "It uses the text Luma already read out of documents: Settings → File content search"))
                     .withIcon(icon).invalid());
             break;
         case Phase::WaitingForYes: {
@@ -610,7 +610,7 @@ private:
         std::uint32_t stamp;
     };
 
-    // The files to have, from Win顺's content index; nullopt with the phase set when there are none to be had.
+    // The files to have, from Luma's content index; nullopt with the phase set when there are none to be had.
     std::optional<std::vector<Listed>> list(std::uint64_t generation)
     {
         Json::Array folders;

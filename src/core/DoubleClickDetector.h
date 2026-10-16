@@ -27,7 +27,7 @@ public:
     }
 
     // Returns true when the press completes a double click. `window`: the
-    // one under the pointer (an HWND). `menuWasOpen`: Win顺's folder menu was
+    // one under the pointer (an HWND). `menuWasOpen`: Luma's folder menu was
     // up when the press came (see firstClosedMenu()).
     bool leftDown(std::uint32_t timeMs, int x, int y, std::uintptr_t window, bool menuWasOpen) noexcept
     {

@@ -237,15 +237,15 @@ void Favorites::load()
         if (const std::optional<FavoritesFile> read = readFavoritesFile(bytes, &newer)) {
             m_items = read->favorites;
         } else if (newer) {
-            m_readOnly = true; // a newer Win顺's: kept as it is, for when that one runs again
-            qWarning("WinShun: the favorites were saved by a newer WinShun, not changed meanwhile");
+            m_readOnly = true; // a newer Luma's: kept as it is, for when that one runs again
+            qWarning("Luma: the favorites were saved by a newer Luma, not changed meanwhile");
         } else {
             // Kept aside, not overwritten by the next change: its user may want it back.
             const QString bad = m_filePath + u".bad"_s;
             QFile::remove(bad);
             if (!QFile::rename(m_filePath, bad))
                 m_readOnly = true;
-            qWarning("WinShun: the favorites could not be read, kept as %ls", qUtf16Printable(bad));
+            qWarning("Luma: the favorites could not be read, kept as %ls", qUtf16Printable(bad));
         }
     } else if (!QFileInfo::exists(m_filePath) && !m_pinsFile.isEmpty() && QFileInfo::exists(m_pinsFile)) {
         // Once: the dialog box's pinned folders, newest first as it listed them.
@@ -254,7 +254,7 @@ void Favorites::load()
         m_items = favoritesFromPins(pins.items());
         save();
         if (!QFile::rename(m_pinsFile, m_pinsFile + u".migrated"_s))
-            qWarning("WinShun: %ls taken into the favorites but not renamed", qUtf16Printable(m_pinsFile));
+            qWarning("Luma: %ls taken into the favorites but not renamed", qUtf16Printable(m_pinsFile));
     }
     emit changed();
 }
@@ -375,7 +375,7 @@ void Favorites::save()
     QDir().mkpath(QFileInfo(m_filePath).absolutePath());
     QSaveFile file(m_filePath);
     if (!file.open(QIODevice::WriteOnly) || file.write(writeFavoritesFile(m_items)) < 0 || !file.commit())
-        qWarning("WinShun: the favorites could not be saved to %ls", qUtf16Printable(m_filePath));
+        qWarning("Luma: the favorites could not be saved to %ls", qUtf16Printable(m_filePath));
 }
 
 } // namespace ws

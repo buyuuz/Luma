@@ -7,7 +7,7 @@
   "author": "LingCore",
   "homepage": "https://github.com/LingCore/WinShun",
   "license": "MIT",
-  "runtime": {"mode": "resident", "program": "WinShunSemantic.exe", "start": "eager", "sandbox": "strict", "timeoutMs": 10000, "idleExitSec": 0, "memoryMB": 512},
+  "runtime": {"mode": "resident", "program": "LumaSemantic.exe", "start": "eager", "sandbox": "strict", "timeoutMs": 10000, "idleExitSec": 0, "memoryMB": 512},
   "permissions": ["winshun:content", "network"],
   "commands": [{
     "id": "find",

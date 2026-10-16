@@ -64,7 +64,7 @@ QJsonObject serverEntry(const QString& id)
     if (id == u"vscode")
         entry.insert(u"type"_s, u"stdio"_s);
     entry.insert(u"command"_s, relayPath());
-    // --start-winshun: a tool call starts Win顺 (through its autostart task,
+    // --start-winshun: a tool call starts Luma (through its autostart task,
     // no UAC prompt) when it is not running at all.
     entry.insert(u"args"_s, QJsonArray {u"--start-winshun"_s});
     return entry;
@@ -159,7 +159,7 @@ QString quoted(const QString& path)
 
 QString relayPath()
 {
-    const QString path = QCoreApplication::applicationDirPath() + u"/WinShunMcp.exe"_s;
+    const QString path = QCoreApplication::applicationDirPath() + u"/LumaMcp.exe"_s;
     return QFileInfo::exists(path) ? QDir::toNativeSeparators(path) : QString();
 }
 
@@ -215,7 +215,7 @@ QVariantList toVariant(const std::vector<Client>& clients)
 void connect(const QString& id, QObject* context, std::function<void(Result)> done)
 {
     if (relayPath().isEmpty()) {
-        done({false, Tr::tr("没找到 WinShunMcp.exe，重新安装 Win顺 就有了")});
+        done({false, Tr::tr("没找到 LumaMcp.exe，重新安装 Luma 就有了")});
         return;
     }
     if (id == u"claude-desktop") {

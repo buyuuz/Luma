@@ -1,12 +1,12 @@
 #pragma once
 
-// What a viewer may see. Win顺 runs as administrator, but the AI clients
+// What a viewer may see. Luma runs as administrator, but the AI clients
 // connect with the user's normal rights: the tools show only what that
 // viewer could list, read or open itself. Every decision is an AccessCheck
 // of the file's security descriptor against the viewer's token: the pipe
 // client's own (McpServer takes it with ImpersonateNamedPipeClient), or,
 // for a session without one, this process's linked token (the user's
-// unelevated rights) — never Win顺's own elevated token.
+// unelevated rights) — never Luma's own elevated token.
 
 #include <QHash>
 #include <QString>

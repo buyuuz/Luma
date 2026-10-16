@@ -20,3 +20,6 @@ add_library(wstap_api INTERFACE)
 target_include_directories(wstap_api INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 install(TARGETS WinShunTap RUNTIME DESTINATION .)
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShunTap PROPERTIES OUTPUT_NAME "LumaTap")

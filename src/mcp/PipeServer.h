@@ -1,6 +1,6 @@
 #pragma once
 
-// Win顺's end of the pipe (Pipe.h): serves any number of relays at once,
+// Luma's end of the pipe (Pipe.h): serves any number of relays at once,
 // each a connection with an id. Lines in, lines out. The callbacks run on
 // the pipe's own threads: the server hops to its thread (McpServer).
 

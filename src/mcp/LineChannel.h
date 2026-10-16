@@ -1,7 +1,7 @@
 #pragma once
 
 // Lines in, lines out, on one duplex handle opened for overlapped I/O (a
-// named pipe's end): what Win顺's MCP pipe (PipeServer) and the plugin
+// named pipe's end): what Luma's MCP pipe (PipeServer) and the plugin
 // runner's pipe (plugin::Runner) have in common. Reads happen on the thread
 // that calls run(); lines to write are queued from any thread and written
 // by that same thread, so one handle never has two threads' I/O waiting on

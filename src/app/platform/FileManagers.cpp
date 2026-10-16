@@ -252,7 +252,7 @@ QList<pathtext::OpusTab> opusTabs()
     if (rt.empty() || n == 0 || n > MAX_PATH)
         return {};
     static std::atomic<unsigned> asked {0};
-    const std::wstring file = std::wstring(temp, n) + L"WinShun-opus-" + std::to_wstring(::GetCurrentProcessId()) + L'-'
+    const std::wstring file = std::wstring(temp, n) + L"Luma-opus-" + std::to_wstring(::GetCurrentProcessId()) + L'-'
         + std::to_wstring(++asked) + L".xml";
     // It answers in a file, written by the time dopusrt.exe ends (some 50 ms).
     const win32::UniqueHandle process = shell::startUnelevated(rt, L"/info " + quoted(file) + L",paths");

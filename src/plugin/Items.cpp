@@ -56,7 +56,7 @@ IconSpec parseIcon(const QString& text)
             return spec;
         }
     }
-    // A file in the plugin folder: relative, inside it, a picture Win顺 can
+    // A file in the plugin folder: relative, inside it, a picture Luma can
     // show (no SVG: the installed Qt has no SVG support; Manifest says so).
     if (!insideFolder(text))
         return spec;

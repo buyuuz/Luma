@@ -9,7 +9,7 @@
 
 namespace ws {
 
-// Typing in the Start menu searches with Win顺 instead of Windows (a
+// Typing in the Start menu searches with Luma instead of Windows (a
 // setting, off by default; EverythingToolbar does the same).
 //
 // Windows' search takes over the Start menu as soon as one types there. Here
@@ -17,7 +17,7 @@ namespace ws {
 // search) is in front is taken from it, and the launcher is asked for: it
 // opens over the taskbar. That key and the ones typed after it are held back
 // until the launcher has the keyboard (deliver), then typed again in order
-// (SendInput, marked as Win顺's own): they go through the input method as if
+// (SendInput, marked as Luma's own): they go through the input method as if
 // typed into the search box.
 //
 // A low-level keyboard hook, which every key press in the system waits on

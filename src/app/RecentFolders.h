@@ -25,7 +25,7 @@ private:
 QString folderOf(const QString& path, const LocalDrives& drives);
 
 // Newest first, at most `max`: the folders of what Windows lists as opened
-// lately and those of `history` (Win顺's, newest first: files and folders
+// lately and those of `history` (Luma's, newest first: files and folders
 // opened through it), taken in turns. Needs COM; looks at the disk.
 QStringList recent(const QStringList& history, int max);
 

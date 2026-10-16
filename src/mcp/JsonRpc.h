@@ -1,7 +1,7 @@
 #pragma once
 
 // JSON-RPC 2.0 messages, one per line of UTF-8 (as MCP's stdio transport
-// frames them, and as Win顺's pipe does): parsed from a line, and made into
+// frames them, and as Luma's pipe does): parsed from a line, and made into
 // one. Qt Core only: the relay (WinShunMcp.exe) uses it too.
 
 #include <QByteArray>
@@ -19,7 +19,7 @@ inline constexpr int kInvalidRequest = -32600;
 inline constexpr int kMethodNotFound = -32601;
 inline constexpr int kInvalidParams = -32602;
 inline constexpr int kInternalError = -32603;
-// Server-defined: Win顺 (or its relay) cannot serve the request now.
+// Server-defined: Luma (or its relay) cannot serve the request now.
 inline constexpr int kUnavailable = -32000;
 // Server-defined: the request was cancelled (notifications/cancelled, or the
 // session ended).

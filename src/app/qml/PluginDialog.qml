@@ -178,7 +178,7 @@ Item {
                                 size: 12
                                 color: Theme.success
                             }
-                            Rectangle { // declared only: Win顺 cannot hold the plugin to it
+                            Rectangle { // declared only: Luma cannot hold the plugin to it
                                 x: 2
                                 y: 4
                                 visible: !permissionRow.modelData.enforced

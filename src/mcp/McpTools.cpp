@@ -665,7 +665,7 @@ void ToolHost::logCall(const Call& call, const ToolResult& result) const
 
 QString ToolHost::instructions()
 {
-    return u"Win顺 (WinShun) indexes every file and folder name on this PC's local drives and searches the text "
+    return u"Luma (Luma) indexes every file and folder name on this PC's local drives and searches the text "
            "inside text files and documents (Word, Excel, PowerPoint, PDF). search_files finds by name in "
            "milliseconds; search_content looks inside files (slower, returns partial results with complete=false when "
            "its timeout runs out); recent_files lists what changed lately; list_folder and get_file_info look around; "
@@ -682,7 +682,7 @@ QString ToolHost::instructions()
            "before telling the user which file it is.\n"
            "Paths are Windows paths; show them to the user as they are. Keep limits small (20–50) unless more is "
            "needed. Tools that open files or read the clipboard history are listed only when the user allowed them "
-           "in Win顺's settings."_s;
+           "in Luma's settings."_s;
 }
 
 // ---- the engine's answers ----------------------------------------------------
@@ -781,7 +781,7 @@ void ToolHost::addTools()
     Tool search;
     search.name = u"search_files"_s;
     search.title = u"Search file and folder names"_s;
-    search.description = u"Find files and folders on this PC by name, instantly, from Win顺's index of all local drives. "
+    search.description = u"Find files and folders on this PC by name, instantly, from Luma's index of all local drives. "
                          "Supports pinyin for Chinese names (bg or baogao for 报告), \"quoted phrases\", !exclusions, "
                          "wildcards (*.pdf), ext:pdf,docx, folder\\name, and full paths (D:\\Projects\\report). "
                          "Ranked by relevance (exact names and the user's own, recently opened files first) or by "
@@ -870,7 +870,7 @@ void ToolHost::addTools()
     Tool info;
     info.name = u"get_file_info"_s;
     info.title = u"File or folder details"_s;
-    info.description = u"Size, dates and attributes of one file or folder, read from the disk, and whether Win顺 indexes it."_s;
+    info.description = u"Size, dates and attributes of one file or folder, read from the disk, and whether Luma indexes it."_s;
     info.inputSchema = object({{u"path"_s, typed("string", u"Full path"_s)}}, {u"path"_s});
     info.outputSchema = object({{u"exists"_s, typed("boolean", u"Whether it is there"_s)}, {u"path"_s, typed("string", u"The path, normalized"_s)},
         {u"name"_s, typed("string", u"Name"_s)}, {u"type"_s, typed("string", u"file or folder"_s)}, {u"size"_s, typed("integer", u"Bytes (files)"_s)},
@@ -878,7 +878,7 @@ void ToolHost::addTools()
         {u"extension"_s, typed("string", u"Without the dot"_s)}, {u"hidden"_s, typed("boolean", u"Hidden attribute"_s)},
         {u"read_only"_s, typed("boolean", u"Read-only attribute"_s)}, {u"system"_s, typed("boolean", u"System attribute"_s)},
         {u"cloud_placeholder"_s, typed("boolean", u"A cloud file not on this disk: reading it would download it"_s)},
-        {u"indexed"_s, typed("boolean", u"Whether it is in Win顺's index"_s)}});
+        {u"indexed"_s, typed("boolean", u"Whether it is in Luma's index"_s)}});
     info.annotations = annotations(true, true);
     info.run = [this](const std::shared_ptr<Call>& call) { fileInfo(call); };
     m_tools.push_back(std::move(info));
@@ -911,7 +911,7 @@ void ToolHost::addTools()
     Tool clips;
     clips.name = u"clipboard_history"_s;
     clips.title = u"Clipboard history"_s;
-    clips.description = u"What the user copied lately (Win顺's clipboard history), newest first: text, links, file paths, "
+    clips.description = u"What the user copied lately (Luma's clipboard history), newest first: text, links, file paths, "
                         "copied files and pictures (pictures as their size only). Texts are cut to max_chars; "
                         "clipboard_get reads one whole. Searchable by words (pinyin too) and @program."_s;
     clips.inputSchema = object({{u"query"_s, typed("string", u"Words that must all occur; @name keeps to what one program copied"_s)},
@@ -955,16 +955,16 @@ void ToolHost::addTools()
 
     Tool status;
     status.name = u"index_status"_s;
-    status.title = u"Win顺 status"_s;
-    status.description = u"Whether Win顺 is running and its index is ready: how many items it holds, which drives are "
+    status.title = u"Luma status"_s;
+    status.description = u"Whether Luma is running and its index is ready: how many items it holds, which drives are "
                          "still being read, the state of the content index, and which optional tools the user allowed."_s;
     status.inputSchema = {{u"type"_s, u"object"_s}, {u"additionalProperties"_s, false}};
-    status.outputSchema = object({{u"running"_s, typed("boolean", u"Win顺 is running"_s)},
-        {u"connected"_s, typed("boolean", u"The AI connection to Win顺 is up; false when it is off or Win顺 is not running, and the relay answers alone"_s)},
+    status.outputSchema = object({{u"running"_s, typed("boolean", u"Luma is running"_s)},
+        {u"connected"_s, typed("boolean", u"The AI connection to Luma is up; false when it is off or Luma is not running, and the relay answers alone"_s)},
         {u"version"_s, typed("string", u"Its version"_s)},
         {u"index"_s, typed("object", u"state (loading, building, ready), items, volumes"_s)},
         {u"content_index"_s, typed("object", u"enabled, files, pending, reading"_s)},
-        {u"ai"_s, typed("object", u"open_allowed, clipboard_allowed, excluded_folders"_s)}, {u"hint"_s, typed("string", u"What to tell the user when Win顺 is not running"_s)}});
+        {u"ai"_s, typed("object", u"open_allowed, clipboard_allowed, excluded_folders"_s)}, {u"hint"_s, typed("string", u"What to tell the user when Luma is not running"_s)}});
     status.annotations = annotations(true, true);
     status.run = [this](const std::shared_ptr<Call>& call) { indexStatus(call); };
     m_tools.push_back(std::move(status));
@@ -972,7 +972,7 @@ void ToolHost::addTools()
     Tool text;
     text.name = u"read_file_text"_s;
     text.title = u"Read the text of a file"_s;
-    text.description = u"The text of one file: a document's (Word, Excel, PowerPoint, PDF, WPS) as Win顺 read it out, "
+    text.description = u"The text of one file: a document's (Word, Excel, PowerPoint, PDF, WPS) as Luma read it out, "
                        "with [page N], [slide N] and [sheet Name] lines where those begin, or a text file's (txt, md, "
                        "csv, code…). Use it to see what a file found by search_files or search_content says. A long "
                        "text comes in parts: pass next_offset as offset for the next one."_s;
@@ -985,7 +985,7 @@ void ToolHost::addTools()
         {u"text"_s, typed("string", u"The text from offset"_s)}, {u"chars"_s, typed("integer", u"Length of the whole text"_s)},
         {u"offset"_s, typed("integer", u"Where this part starts"_s)},
         {u"next_offset"_s, typed("integer", u"Where the rest starts; absent at the end"_s)},
-        {u"cut"_s, typed("boolean", u"The file holds more than Win顺 reads (16 MB of text)"_s)},
+        {u"cut"_s, typed("boolean", u"The file holds more than Luma reads (16 MB of text)"_s)},
         {u"note"_s, typed("string", u"Why the text is empty, when it is"_s)}});
     text.annotations = annotations(true, true);
     text.run = [this](const std::shared_ptr<Call>& call) { readFileText(call); };
@@ -1056,7 +1056,7 @@ void ToolHost::searchContent(const std::shared_ptr<Call>& call)
     if (query.isEmpty())
         return finish(call, {{}, true, u"query is empty"_s});
     if (!m_policy.content)
-        return finish(call, {{}, true, u"File content search is turned off in WinShun's settings"_s});
+        return finish(call, {{}, true, u"File content search is turned off in Luma's settings"_s});
     folders.removeIf([](const QString& folder) { return folder.trimmed().isEmpty(); });
     if (!folders.isEmpty()) {
         const auto index = m_services.index->index();
@@ -1064,14 +1064,14 @@ void ToolHost::searchContent(const std::shared_ptr<Call>& call)
         for (QString& folder : folders) {
             folder = folder.trimmed();
             if (excluded(folder))
-                return finish(call, {{}, true, u"This folder is not visible to AI (excluded in Win顺's settings): "_s + folder});
+                return finish(call, {{}, true, u"This folder is not visible to AI (excluded in Luma's settings): "_s + folder});
             const EntryId id = index->findPath(indexPath(folder));
             if (id == kNoEntry)
                 return finish(call, {{}, true, u"The folder is not in the index: it may not exist, be excluded from indexing, or be on a drive that is not indexed. Check it with get_file_info: "_s + folder});
             if (!index->entry(id).isDir())
                 return finish(call, {{}, true, u"The path is a file, not a folder: "_s + folder});
             if (index->entry(id).flags & EntryFlag::Remote)
-                return finish(call, {{}, true, u"The folder is on a network share: Win顺 does not read file contents there. "_s + folder});
+                return finish(call, {{}, true, u"The folder is on a network share: Luma does not read file contents there. "_s + folder});
             folder = QString::fromStdWString(index->wpath(id));
         }
     }
@@ -1105,7 +1105,7 @@ void ToolHost::recentFiles(const std::shared_ptr<Call>& call)
     if (!args.error().isEmpty())
         return finish(call, {{}, true, args.error()});
     if (!folder.isEmpty() && excluded(folder))
-        return finish(call, {{}, true, u"This folder is not visible to AI (excluded in Win顺's settings)."_s});
+        return finish(call, {{}, true, u"This folder is not visible to AI (excluded in Luma's settings)."_s});
     std::vector<std::string> wanted; // extensions, lower case, without the dot
     for (QString ext : extensions) {
         while (ext.startsWith(u'.'))
@@ -1251,7 +1251,7 @@ void ToolHost::listFolder(const std::shared_ptr<Call>& call)
     if (path.isEmpty())
         return finish(call, {{}, true, u"path is empty"_s});
     if (excluded(path))
-        return finish(call, {{}, true, u"This folder is not visible to AI (excluded in Win顺's settings)."_s});
+        return finish(call, {{}, true, u"This folder is not visible to AI (excluded in Luma's settings)."_s});
 
     struct Child {
         QString name;
@@ -1313,7 +1313,7 @@ void ToolHost::fileInfo(const std::shared_ptr<Call>& call)
     if (given.isEmpty())
         return finish(call, {{}, true, u"path is empty"_s});
     if (excluded(given))
-        return finish(call, {{}, true, u"This path is not visible to AI (excluded in Win顺's settings)."_s});
+        return finish(call, {{}, true, u"This path is not visible to AI (excluded in Luma's settings)."_s});
     const QString path = nativePath(given);
     WIN32_FILE_ATTRIBUTE_DATA data {};
     if (!::GetFileAttributesExW(win32::longPath(path.toStdWString()).c_str(), GetFileExInfoStandard, &data)) {
@@ -1359,7 +1359,7 @@ void ToolHost::openItem(const std::shared_ptr<Call>& call, bool reveal)
     if (given.isEmpty())
         return finish(call, {{}, true, u"path is empty"_s});
     if (excluded(given))
-        return finish(call, {{}, true, u"This path is not visible to AI (excluded in Win顺's settings)."_s});
+        return finish(call, {{}, true, u"This path is not visible to AI (excluded in Luma's settings)."_s});
     const QString path = nativePath(given);
     const DWORD attributes = ::GetFileAttributesW(win32::longPath(path.toStdWString()).c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
@@ -1443,7 +1443,7 @@ void ToolHost::readFileText(const std::shared_ptr<Call>& call)
     if (given.isEmpty())
         return finish(call, {{}, true, u"path is empty"_s});
     if (excluded(given))
-        return finish(call, {{}, true, u"This path is not visible to AI (excluded in Win顺's settings)."_s});
+        return finish(call, {{}, true, u"This path is not visible to AI (excluded in Luma's settings)."_s});
     const QString path = nativePath(given);
     // Only what the caller could read itself; the rest is, to it, not there.
     Visibility view(call->token);
@@ -1477,9 +1477,9 @@ void ToolHost::readFileText(const std::shared_ptr<Call>& call)
             case Status::Folder:
                 return finish(call, {{}, true, u"This is a folder; list it with list_folder."_s});
             case Status::NotText:
-                return finish(call, {{}, true, u"This is not a text file or a document Win顺 can read."_s});
+                return finish(call, {{}, true, u"This is not a text file or a document Luma can read."_s});
             case Status::TooLarge:
-                return finish(call, {{}, true, u"The file is larger than Win顺's size limit for its kind (Settings → content search)."_s});
+                return finish(call, {{}, true, u"The file is larger than Luma's size limit for its kind (Settings → content search)."_s});
             case Status::CloudOnly:
                 return finish(call, {{}, true, u"This is a cloud file that is not on this PC; reading it would download it. The user can open it to download it first."_s});
             case Status::Unreadable:
@@ -1514,7 +1514,7 @@ void ToolHost::listDocuments(const std::shared_ptr<Call>& call)
         return finish(call, {{}, true, args.error()});
     const auto content = m_services.index->contentIndex();
     if (!content || !m_services.index->contentIndexer()->enabled())
-        return finish(call, {{}, true, u"The content index is off: the user can turn it on in Win顺's settings (文件内容)."_s});
+        return finish(call, {{}, true, u"The content index is off: the user can turn it on in Luma's settings (文件内容)."_s});
     std::vector<QString> folders; // case-folded, with a trailing separator
     for (const QString& folder : folderArgs) {
         QString f = nativePath(folder).toCaseFolded();

@@ -46,7 +46,7 @@ struct Item {
     bool hasScore = false;
     QString match; // what to filter and highlight on instead of the title
     QString autocomplete; // Tab
-    Open open; // the default action, done by Win顺 without asking the plugin
+    Open open; // the default action, done by Luma without asking the plugin
     QString copy; // Ctrl+C; empty: the title
     QString previewText;
     QList<Action> actions; // overriding the command's

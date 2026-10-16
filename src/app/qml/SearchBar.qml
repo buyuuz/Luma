@@ -13,7 +13,7 @@ Item {
     readonly property bool hasSelection: input.selectedText.length > 0
     readonly property string composition: input.preeditText // an input method's, not typed yet
     readonly property Item field: input // what the clipboard pastes into
-    // Opened over Win顺's box on the taskbar: the field is drawn there (its
+    // Opened over Luma's box on the taskbar: the field is drawn there (its
     // state reported, see Launcher.inTaskbarBox), here only the tabs show.
     // The field stays, out of sight, with the keyboard.
     readonly property bool inBox: launcher.inTaskbarBox

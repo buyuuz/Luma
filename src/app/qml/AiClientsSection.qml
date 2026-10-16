@@ -3,7 +3,7 @@ import QtQuick
 import WinShun
 
 // Settings → AI 助手 › 连接客户端: the AI clients found on this PC, each connected to
-// Win顺 with one click (McpClients writes WinShunMcp.exe into its
+// Luma with one click (McpClients writes LumaMcp.exe into its
 // configuration), and the configuration to paste into any other.
 SettingsSection {
     id: clientsSection
@@ -13,7 +13,7 @@ SettingsSection {
     readonly property bool relayFound: editor.mcpRelayPath.length > 0
 
     note: relayFound ? qsTr("点“连接”就写进那个客户端的配置（原文件先备份成 .bak）。装了的客户端才列出来。")
-                     : qsTr("没找到 WinShunMcp.exe，重新安装 Win顺 就有了。")
+                     : qsTr("没找到 LumaMcp.exe，重新安装 Luma 就有了。")
 
     Repeater {
         model: clientsSection.editor.mcpClients
@@ -54,7 +54,7 @@ SettingsSection {
     SettingRow {
         title: qsTr("其他支持 MCP 的客户端")
         keywords: qsTr("其他;配置;stdio;MCP;AI;JSON").split(";")
-        description: qsTr("把 WinShunMcp.exe 加为 stdio 类型的 MCP 服务器，不需要参数：") + "\n" + clientsSection.editor.mcpRelayPath
+        description: qsTr("把 LumaMcp.exe 加为 stdio 类型的 MCP 服务器，不需要参数：") + "\n" + clientsSection.editor.mcpRelayPath
         shown: clientsSection.editor.mcp
 
         FlatButton {

@@ -133,7 +133,7 @@ void Server::acceptLoop()
                 DWORD unused = 0;
                 connected = ::GetOverlappedResult(m_listening, &overlapped, &unused, TRUE) != 0;
             } else {
-                qWarning("WinShun MCP: ConnectNamedPipe failed (%lu)", code);
+                qWarning("Luma MCP: ConnectNamedPipe failed (%lu)", code);
                 if (::WaitForSingleObject(m_stopEvent, 500) == WAIT_OBJECT_0)
                     break;
             }
@@ -172,7 +172,7 @@ void Server::acceptLoop()
         DWORD error = 0;
         m_listening = createInstance(false, &error);
         while (m_listening == INVALID_HANDLE_VALUE && m_running) {
-            qWarning("WinShun MCP: cannot make another pipe instance (%lu)", error);
+            qWarning("Luma MCP: cannot make another pipe instance (%lu)", error);
             if (::WaitForSingleObject(m_stopEvent, 1000) == WAIT_OBJECT_0)
                 break;
             m_listening = createInstance(false, &error);

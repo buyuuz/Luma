@@ -15,12 +15,12 @@ namespace ws {
 
 namespace {
 
-constexpr wchar_t kClassName[] = L"WinShun.MessageWindow";
+constexpr wchar_t kClassName[] = L"Luma.MessageWindow";
 constexpr UINT kTrayMessage = WM_APP + 1;
 constexpr UINT kTrayId = 1;
 constexpr ULONG_PTR kCopyDataTag = 0x5753484E; // "WSHN"
 // The window Explorer's "search here" reaches (WinShunSearch.exe, src/stub).
-constexpr wchar_t kSearchHereClass[] = L"WinShun.SearchHere";
+constexpr wchar_t kSearchHereClass[] = L"Luma.SearchHere";
 constexpr ULONG_PTR kSearchHereTag = 0x57535348; // "WSSH"
 
 // A folder's full path as Explorer gives it: on a drive or a share, nothing
@@ -62,14 +62,14 @@ MessageWindow::MessageWindow(Callbacks callbacks)
     // A real (hidden) top-level window rather than HWND_MESSAGE: message-only
     // windows miss the "TaskbarCreated" broadcast.
     m_hwnd = ::CreateWindowExW(
-        WS_EX_TOOLWINDOW, kClassName, L"WinShun", WS_POPUP, 0, 0, 0, 0, nullptr, nullptr, instance, this);
+        WS_EX_TOOLWINDOW, kClassName, L"Luma", WS_POPUP, 0, 0, 0, 0, nullptr, nullptr, instance, this);
     m_taskbarCreated = ::RegisterWindowMessageW(L"TaskbarCreated");
     // Let Explorer (medium integrity) reach us even if we run elevated. A
-    // second start of Win顺 too: it runs with the user's normal rights
+    // second start of Luma too: it runs with the user's normal rights
     // (GitHub #21), while this copy may be elevated (the 管理员直读 mode), and
     // its WM_COPYDATA would be dropped by UIPI otherwise. What it carries is
     // one of toggle, quit, settings and query (App::handleCommand): no input
-    // for anything, nothing run. Not the same window as "WinShun.SearchHere"
+    // for anything, nothing run. Not the same window as "Luma.SearchHere"
     // below, which has its own.
     ::ChangeWindowMessageFilterEx(m_hwnd, m_taskbarCreated, MSGFLT_ALLOW, nullptr);
     ::ChangeWindowMessageFilterEx(m_hwnd, WM_COPYDATA, MSGFLT_ALLOW, nullptr);
@@ -81,7 +81,7 @@ MessageWindow::MessageWindow(Callbacks callbacks)
     searchHere.lpszClassName = kSearchHereClass;
     ::RegisterClassExW(&searchHere);
     m_searchHere = ::CreateWindowExW(
-        0, kSearchHereClass, L"WinShun", 0, 0, 0, 0, 0, HWND_MESSAGE, nullptr, instance, this);
+        0, kSearchHereClass, L"Luma", 0, 0, 0, 0, 0, HWND_MESSAGE, nullptr, instance, this);
     ::ChangeWindowMessageFilterEx(m_searchHere, WM_COPYDATA, MSGFLT_ALLOW, nullptr);
     m_powerNotify = ::RegisterSuspendResumeNotification(m_hwnd, DEVICE_NOTIFY_WINDOW_HANDLE);
 

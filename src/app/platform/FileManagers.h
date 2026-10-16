@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-// The file managers Win顺 works with: File Explorer, Total Commander and
+// The file managers Luma works with: File Explorer, Total Commander and
 // Directory Opus. They are asked which folders their windows show (for the
 // Open and Save dialogs: Ctrl+G, the bar beside them, going there by
 // themselves), and told to open a folder or to show where an item is
@@ -15,7 +15,7 @@
 //
 // Total Commander answers window messages (WM_USER+50) at once. Directory
 // Opus answers through its dopusrt.exe, started with the user's normal
-// rights: started elevated, as Win顺 is, it waits for an answer that never
+// rights: started elevated, as Luma is, it waits for an answer that never
 // comes (docs/pitfalls.md).
 namespace ws::filemanager {
 

@@ -394,7 +394,7 @@ LRESULT KeyRouter::handleKey(int code, WPARAM message, LPARAM lParam)
 }
 
 // A chord with Ctrl or Alt that another program holds as a global hotkey
-// (RegisterHotKey refuses it; or one of Win顺's own) is that program's:
+// (RegisterHotKey refuses it; or one of Luma's own) is that program's:
 // PixPin's Ctrl+1 and up, with the clipboard's number keys set to Ctrl.
 // Asked once per chord while the window is up: a few microseconds.
 bool KeyRouter::heldAsHotkey(const Key& key)

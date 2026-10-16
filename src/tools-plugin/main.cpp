@@ -1,8 +1,8 @@
-// WinShunTools.exe: the winshun.tools plugin that comes with Win顺 (the
+// WinShunTools.exe: the winshun.tools plugin that comes with Luma (the
 // plugin design, §5.6). A resident C++ plugin on the single-header SDK
 // (src/plugins-sdk/winshun.h), no Qt, the C runtime linked in, run in the
 // strict sandbox (low integrity, no child processes, no clipboard: Enter
-// copies through Win顺). Its commands:
+// copies through Luma). Its commands:
 //
 //   =      calculator and unit conversion ("= 1+2*3", "12 inch to cm"; both
 //          also without the keyword, by regex)

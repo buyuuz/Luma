@@ -220,7 +220,7 @@ bool onlyIndexFiles(const QString& folder)
         if (entry.isDir())
             return entry.fileName().compare(kContent, Qt::CaseInsensitive) == 0
                 && std::ranges::all_of(QDir(entry.filePath()).entryInfoList(all), isSegment);
-        // index.bin.XXXXXX: one being saved when Win顺 stopped (QSaveFile)
+        // index.bin.XXXXXX: one being saved when Luma stopped (QSaveFile)
         return entry.fileName().startsWith(kSnapshot, Qt::CaseInsensitive)
             && (entry.fileName().size() == kSnapshot.size() || entry.fileName()[kSnapshot.size()] == u'.');
     });

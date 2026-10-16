@@ -43,7 +43,7 @@ HWND usableTarget(HWND window)
     ::GetWindowThreadProcessId(root, &pid);
     if (pid == ::GetCurrentProcessId())
         return nullptr;
-    // The taskbar (Win顺 opened from the tray icon) takes no paste.
+    // The taskbar (Luma opened from the tray icon) takes no paste.
     wchar_t className[64] {};
     ::GetClassNameW(root, className, static_cast<int>(std::size(className)));
     if (std::wcscmp(className, L"Shell_TrayWnd") == 0 || std::wcscmp(className, L"Shell_SecondaryTrayWnd") == 0)

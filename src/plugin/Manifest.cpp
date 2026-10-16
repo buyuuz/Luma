@@ -235,7 +235,7 @@ Permissions readPermissions(const QJsonValue& value, Check& check)
         if (item.isString()) {
             const auto permission = permissionFromName(item.toString());
             if (!permission) {
-                check.fail(u"permissions 里的 %1 不认识（可能需要更新的 Win顺）"_s.arg(item.toString()));
+                check.fail(u"permissions 里的 %1 不认识（可能需要更新的 Luma）"_s.arg(item.toString()));
                 return p;
             }
             p.flags |= static_cast<std::uint32_t>(*permission);
@@ -245,7 +245,7 @@ Permissions readPermissions(const QJsonValue& value, Check& check)
             for (auto it = o.begin(); it != o.end(); ++it) {
                 const auto permission = permissionFromName(it.key());
                 if (!permission) {
-                    check.fail(u"permissions 里的 %1 不认识（可能需要更新的 Win顺）"_s.arg(it.key()));
+                    check.fail(u"permissions 里的 %1 不认识（可能需要更新的 Luma）"_s.arg(it.key()));
                     return p;
                 }
                 p.flags |= static_cast<std::uint32_t>(*permission);
@@ -395,7 +395,7 @@ Command readCommand(const QJsonValue& value, int index, bool hasRuntime, Check& 
     c.hint = textOr(o.value(u"hint"_s), where + u".hint"_s, check);
     c.icon = stringField(o, u"icon"_s, where, check);
     if (c.icon.endsWith(u".svg"_s, Qt::CaseInsensitive))
-        check.fail(where + u".icon 是 SVG：Win顺 不带 SVG 支持，请用 PNG"_s);
+        check.fail(where + u".icon 是 SVG：Luma 不带 SVG 支持，请用 PNG"_s);
     if (o.contains(u"keyword"_s)) {
         c.keywords = stringList(o.value(u"keyword"_s), where + u".keyword"_s, check);
         for (const QString& keyword : c.keywords) {
@@ -545,7 +545,7 @@ std::optional<Manifest> Manifest::parse(const QByteArray& json, QString* error)
         return fail(u"缺少 manifest（架构版本，现在是 1）"_s);
     m.manifestVersion = static_cast<int>(manifestVersion.toDouble());
     if (m.manifestVersion > kManifestVersion)
-        return fail(u"这个插件要 manifest %1，这个 Win顺 只认识到 %2：请升级 Win顺"_s.arg(m.manifestVersion).arg(kManifestVersion));
+        return fail(u"这个插件要 manifest %1，这个 Luma 只认识到 %2：请升级 Luma"_s.arg(m.manifestVersion).arg(kManifestVersion));
     if (m.manifestVersion < 1)
         return fail(u"manifest 要是 1"_s);
 
@@ -570,12 +570,12 @@ std::optional<Manifest> Manifest::parse(const QByteArray& json, QString* error)
     m.license = stringField(o, u"license"_s, u"顶层"_s, check);
     m.icon = stringField(o, u"icon"_s, u"顶层"_s, check);
     if (m.icon.endsWith(u".svg"_s, Qt::CaseInsensitive))
-        check.fail(u"icon 是 SVG：Win顺 不带 SVG 支持，请用 PNG"_s);
+        check.fail(u"icon 是 SVG：Luma 不带 SVG 支持，请用 PNG"_s);
     else if (!m.icon.isEmpty())
         relativeInside(m.icon, u"icon"_s, check);
-    m.minWinShun = stringField(o, u"minWinShun"_s, u"顶层"_s, check);
+    m.minWinShun = stringField(o, u"minLuma"_s, u"顶层"_s, check);
     if (!m.minWinShun.isEmpty() && !kVersion.match(m.minWinShun).hasMatch())
-        check.fail(u"minWinShun 要像 0.7.0 这样"_s);
+        check.fail(u"minLuma 要像 0.7.0 这样"_s);
     m.runtime = readRuntime(o.value(u"runtime"_s), check);
     m.permissions = readPermissions(o.value(u"permissions"_s), check);
 

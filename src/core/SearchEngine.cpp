@@ -211,7 +211,7 @@ private:
             s.answered.notify_all();
             // Once while it stays slow: a share whose server is gone takes as long every time.
             if (took > 2s && drive.lastTook <= 2s) {
-                qWarning("WinShun: drive %ls took %lld ms to say whether a recent item is still there",
+                qWarning("Luma: drive %ls took %lld ms to say whether a recent item is still there",
                     qUtf16Printable(key), static_cast<long long>(took.count()));
             }
             drive.lastTook = took;
@@ -1084,7 +1084,7 @@ void SearchEngine::runNameSearch(const Job& job)
                 r.offline = m_index->shares().offline(r.path.toStdWString());
         }
 
-        // 全部: a web shortcut's keyword typed first ("gh", "gh WinShun")
+        // 全部: a web shortcut's keyword typed first ("gh", "gh Luma")
         // puts its site or search on top. Then every app found, the best few
         // places and the web shortcuts by name, best first; then the files
         // and folders.
@@ -1290,7 +1290,7 @@ void SearchEngine::runNameSearch(const Job& job)
     };
     const auto end = Clock::now();
     if (end - job.submitted > 2s) {
-        qWarning("WinShun: a search took %lld ms (%lld waiting for the search before, %lld for the index, "
+        qWarning("Luma: a search took %lld ms (%lld waiting for the search before, %lld for the index, "
                  "%lld finding names, %lld the rest)",
             ms(end - job.submitted), ms(began - job.submitted), ms(lockWait), ms(names), ms(end - began - lockWait - names));
     }

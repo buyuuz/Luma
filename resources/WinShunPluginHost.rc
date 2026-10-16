@@ -1,8 +1,8 @@
 #pragma code_page(65001)
 #include <winver.h>
 
-// WinShunPluginHost.exe (src/plugin/runner): starts plugin processes for
-// Win顺 with the user's normal rights.
+// LumaPluginHost.exe (src/plugin/runner): starts plugin processes for
+// Luma with the user's normal rights.
 IDI_ICON1 ICON "app.ico"
 
 VS_VERSION_INFO VERSIONINFO
@@ -18,12 +18,12 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "CompanyName", "WinShun"
-            VALUE "FileDescription", "Win顺 插件进程 · WinShun plugin host"
+            VALUE "CompanyName", "Luma"
+            VALUE "FileDescription", "Luma 插件进程 · Luma plugin host"
             VALUE "FileVersion", WINSHUN_VERSION
-            VALUE "InternalName", "WinShunPluginHost"
-            VALUE "OriginalFilename", "WinShunPluginHost.exe"
-            VALUE "ProductName", "Win顺 · WinShun"
+            VALUE "InternalName", "LumaPluginHost"
+            VALUE "OriginalFilename", "LumaPluginHost.exe"
+            VALUE "ProductName", "Luma · Luma"
             VALUE "ProductVersion", WINSHUN_VERSION
         END
     END

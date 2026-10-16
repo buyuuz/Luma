@@ -56,7 +56,7 @@ public:
         QString runnerExe; // WinShunPluginHost.exe
         QString locale = QStringLiteral("zh");
         QString theme = QStringLiteral("light");
-        QString version; // of Win顺
+        QString version; // of Luma
         int maxResident = 8;
     };
 

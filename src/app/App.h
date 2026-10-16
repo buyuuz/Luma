@@ -95,7 +95,7 @@ public:
     void toggleLauncher();
     void toggleClipboard(); // the clipboard window (Win+V)
     // With `spot`, over the taskbar, as Windows' own search (taskbar::);
-    // `inBox`: over Win顺's box there, its field drawn in the box when the
+    // `inBox`: over Luma's box there, its field drawn in the box when the
     // box is wide enough for it.
     void showLauncher(const QString& query = {}, const std::optional<taskbar::Spot>& spot = {}, bool inBox = false);
     void hideLauncher();
@@ -143,7 +143,7 @@ private:
     void uncloakClipboard(); // its first frame is up
     void prewarmClipboard();
     void finishClipPrewarm();
-    QQuickItem* focusedField() const; // a text field of Win顺's own with the keyboard
+    QQuickItem* focusedField() const; // a text field of Luma's own with the keyboard
     void returnToField(QQuickItem* field); // from the clipboard (Clipboard::fieldRequested)
     void updateCompanions(); // our windows that go with a file dialog (DialogJump)
     // Ctrl+1… on the launcher and the dialog bar: as one of them comes to
@@ -161,7 +161,7 @@ private:
     void toggleAtTaskbar(bool clicked);
     void startScreenClip(); // Win+Shift+S, which Explorer gives up with Win+S
     void startMenuTyped(); // typed in the Start menu (StartMenuTyping): the launcher over the taskbar
-    // Win顺's own search box on the taskbar ([Taskbar] SearchBox, taskbar::SearchBox).
+    // Luma's own search box on the taskbar ([Taskbar] SearchBox, taskbar::SearchBox).
     void applySearchBox();
     void setSearchBoxShown(taskbar::SearchBox::Hidden why); // it is on the taskbar (None), or why not
     void setSearchBoxWide(bool wide); // the whole box, or its label or icon alone (SearchBox::wide)
@@ -196,7 +196,7 @@ private:
     // read from, the index service looked for again while it is wanted and
     // not there, the autostart task's run level kept with the mode.
     void applyAutostartLevel(); // at start: the task's run level follows the mode (and an old elevated task sets the mode, portable)
-    // Rewrites the task (`task`: whether it runs Win顺 elevated, as read)
+    // Rewrites the task (`task`: whether it runs Luma elevated, as read)
     // when that is not the mode's level, where this process may.
     void reconcileAutostart(const std::optional<bool>& task);
     void applyIndexAccess(); // the setting changed: restart with other rights, or switch in place
@@ -232,7 +232,7 @@ private:
     void applyMcp();
     mcp::Policy mcpPolicy() const;
     void refreshMcpStatus();
-    void writeMcpToolsCache(); // the tools, for the relay to list while Win顺 is not running
+    void writeMcpToolsCache(); // the tools, for the relay to list while Luma is not running
     // The plugins' commands as the AI's tools (plugin::AiBridge): what the
     // [Mcp] Plugins switches and the cards' "给 AI 用" say, applied from
     // applyMcp and applyPlugins alike.
@@ -242,7 +242,7 @@ private:
     void createPluginHost();
     void applyPlugins();
     void pluginsChanged(); // the catalog's entries: the icon provider's folders
-    // Win顺's tools for the plugins' winshun/tool (plugin::Tools): made
+    // Luma's tools for the plugins' winshun/tool (plugin::Tools): made
     // with the first call, whatever the AI switch says.
     plugin::Tools& pluginTools();
     mcp::Services toolServices() const; // what the tool hosts (the AI's, the plugins') need from the app
@@ -292,7 +292,7 @@ private:
     // Destroyed before the two above: its thread calls back into the app, and
     // the page waits on its writes.
     std::unique_ptr<ClipboardWatcher> m_clipWatcher;
-    bool m_clipboardPaused = false; // from the tray menu, until Win顺 restarts
+    bool m_clipboardPaused = false; // from the tray menu, until Luma restarts
     bool m_clipboardNotified = false; // the last tray notification told of the clipboard history
     std::optional<bool> m_winVApplied; // the Win+V switch, as last put into the registry
     bool m_winVRegistryFailed = false;

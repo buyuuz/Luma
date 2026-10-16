@@ -60,7 +60,7 @@ std::wstring findShortcut(const std::wstring& folder, const std::wstring& target
     return {};
 }
 
-// "S-1-5-21-…": the user Win顺 runs as.
+// "S-1-5-21-…": the user Luma runs as.
 std::wstring userSid()
 {
     HANDLE token = nullptr;
@@ -145,7 +145,7 @@ bool isTaskbar(HWND window)
 
 HANDLE createEvent()
 {
-    // Everything for the system and administrators (Win顺); setting it and
+    // Everything for the system and administrators (Luma); setting it and
     // waiting on it for the user. The label lets processes of medium
     // integrity write to it: made by an elevated process, it would be high,
     // and they could not.

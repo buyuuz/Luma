@@ -21,10 +21,10 @@ namespace ws::backupfiles {
 namespace {
 
 constexpr qint64 kMaxZipBytes = 512ll << 20;
-const QString kPrefix = u"WinShun-"_s;
+const QString kPrefix = u"Luma-"_s;
 const QString kTimeFormat = u"yyyy-MM-dd-HHmmss"_s;
 const QString kManifest = u"backup.json"_s;
-const QString kSettingsName = u"WinShun.ini"_s;
+const QString kSettingsName = u"Luma.ini"_s;
 
 QString tr(const char* text)
 {
@@ -72,7 +72,7 @@ QJsonObject manifestOf(Zip& zip)
         return {};
     const QJsonObject o = QJsonDocument::fromJson(QByteArray(static_cast<const char*>(data), static_cast<qsizetype>(size))).object();
     mz_free(data);
-    return o.value(u"app"_s).toString() == u"WinShun" ? o : QJsonObject();
+    return o.value(u"app"_s).toString() == u"Luma" ? o : QJsonObject();
 }
 
 } // namespace
@@ -133,7 +133,7 @@ Packed pack(const QList<File>& files, const QString& version, const QDateTime& w
     Packed packed;
     packed.hash = QString::fromLatin1(hash.result().toHex());
     const QByteArray manifest = QJsonDocument(QJsonObject {
-                                                  {u"app"_s, u"WinShun"_s},
+                                                  {u"app"_s, u"Luma"_s},
                                                   {u"format"_s, 1},
                                                   {u"version"_s, version},
                                                   {u"created"_s, when.toString(Qt::ISODate)},
@@ -224,13 +224,13 @@ QString unpack(const QString& path, const QString& folder)
     if (!file.open(QIODevice::ReadOnly))
         return tr("打不开 %1").arg(QDir::toNativeSeparators(path));
     if (file.size() > kMaxZipBytes)
-        return tr("这不是 Win顺 的备份");
+        return tr("这不是 Luma 的备份");
     const QByteArray bytes = file.readAll();
     file.close();
     Zip zip;
     zip.reading = mz_zip_reader_init_mem(&zip.archive, bytes.constData(), static_cast<size_t>(bytes.size()), 0);
     if (!zip.reading || manifestOf(zip).isEmpty())
-        return tr("这不是 Win顺 的备份");
+        return tr("这不是 Luma 的备份");
 
     struct Entry {
         mz_uint index;

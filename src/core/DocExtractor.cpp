@@ -193,14 +193,14 @@ std::wstring DocExtractor::programPath()
         path.resize(path.size() * 2);
     }
     path.resize(path.find_last_of(L'\\') + 1);
-    return path + L"WinShunExtract.exe";
+    return path + L"LumaExtract.exe";
 }
 
 std::unique_ptr<DocExtractor::Process> DocExtractor::start()
 {
     static std::atomic<unsigned> counter {0};
     wchar_t name[96];
-    std::swprintf(name, std::size(name), L"\\\\.\\pipe\\WinShun.extract.%lu.%u.%llu", ::GetCurrentProcessId(),
+    std::swprintf(name, std::size(name), L"\\\\.\\pipe\\Luma.extract.%lu.%u.%llu", ::GetCurrentProcessId(),
         counter.fetch_add(1), static_cast<unsigned long long>(::GetTickCount64()));
     auto p = std::make_unique<Process>();
     p->pipe.reset(::CreateNamedPipeW(name, PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED | FILE_FLAG_FIRST_PIPE_INSTANCE,
@@ -420,7 +420,7 @@ DocExtractor::Result DocExtractor::extract(HANDLE file, std::uint64_t size, cons
             DWORD exitCode = STILL_ACTIVE;
             ::WaitForSingleObject(p->process.get(), 100);
             ::GetExitCodeProcess(p->process.get(), &exitCode);
-            qWarning("WinShun: the document reader %s (exit code 0x%08lx)",
+            qWarning("Luma: the document reader %s (exit code 0x%08lx)",
                 io == Io::TimedOut ? "took too long" : "stopped", exitCode);
         }
         p.reset(); // in the middle of something: ended, and replaced when needed

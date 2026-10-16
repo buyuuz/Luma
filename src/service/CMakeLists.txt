@@ -18,3 +18,6 @@ target_link_libraries(WinShunService PRIVATE winshun_options advapi32 user32)
 set_target_properties(WinShunService PROPERTIES AUTOMOC OFF MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 install(TARGETS WinShunService RUNTIME DESTINATION .)
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShunService PROPERTIES OUTPUT_NAME "LumaService")

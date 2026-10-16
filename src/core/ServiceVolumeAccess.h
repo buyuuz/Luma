@@ -13,7 +13,7 @@
 namespace ws::ntfs {
 
 // The volumes through the index service (WinShunService.exe, src/service),
-// over its pipe: for a Win顺 that runs with the user's normal rights. Each
+// over its pipe: for a Luma that runs with the user's normal rights. Each
 // MFT read, journal query, journal followed and CloseVolume is a connection
 // of its own (VolumeProtocol.h), so the sources here are independent of one
 // another and of this object, which only keeps the pipe's name.

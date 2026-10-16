@@ -31,3 +31,6 @@ set_target_properties(WinShunMcp PROPERTIES WIN32_EXECUTABLE OFF)
 target_link_libraries(WinShunMcp PRIVATE wsmcp_proto)
 
 install(TARGETS WinShunMcp RUNTIME DESTINATION .)
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShunMcp PROPERTIES OUTPUT_NAME "LumaMcp")

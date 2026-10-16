@@ -1,14 +1,14 @@
 // WinShunTap.dll: a XAML diagnostics "TAP" that Windows loads into explorer.exe
-// for Win顺 (platform/TaskbarStartGap asks for it). It does one thing: puts a
+// for Luma (platform/TaskbarStartGap asks for it). It does one thing: puts a
 // right Margin on the taskbar's Start button (Taskbar.ExperienceToggleButton,
 // AutomationId "StartButton") of the PRIMARY taskbar, so the app icons move
 // right and the search box has room next to Start. The margin comes in over
 // a shared-memory channel (TapProtocol.h); it goes back to the default when
-// Win顺 asks, or by itself when the Win顺 process ends.
+// Luma asks, or by itself when the Luma process ends.
 //
 // Entered by Windows on the XAML thread it was attached to (SetSite), then by
 // the visual tree callbacks on that thread. Its own worker thread only waits
-// on the channel and on Win顺's process handle and hands work to the XAML
+// on the channel and on Luma's process handle and hands work to the XAML
 // thread through its dispatcher queue: XAML objects are touched on that
 // thread alone. Every entry point is guarded (C++ and SEH): nothing of ours
 // may bring Explorer down. Never unloads (DllCanUnloadNow: S_FALSE).
@@ -59,7 +59,7 @@ void trace(const wchar_t* format, ...)
     va_start(args, format);
     std::vswprintf(line, 512, format, args);
     va_end(args);
-    std::wstring out = L"[WinShunTap] ";
+    std::wstring out = L"[LumaTap] ";
     out += line;
     out += L"\n";
     ::OutputDebugStringW(out.c_str());
@@ -254,7 +254,7 @@ private:
     }
 
     // The worker: advises (off the XAML thread), then waits for requests and
-    // for the Win顺 process to end.
+    // for the Luma process to end.
     void work()
     {
         const HRESULT advised = m_tree->AdviseVisualTreeChange(this);
@@ -271,7 +271,7 @@ private:
             if (woke == WAIT_OBJECT_0 + 1) {
                 takeRequest();
             } else if (woke == WAIT_OBJECT_0 + 2) {
-                trace(L"Win顺 (pid %lu) ended: margin back to the default", m_clientPid);
+                trace(L"Luma (pid %lu) ended: margin back to the default", m_clientPid);
                 dropClient();
                 post([self = get_strong()] { self->apply(0, 0); });
             }
@@ -280,7 +280,7 @@ private:
 
     void takeRequest()
     {
-        // A copy: Win顺 may write again while this one is handled.
+        // A copy: Luma may write again while this one is handled.
         const uint32_t seq = m_shared->requestSeq;
         const int32_t centi = m_shared->marginCentiDips;
         const uint32_t pid = m_shared->clientPid;
@@ -446,7 +446,7 @@ private:
     }
 
     // Puts `centi` hundredths of a DIP of right margin on the Start button
-    // (0: the local value cleared, the style's own back), answers Win顺.
+    // (0: the local value cleared, the style's own back), answers Luma.
     void apply(uint32_t seq, int32_t centi)
     {
         m_wantedCentiDips = centi;
@@ -487,7 +487,7 @@ private:
     HANDLE m_ack = nullptr;
     HANDLE m_stop = nullptr;
     std::thread m_worker;
-    HANDLE m_client = nullptr; // Win顺's process
+    HANDLE m_client = nullptr; // Luma's process
     DWORD m_clientPid = 0;
     uint64_t m_clientHandleValue = 0;
 

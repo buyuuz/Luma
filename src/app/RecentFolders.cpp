@@ -105,7 +105,7 @@ QString folderOf(const QString& path, const LocalDrives& drives)
 QStringList recent(const QStringList& history, int max)
 {
     const LocalDrives drives;
-    // The folders of what was opened through Win顺 (or the folders themselves).
+    // The folders of what was opened through Luma (or the folders themselves).
     QStringList ours;
     for (const QString& item : history) {
         if (ours.size() >= max)

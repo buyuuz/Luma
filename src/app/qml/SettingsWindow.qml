@@ -17,7 +17,7 @@ Window {
     readonly property var transparencies: ["off", "on"]
     readonly property var dialogBarPlaces: ["auto", "below", "left", "right"]
     readonly property var pages: [
-        { title: qsTr("打开 Win顺"), glyph: "" }, // Keyboard
+        { title: qsTr("打开 Luma"), glyph: "" }, // Keyboard
         { title: qsTr("外观"), glyph: "\uE771" }, // Personalize
         { title: qsTr("搜索范围"), glyph: "" }, // Folder
         { title: qsTr("结果列表"), glyph: "\uE8FD" }, // BulletedList
@@ -90,7 +90,7 @@ Window {
     // colour: Qt clears with it unpremultiplied, and a light one comes out
     // white.
     color: Theme.backdrop && SystemTheme.materials && window.active ? "transparent" : Theme.page
-    title: qsTr("设置") // shown as "设置 - Win顺"
+    title: qsTr("设置") // shown as "设置 - Luma"
     flags: Qt.Window | Qt.FramelessWindowHint // the title bar is ours (see WindowFrame)
 
     // Forcing it onto contentItem would hand it straight back to the item
@@ -101,7 +101,7 @@ Window {
     }
 
     // The taskbar button is pinned, Windows' search hidden, a file manager
-    // installed, outside Win顺: looked at again when the user comes back.
+    // installed, outside Luma: looked at again when the user comes back.
     onActiveChanged: {
         if (active) {
             editor.refreshTaskbarState()
@@ -290,7 +290,7 @@ Window {
     function showClipboardPage() { showPage(clipboardPage) } // App::showClipboardSettings
     function showWebPage() { showPage(webPage) } // App::showWebSettings
     function showFileTypesPage() { goTo(fileTypesRow) } // App::showFileTypeSettings: the launcher strip's +
-    // Win顺 restarted from here (App::restart, --settings-at): back where it
+    // Luma restarted from here (App::restart, --settings-at): back where it
     // was, "page,tab"; after 索引方式 changed the rights it runs with, that row.
     function place() { return currentPage + "," + currentTab }
     function showPlace(where) {
@@ -627,7 +627,7 @@ Window {
                 spacing: 5
 
                 Text {
-                    text: qsTr("Win顺 %1").arg(window.updater.currentVersion)
+                    text: qsTr("Luma %1").arg(window.updater.currentVersion)
                     color: window.warm ? WarmPalette.inkSoft : Theme.faint
                     font.pixelSize: Theme.fontCaption
                 }
@@ -995,10 +995,10 @@ Window {
                 id: taskbarSteps
 
                 // The four steps, in order, each ticked off once done, here
-                // or outside Win顺 (the editor watches the taskbar and the
+                // or outside Luma (the editor watches the taskbar and the
                 // setting of Windows' search box). Windows' own search may
-                // stay next to Win顺's; hiding it is only recommended. The
-                // first: Win顺's box on the taskbar, or on Windows 10, which
+                // stay next to Luma's; hiding it is only recommended. The
+                // first: Luma's box on the taskbar, or on Windows 10, which
                 // has no room for one, its pinned button.
                 readonly property var done: [window.editor.searchBoxSupported
                                                  ? window.editor.taskbarSearchBox && window.editor.searchBoxShown
@@ -1013,23 +1013,23 @@ Window {
                 width: parent.width
                 title: qsTr("代替任务栏上的 Windows 搜索")
                 note: doneCount === done.length
-                      ? qsTr("都设好了：任务栏、Win+S 和开始菜单都用 Win顺 搜索。")
+                      ? qsTr("都设好了：任务栏、Win+S 和开始菜单都用 Luma 搜索。")
                       : qsTr("按顺序做完这四步，做好的会自动打勾。已完成 %1/4。")
                         .arg(doneCount)
 
                 SettingRow {
                     id: taskbarButtonRow
 
-                    property bool missing: false // no WinShunSearch.exe next to Win顺
+                    property bool missing: false // no LumaSearch.exe next to Luma
                     readonly property bool boxes: window.editor.searchBoxSupported // Windows 11; else the button alone
                     readonly property bool boxOn: window.editor.taskbarSearchBox
                     readonly property bool pinned: window.editor.taskbarButtonPinned
 
-                    title: boxes ? qsTr("1. 在任务栏上放 Win顺 的搜索框") : qsTr("1. 把 Win顺 按钮固定到任务栏")
+                    title: boxes ? qsTr("1. 在任务栏上放 Luma 的搜索框") : qsTr("1. 把 Luma 按钮固定到任务栏")
                     keywords: qsTr("固定;任务栏;按钮;搜索框;pin;taskbar").split(";")
                     description: {
                         if (!boxes)
-                            return pinned ? qsTr("已固定，点它就能打开 Win顺")
+                            return pinned ? qsTr("已固定，点它就能打开 Luma")
                                           : qsTr("点“固定”后选“是”；打开的若是文件夹，右键其中的图标选“固定到任务栏”")
                         if (!boxOn)
                             return qsTr("放在任务栏图标旁边，点它直接打字")
@@ -1074,7 +1074,7 @@ Window {
 
                     body: Text {
                         width: parent.width
-                        text: qsTr("没找到 WinShunSearch.exe，重新安装 Win顺 就有了")
+                        text: qsTr("没找到 LumaSearch.exe，重新安装 Luma 就有了")
                         color: Theme.danger
                         font.pixelSize: Theme.fontCaption
                         wrapMode: Text.Wrap
@@ -1143,7 +1143,7 @@ Window {
                 }
 
                 SettingRow {
-                    title: qsTr("3. 用 Win+S 打开 Win顺")
+                    title: qsTr("3. 用 Win+S 打开 Luma")
                     keywords: qsTr("Win+S;Windows 搜索;截图;Win+Shift+S").split(";")
                     description: qsTr("切换时资源管理器会重启，打开的文件夹窗口会关闭")
 
@@ -1198,7 +1198,7 @@ Window {
                 }
 
                 SettingRow {
-                    title: qsTr("4. 在开始菜单里打字，也用 Win顺 搜索")
+                    title: qsTr("4. 在开始菜单里打字，也用 Luma 搜索")
                     keywords: qsTr("开始菜单;打字;Win;start menu").split(";")
                     description: qsTr("想用 Windows 自带的搜索时，先按一下左 Alt 再打字")
 
@@ -1235,7 +1235,7 @@ Window {
                 }
 
                 SettingRow {
-                    title: qsTr("资源管理器右键“用 Win顺 搜索此处”")
+                    title: qsTr("资源管理器右键“用 Luma 搜索此处”")
                     keywords: qsTr("右键;右键菜单;上下文菜单;搜索此文件夹;在此搜索;资源管理器;context menu").split(";")
                     description: qsTr("右键文件夹、文件夹空白处或磁盘，只在那里面搜；Windows 11 在“显示更多选项”里")
 
@@ -1504,7 +1504,7 @@ Window {
                 SettingRow {
                     title: qsTr("任务栏图标")
                     keywords: qsTr("托盘;通知区域;单色;黑白;彩色;图标;tray;icon").split(";")
-                    description: qsTr("通知区域和任务栏搜索框里的 Win顺 图标。单色随任务栏的浅色、深色变成黑或白，和系统图标一致")
+                    description: qsTr("通知区域和任务栏搜索框里的 Luma 图标。单色随任务栏的浅色、深色变成黑或白，和系统图标一致")
 
                     ScopeTabs {
                         labels: [qsTr("彩色"), qsTr("单色")]
@@ -1702,7 +1702,7 @@ Window {
                 SettingRow {
                     title: qsTr("启动时检查文件变化")
                     keywords: qsTr("重新扫描;扫描;rescan").split(";")
-                    description: qsTr("补上 U 盘等非 NTFS 磁盘在 Win顺 关闭期间的改动")
+                    description: qsTr("补上 U 盘等非 NTFS 磁盘在 Luma 关闭期间的改动")
 
                     ToggleSwitch {
                         checked: window.editor.rescanOnStartup
@@ -1732,10 +1732,10 @@ Window {
                         let what
                         switch (chosen) {
                         case "service":
-                            what = qsTr("通过索引服务读取磁盘的主文件表和变更日志，Win顺 以普通权限运行")
+                            what = qsTr("通过索引服务读取磁盘的主文件表和变更日志，Luma 以普通权限运行")
                             break
                         case "direct":
-                            what = qsTr("Win顺 以管理员身份运行，自己读取主文件表和变更日志；开机自启也以管理员身份")
+                            what = qsTr("Luma 以管理员身份运行，自己读取主文件表和变更日志；开机自启也以管理员身份")
                             break
                         case "walk":
                             what = qsTr("不需要任何权限，逐个文件夹遍历，建索引慢一些")
@@ -1782,8 +1782,8 @@ Window {
                     title: qsTr("便携版的索引服务")
                     keywords: qsTr("便携;安装服务;卸载服务;索引服务;portable;service").split(";")
                     description: window.editor.indexServiceInstalled
-                                 ? qsTr("已安装 Windows 服务“Win顺 索引服务”，它替普通权限的 Win顺 读取主文件表")
-                                 : qsTr("安装一个 Windows 服务，替普通权限的 Win顺 读取主文件表，建索引快得多；需要管理员权限一次")
+                                 ? qsTr("已安装 Windows 服务“Luma 索引服务”，它替普通权限的 Luma 读取主文件表")
+                                 : qsTr("安装一个 Windows 服务，替普通权限的 Luma 读取主文件表，建索引快得多；需要管理员权限一次")
                     bodyShown: window.editor.indexServiceMessage.length > 0
 
                     FlatButton {
@@ -2207,7 +2207,7 @@ Window {
                     title: qsTr("文件内容搜索")
                     keywords: qsTr("内容;全文;文字;开关;关闭;content").split(";")
                     unlocks: [documentsRow, extensionsRow, lowPriorityRow, contentIndexRow]
-                    description: qsTr("关掉后搜索框里不再有“内容”，“全部”只按名字找；Win顺 不读取文件里的文字，内容索引也会清空")
+                    description: qsTr("关掉后搜索框里不再有“内容”，“全部”只按名字找；Luma 不读取文件里的文字，内容索引也会清空")
 
                     ToggleSwitch {
                         checked: window.editor.contentSearch
@@ -2729,7 +2729,7 @@ Window {
                             width: parent.width
                             text: {
                                 switch (window.editor.winVState) {
-                                case "on": return qsTr("已生效：Win+V 打开 Win顺的剪贴板")
+                                case "on": return qsTr("已生效：Win+V 打开 Luma的剪贴板")
                                 case "waiting": return qsTr("资源管理器重启后生效，下次登录 Windows 时也会自动生效")
                                 case "releasing": return qsTr("资源管理器重启后，Win+V 回到 Windows 自带的剪贴板")
                                 case "failed": return qsTr("没能修改 Windows 的设置，Win+V 仍是 Windows 自带的剪贴板")
@@ -2963,7 +2963,7 @@ Window {
                 SettingRow {
                     title: qsTr("恢复设置")
                     keywords: qsTr("恢复;还原;导入;换电脑;restore;import").split(";")
-                    description: qsTr("从一份备份恢复，Win顺 随后重启；现在的设置会先备份一份，恢复错了还能换回来")
+                    description: qsTr("从一份备份恢复，Luma 随后重启；现在的设置会先备份一份，恢复错了还能换回来")
 
                     FlatButton {
                         visible: window.editor.backupFolder.length > 0
@@ -2987,7 +2987,7 @@ Window {
                     title: qsTr("界面绘制方式")
                     keywords: qsTr("渲染;GPU;显卡;内存;模糊;清晰;renderer").split(";")
                     description: window.editor.restartRequired
-                                 ? qsTr("重启 Win顺后生效")
+                                 ? qsTr("重启 Luma后生效")
                                  : qsTr("“省内存”少占约 50 MB，但文字偏模糊")
 
                     FlatButton { // sized like one of the tabs next to it

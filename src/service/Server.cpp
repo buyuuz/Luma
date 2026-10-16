@@ -35,7 +35,7 @@ constexpr DWORD kStopWaitMs = 15'000;
 
 namespace {
 
-constexpr wchar_t kWindowClass[] = L"WinShunService.DeviceWatch";
+constexpr wchar_t kWindowClass[] = L"LumaService.DeviceWatch";
 
 LRESULT CALLBACK watchWindowProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam)
 {

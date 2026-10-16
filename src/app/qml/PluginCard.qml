@@ -9,7 +9,7 @@ import WinShun
 // asking for its settings): its keywords to change (with who has one it
 // cannot use), 给 AI 用, its permissions (what Windows enforces ticked, the
 // rest "仅声明"), the settings its manifest declares, each drawn with
-// Win顺's own controls (the plugin design, §4.7), and its version and
+// Luma's own controls (the plugin design, §4.7), and its version and
 // author. Built like ShareCard. Whether it is unfolded is the section's
 // (PluginsSection.expandedIds): the list is reset when plugins come or go.
 Rectangle {
@@ -151,7 +151,7 @@ Rectangle {
                         width: Math.min(implicitWidth, parent.width - (bundledTag.visible ? bundledTag.width + 8 : 0)
                                                         - (aiTag.visible ? aiTag.width + 8 : 0))
                     }
-                    Tag { // 随包: it came with Win顺
+                    Tag { // 随包: it came with Luma
                         id: bundledTag
                         visible: card.bundled
                         text: qsTr("随包")
@@ -505,7 +505,7 @@ Rectangle {
                             size: 12
                             color: Theme.success
                         }
-                        Rectangle { // declared only: Win顺 cannot hold the plugin to it
+                        Rectangle { // declared only: Luma cannot hold the plugin to it
                             id: declaredTag
                             x: 6
                             y: 3

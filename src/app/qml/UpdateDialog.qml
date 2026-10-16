@@ -91,7 +91,7 @@ Item {
                     Text {
                         width: parent.width
                         text: dialog.updater.checking ? qsTr("正在检查更新…")
-                            : card.newer ? qsTr("Win顺 %1 可以更新了").arg(dialog.updater.availableVersion)
+                            : card.newer ? qsTr("Luma %1 可以更新了").arg(dialog.updater.availableVersion)
                             : dialog.updater.problem.length > 0 ? qsTr("检查更新失败")
                             : qsTr("已经是最新版本")
                         color: Theme.text
@@ -103,9 +103,9 @@ Item {
                         width: parent.width
                         visible: text.length > 0
                         text: dialog.updater.checking ? ""
-                            : card.newer ? qsTr("你现在用的是 %1。下载安装程序（Setup）运行就行，它会先关掉正在运行的 Win顺，设置和索引都会保留。").arg(dialog.updater.currentVersion)
+                            : card.newer ? qsTr("你现在用的是 %1。下载安装程序（Setup）运行就行，它会先关掉正在运行的 Luma，设置和索引都会保留。").arg(dialog.updater.currentVersion)
                             : dialog.updater.problem.length > 0 ? dialog.updater.problem
-                            : qsTr("Win顺 %1 是目前最新的版本。").arg(dialog.updater.currentVersion)
+                            : qsTr("Luma %1 是目前最新的版本。").arg(dialog.updater.currentVersion)
                         color: !card.newer && dialog.updater.problem.length > 0 ? Theme.danger : Theme.subtext
                         font.pixelSize: Theme.fontCaption
                         wrapMode: Text.Wrap

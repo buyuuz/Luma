@@ -379,8 +379,8 @@ double recency(qint64 last, qint64 now)
 bool isWinShun(const AppInfo& app)
 {
     const QString file = app.target.mid(app.target.lastIndexOf(u'\\') + 1);
-    return file.compare(u"WinShun.exe", Qt::CaseInsensitive) == 0
-        || file.compare(u"WinShunSearch.exe", Qt::CaseInsensitive) == 0;
+    return file.compare(u"Luma.exe", Qt::CaseInsensitive) == 0
+        || file.compare(u"LumaSearch.exe", Qt::CaseInsensitive) == 0;
 }
 
 } // namespace

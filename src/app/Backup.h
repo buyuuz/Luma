@@ -11,11 +11,11 @@ namespace ws {
 // Backing up the settings (GitHub #17; what a backup holds: BackupFiles.h)
 // into a folder the user chose. One in a synced folder (OneDrive, 坚果云, a
 // WebDAV drive mounted with alist, RaiDrive or rclone) takes them to the
-// cloud as well: Win顺 itself speaks no WebDAV. Automatic while a folder is
+// cloud as well: Luma itself speaks no WebDAV. Automatic while a folder is
 // set: a few minutes after start, a minute after the settings change, and
 // every half hour; each time only when something changed since the newest
 // backup there. Restoring unpacks a backup beside the data and restarts
-// Win顺, which puts it in place before reading anything (applyRestored).
+// Luma, which puts it in place before reading anything (applyRestored).
 // GUI thread; the files are read and written on a thread of their own.
 class Backup : public QObject {
     Q_OBJECT
@@ -39,7 +39,7 @@ public:
     Q_INVOKABLE void backUpNow();
     Q_INVOKABLE void openFolder();
     // Asks which backup (a dialog owned by `window`), backs up what there is
-    // now, then has Win顺 restart with the one chosen.
+    // now, then has Luma restart with the one chosen.
     Q_INVOKABLE void restore(QWindow* window);
 
     // At start, before anything reads the settings: a backup being restored

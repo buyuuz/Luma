@@ -18,12 +18,12 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "CompanyName", "WinShun"
-            VALUE "FileDescription", "Win顺"
+            VALUE "CompanyName", "Luma"
+            VALUE "FileDescription", "Luma"
             VALUE "FileVersion", WINSHUN_VERSION
-            VALUE "InternalName", "WinShun"
-            VALUE "OriginalFilename", "WinShun.exe"
-            VALUE "ProductName", "Win顺 · WinShun"
+            VALUE "InternalName", "Luma"
+            VALUE "OriginalFilename", "Luma.exe"
+            VALUE "ProductName", "Luma · Luma"
             VALUE "ProductVersion", WINSHUN_VERSION
         END
     END

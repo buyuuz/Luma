@@ -1,6 +1,6 @@
-﻿; Win顺 installer (Inno Setup 6.5 or later: the Windows 11 wizard style with
+; Luma installer (Inno Setup 6.5 or later: the Windows 11 wizard style with
 ; dark mode). Built by scripts/release.ps1, which passes:
-;   /DAppVersion=0.2.1  /DSourceDir=<dist\WinShun>  /DOutputDir=<dist>
+;   /DAppVersion=0.2.1  /DSourceDir=<dist\Luma>  /DOutputDir=<dist>
 ; Upgrading is installing again: the same AppId replaces the old version in
 ; place, and the user's settings and index (in %APPDATA% / %LOCALAPPDATA%)
 ; are not touched.
@@ -9,40 +9,40 @@
   #error Pass /DAppVersion=x.y.z
 #endif
 #ifndef SourceDir
-  #define SourceDir "..\dist\WinShun"
+  #define SourceDir "..\dist\Luma"
 #endif
 #ifndef OutputDir
   #define OutputDir "..\dist"
 #endif
 
-#define AppName "Win顺"
-#define AppExe "WinShun.exe"
-#define Repository "https://github.com/LingCore/WinShun"
+#define AppName "Luma"
+#define AppExe "Luma.exe"
+#define Repository "https://github.com/buyuuz/Luma"
 
 [Setup]
 ; Never change the AppId: it is how a new version finds the old one.
-AppId={{C582F95C-EAF2-4AF2-961D-E35C4506652A}
+AppId={{246D5E49-BA1D-4BD4-9675-4CFA16EC9F7D}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppVerName={#AppName} {#AppVersion}
-AppPublisher=LingCore
+AppPublisher=buyuuz
 AppPublisherURL={#Repository}
 AppSupportURL={#Repository}/issues
 AppUpdatesURL={#Repository}/releases
 AppCopyright=Copyright © 2026 LingCore
 VersionInfoVersion={#AppVersion}
-VersionInfoProductName={#AppName} · WinShun
+VersionInfoProductName={#AppName}
 VersionInfoDescription={#AppName} Setup
-VersionInfoCompany=LingCore
+VersionInfoCompany=buyuuz
 
 ; Installed for all users under Program Files: the index service (which
-; reads the NTFS master file tables for WinShun, GitHub #21) is registered
-; once, by this installer; WinShun itself runs with the user's normal rights.
+; reads the NTFS master file tables for Luma, GitHub #21) is registered
+; once, by this installer; Luma itself runs with the user's normal rights.
 PrivilegesRequired=admin
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
-DefaultDirName={autopf}\WinShun
+DefaultDirName={autopf}\Luma
 DisableProgramGroupPage=yes
 DisableWelcomePage=yes
 DisableReadyPage=yes
@@ -53,7 +53,7 @@ CloseApplications=no
 RestartApplications=no
 
 WizardStyle=modern dynamic windows11
-; Win顺's own pictures, light and dark (tools/make_installer_images.py).
+; Luma's own pictures, light and dark (tools/make_installer_images.py).
 WizardImageFile=wizard-light.png
 WizardImageFileDynamicDark=wizard-dark.png
 WizardSmallImageFile=wizard-small.png
@@ -66,7 +66,7 @@ ShowLanguageDialog=no
 LanguageDetectionMethod=uilanguage
 
 OutputDir={#OutputDir}
-OutputBaseFilename=WinShun-{#AppVersion}-x64-setup
+OutputBaseFilename=Luma-{#AppVersion}-x64-setup
 Compression=lzma2/ultra64
 SolidCompression=yes
 
@@ -75,38 +75,38 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "chinesesimplified"; MessagesFile: "ChineseSimplified.isl"
 
 [CustomMessages]
-english.RemoveData=Also delete WinShun's settings, file index and search history?%n%nKeep them if you are going to install WinShun again.
-chinesesimplified.RemoveData=要同时删除 Win顺 的设置、文件索引和搜索记录吗？%n%n如果还会再装 Win顺，可以保留它们。
-; The Start menu shortcut users pin to the taskbar (WinShunSearch.exe).
-english.SearchShortcut=WinShun Search
-chinesesimplified.SearchShortcut=Win顺 搜索
+english.RemoveData=Also delete Luma's settings, file index and search history?%n%nKeep them if you are going to install Luma again.
+chinesesimplified.RemoveData=要同时删除 Luma 的设置、文件索引和搜索记录吗？%n%n如果还会再装 Luma，可以保留它们。
+; The Start menu shortcut users pin to the taskbar (LumaSearch.exe).
+english.SearchShortcut=Luma Search
+chinesesimplified.SearchShortcut=Luma 搜索
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-; Everything build.ps1 -Deploy put in dist\WinShun, the index service
-; WinShunService.exe (src/service) among them: it is stopped in
+; Everything build.ps1 -Deploy put in dist\Luma, the index service
+; LumaService.exe (src/service) among them: it is stopped in
 ; PrepareToInstall before the files are replaced, and registered again in [Run].
 Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{autoprograms}\{#AppName}"; Filename: "{app}\{#AppExe}"
-; The taskbar button. Its AppUserModelID, the one WinShunSearch.exe sets for
-; itself, lets it ask Windows to be pinned (settings -> 打开 Win顺 -> 固定).
-Name: "{autoprograms}\{cm:SearchShortcut}"; Filename: "{app}\WinShunSearch.exe"; AppUserModelID: "LingCore.WinShun.Search"
+; The taskbar button. Its AppUserModelID, the one LumaSearch.exe sets for
+; itself, lets it ask Windows to be pinned (settings -> 打开 Luma -> 固定).
+Name: "{autoprograms}\{cm:SearchShortcut}"; Filename: "{app}\LumaSearch.exe"; AppUserModelID: "buyuuz.Luma.Search"
 Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; Tasks: desktopicon
 
 [Run]
-; The index service (GitHub #21): registered as the service "WinShun"
+; The index service (GitHub #21): registered as the service "Luma"
 ; (LocalSystem, automatic start) and started, by the installer's own
 ; (elevated) rights; installed again, it is pointed at the new files.
-Filename: "{app}\WinShunService.exe"; Parameters: "--install"; Flags: runhidden waituntilterminated runascurrentuser
-; WinShunTap.dll (the room right of Start) copied to {commonappdata}\WinShun\tap,
-; writable by administrators only: WinShun cannot do that with normal rights.
+Filename: "{app}\LumaService.exe"; Parameters: "--install"; Flags: runhidden waituntilterminated runascurrentuser
+; LumaTap.dll (the room right of Start) copied to {commonappdata}\Luma\tap,
+; writable by administrators only: Luma cannot do that with normal rights.
 Filename: "{app}\{#AppExe}"; Parameters: "--stage-tap"; Flags: runhidden waituntilterminated runascurrentuser
 ; The rest as the user who started Setup, with normal rights (runasoriginaluser):
-; WinShun runs so, and its autostart task and settings are that user's, not
+; Luma runs so, and its autostart task and settings are that user's, not
 ; the administrator's who answered UAC for a standard user (GitHub #21).
 ; An autostart set up earlier (a portable copy, the version before) now
 ; starts this copy; PrepareToInstall removed this copy's old task, which
@@ -123,10 +123,10 @@ Filename: "{app}\{#AppExe}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags
 
 [Code]
 const
-  MessageWindowClass = 'WinShun.MessageWindow';
+  MessageWindowClass = 'Luma.MessageWindow';
   WM_CLOSE = $0010;
 
-function WinShunRunning(): Boolean;
+function LumaRunning(): Boolean;
 var
   ResultCode: Integer;
 begin
@@ -134,41 +134,41 @@ begin
     '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0);
 end;
 
-// Asks a running WinShun to quit, the way it saves its index first: with
+// Asks a running Luma to quit, the way it saves its index first: with
 // --quit through the installed copy, or WM_CLOSE to its message window (a
-// portable copy elsewhere; WinShun 0.2.1 and later). One still running after
+// portable copy elsewhere; Luma 0.2.1 and later). One still running after
 // a while is ended.
-// First the MCP relays (WinShunMcp.exe): an AI client (Claude, Cursor, VS
+// First the MCP relays (LumaMcp.exe): an AI client (Claude, Cursor, VS
 // Code) keeps one running for as long as it is open, with Qt6Core.dll and
 // msvcp140.dll from the install folder loaded, so those could not be
-// replaced (DeleteFile, code 5). Ended before WinShun, too: one would start
-// WinShun again through its autostart task when a tool is called.
-procedure CloseWinShun(Exe: String);
+// replaced (DeleteFile, code 5). Ended before Luma, too: one would start
+// Luma again through its autostart task when a tool is called.
+procedure CloseLuma(Exe: String);
 var
   ResultCode, Waited: Integer;
 begin
-  if Exec(ExpandConstant('{sys}\taskkill.exe'), '/F /IM WinShunMcp.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0) then
+  if Exec(ExpandConstant('{sys}\taskkill.exe'), '/F /IM LumaMcp.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0) then
     Sleep(500); // for the files to be let go
-  if not WinShunRunning() then
+  if not LumaRunning() then
     exit;
   if FileExists(Exe) then
     Exec(Exe, '--quit', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
   else
     PostMessage(FindWindowByClassName(MessageWindowClass), WM_CLOSE, 0, 0);
   Waited := 0;
-  while WinShunRunning() and (Waited < 15000) do
+  while LumaRunning() and (Waited < 15000) do
   begin
     Sleep(500);
     Waited := Waited + 500;
   end;
-  if WinShunRunning() then
+  if LumaRunning() then
   begin
     Exec(ExpandConstant('{sys}\taskkill.exe'), '/F /IM {#AppExe}', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     Sleep(1000);
   end;
 end;
 
-// Started in the tray as the files were in place ([Run]); "run Win顺" left
+// Started in the tray as the files were in place ([Run]); "run Luma" left
 // unticked on the last page, it goes again. A silent install leaves it
 // running, as it was before an update.
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -180,19 +180,19 @@ begin
     Exec(ExpandConstant('{app}\{#AppExe}'), '--quit', '', SW_HIDE, ewNoWait, ResultCode);
 end;
 
-// Stops the index service (the service "WinShun"), so that its file can be
+// Stops the index service (the service "Luma"), so that its file can be
 // replaced; waits up to 15 s for it to stop. [Run] starts it again from the
 // new files. Nothing to do when it is not installed (a first install).
 procedure StopIndexService();
 var
   ResultCode, Waited: Integer;
 begin
-  if not Exec(ExpandConstant('{sys}\sc.exe'), 'stop WinShun', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  if not Exec(ExpandConstant('{sys}\sc.exe'), 'stop Luma', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
     exit;
   if ResultCode <> 0 then
     exit; // not installed (1060), or not running (1062)
   Waited := 0;
-  while (Waited < 15000) and Exec(ExpandConstant('{cmd}'), '/C sc query WinShun | find "STOPPED"', '', SW_HIDE,
+  while (Waited < 15000) and Exec(ExpandConstant('{cmd}'), '/C sc query Luma | find "STOPPED"', '', SW_HIDE,
           ewWaitUntilTerminated, ResultCode) and (ResultCode <> 0) do
   begin
     Sleep(500);
@@ -200,7 +200,7 @@ begin
   end;
 end;
 
-// Its autostart: the logon task WinShun creates itself. Only when it starts
+// Its autostart: the logon task Luma creates itself. Only when it starts
 // this copy; a portable copy elsewhere keeps its own. True when one went.
 function RemoveAutostart(): Boolean;
 var
@@ -209,11 +209,11 @@ var
   ResultCode: Integer;
 begin
   Result := False;
-  ListFile := AddBackslash(GetTempDir()) + 'WinShun-task.txt';
-  if Exec(ExpandConstant('{cmd}'), '/C schtasks /Query /TN WinShun /V /FO LIST > "' + ListFile + '"', '',
+  ListFile := AddBackslash(GetTempDir()) + 'Luma-task.txt';
+  if Exec(ExpandConstant('{cmd}'), '/C schtasks /Query /TN Luma /V /FO LIST > "' + ListFile + '"', '',
        SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0) and LoadStringFromFile(ListFile, Listing) then
     if Pos(Lowercase(ExpandConstant('{app}\{#AppExe}')), Lowercase(String(Listing))) > 0 then
-      Result := Exec(ExpandConstant('{sys}\schtasks.exe'), '/Delete /TN WinShun /F', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+      Result := Exec(ExpandConstant('{sys}\schtasks.exe'), '/Delete /TN Luma /F', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
         and (ResultCode = 0);
   DeleteFile(ListFile);
 end;
@@ -234,7 +234,7 @@ end;
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 begin
   // The installed copy if there is one; a portable copy is ended.
-  CloseWinShun(ExpandConstant('{app}\{#AppExe}'));
+  CloseLuma(ExpandConstant('{app}\{#AppExe}'));
   StopIndexService();
   // This copy's autostart task of old (GitHub #21): registered elevated by
   // the version before, and by whoever answered UAC then, which for a
@@ -246,15 +246,15 @@ begin
 end;
 
 // Win+V back to Windows' clipboard history, and Win+S (with Win+Shift+S) to
-// its search, if WinShun had taken them over: the letter it put into
+// its search, if Luma had taken them over: the letter it put into
 // Explorer's DisabledHotkeys goes (Explorer reads that when it starts). A
-// letter there without WinShun having taken the key belongs to someone else.
+// letter there without Luma having taken the key belongs to someone else.
 procedure GiveBackKey(Section, Name, Key: String);
 var
   Keys: String;
   I: Integer;
 begin
-  if CompareText(GetIniString(Section, Name, 'false', ExpandConstant('{userappdata}\WinShun\WinShun.ini')), 'true') <> 0 then
+  if CompareText(GetIniString(Section, Name, 'false', ExpandConstant('{userappdata}\Luma\Luma.ini')), 'true') <> 0 then
     exit;
   if not RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', 'DisabledHotkeys', Keys) then
     exit;
@@ -278,7 +278,7 @@ var
   Line: String;
 begin
   Result := '';
-  if not LoadStringsFromFile(ExpandConstant('{userappdata}\WinShun\WinShun.ini'), Lines) then
+  if not LoadStringsFromFile(ExpandConstant('{userappdata}\Luma\Luma.ini'), Lines) then
     exit;
   InIndex := False;
   for I := 0 to GetArrayLength(Lines) - 1 do
@@ -301,7 +301,7 @@ begin
   end;
 end;
 
-// Only Win顺's own files there go (the folder itself once it is empty):
+// Only Luma's own files there go (the folder itself once it is empty):
 // it may be a folder the user picked.
 procedure RemoveIndexFolder(Folder: String);
 begin
@@ -314,20 +314,20 @@ begin
   RemoveDir(Folder);
 end;
 
-// Explorer's right-click "用 Win顺 搜索此处" (src/app/platform/ShellMenu.cpp),
-// when it runs this copy's WinShunSearch.exe: a portable copy's stays.
+// Explorer's right-click "用 Luma 搜索此处" (src/app/platform/ShellMenu.cpp),
+// when it runs this copy's LumaSearch.exe: a portable copy's stays.
 procedure RemoveExplorerMenu();
 var
   Keys: array[0..2] of String;
   Command: String;
   I: Integer;
 begin
-  Keys[0] := 'Software\Classes\Directory\shell\WinShun.SearchHere';
-  Keys[1] := 'Software\Classes\Directory\Background\shell\WinShun.SearchHere';
-  Keys[2] := 'Software\Classes\Drive\shell\WinShun.SearchHere';
+  Keys[0] := 'Software\Classes\Directory\shell\Luma.SearchHere';
+  Keys[1] := 'Software\Classes\Directory\Background\shell\Luma.SearchHere';
+  Keys[2] := 'Software\Classes\Drive\shell\Luma.SearchHere';
   for I := 0 to 2 do
     if RegQueryStringValue(HKCU, Keys[I] + '\command', '', Command)
-      and (Pos(Lowercase(ExpandConstant('{app}\WinShunSearch.exe')), Lowercase(Command)) > 0) then
+      and (Pos(Lowercase(ExpandConstant('{app}\LumaSearch.exe')), Lowercase(Command)) > 0) then
       RegDeleteKeyIncludingSubkeys(HKCU, Keys[I]);
 end;
 
@@ -338,26 +338,26 @@ begin
   // Once the user has confirmed, before the files go.
   if CurUninstallStep = usUninstall then
   begin
-    CloseWinShun(ExpandConstant('{app}\{#AppExe}'));
+    CloseLuma(ExpandConstant('{app}\{#AppExe}'));
     // The index service: stopped and removed (while its file is still there).
-    Exec(ExpandConstant('{app}\WinShunService.exe'), '--uninstall', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}\LumaService.exe'), '--uninstall', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     RemoveAutostart();
     RemoveExplorerMenu();
     GiveBackKey('Clipboard', 'WinV', 'V');
     GiveBackKey('Taskbar', 'WinS', 'S');
   end;
-  // The copies of WinShunTap.dll made for Explorer (the room right of Start);
+  // The copies of LumaTap.dll made for Explorer (the room right of Start);
   // one Explorer still has loaded stays until it is gone too.
   if CurUninstallStep = usPostUninstall then
   begin
-    DelTree(ExpandConstant('{commonappdata}\WinShun\tap'), True, True, True);
-    RemoveDir(ExpandConstant('{commonappdata}\WinShun'));
+    DelTree(ExpandConstant('{commonappdata}\Luma\tap'), True, True, True);
+    RemoveDir(ExpandConstant('{commonappdata}\Luma'));
   end;
   if (CurUninstallStep = usPostUninstall) and not UninstallSilent then
     if MsgBox(CustomMessage('RemoveData'), mbConfirmation, MB_YESNO or MB_DEFBUTTON2) = IDYES then
     begin
       RemoveIndexFolder(IndexFolder()); // before the settings that name it
-      DelTree(ExpandConstant('{userappdata}\WinShun'), True, True, True);
-      DelTree(ExpandConstant('{localappdata}\WinShun'), True, True, True);
+      DelTree(ExpandConstant('{userappdata}\Luma'), True, True, True);
+      DelTree(ExpandConstant('{localappdata}\Luma'), True, True, True);
     end;
 end;

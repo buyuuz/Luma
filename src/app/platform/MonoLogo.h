@@ -7,7 +7,7 @@
 
 namespace ws {
 
-// Win顺's logo in one colour, for the taskbar (a setting): the outlines of
+// Luma's logo in one colour, for the taskbar (a setting): the outlines of
 // its four panes and the leaf's vein, as the icons Windows draws there are,
 // in the colour of the taskbar's text. Drawn at the size asked for, so it
 // stays sharp at any scaling; resources/logo.svg is the coloured original.

@@ -9,7 +9,7 @@
 
 namespace ws {
 
-// Files and folders dropped on a window from File Explorer. Win顺 runs as
+// Files and folders dropped on a window from File Explorer. Luma runs as
 // administrator and Explorer does not: Windows (UIPI) lets no OLE drag from a
 // lower process reach it, so Qt's own drop target (and a QML DropArea) never
 // hears of them. Windows' older way still works when let through: the window

@@ -80,7 +80,7 @@ struct Shared {
 inline std::wstring sectionName(DWORD explorerPid, int endpoint)
 {
     wchar_t name[64];
-    std::swprintf(name, 64, L"Local\\WinShunTap.%lu.%d", static_cast<unsigned long>(explorerPid), endpoint);
+    std::swprintf(name, 64, L"Local\\LumaTap.%lu.%d", static_cast<unsigned long>(explorerPid), endpoint);
     return name;
 }
 

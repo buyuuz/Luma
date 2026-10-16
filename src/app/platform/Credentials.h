@@ -7,10 +7,10 @@
 
 // Signing in to a server on the network, for its shares.
 //
-// Win顺 runs elevated: its network connections are not File Explorer's, and
+// Luma runs elevated: its network connections are not File Explorer's, and
 // a password typed in Explorer without "remember" does not reach it. What
 // Windows keeps in the Credential Manager does, both ways: a password saved
-// here serves Explorer too. Win顺 keeps no password itself.
+// here serves Explorer too. Luma keeps no password itself.
 namespace ws::credentials {
 
 struct Entered {

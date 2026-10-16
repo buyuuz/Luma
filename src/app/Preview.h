@@ -1,7 +1,7 @@
 #pragma once
 
 // Renders settings pages to PNG files without showing anything, for checking
-// their layout in both themes and scalings without touching the Win顺 that
+// their layout in both themes and scalings without touching the Luma that
 // is running. Two modes:
 //
 //   WinShun.exe --preview-plugins <file.png> [--dark] [--scale 1.5] [--dialog] [--page ai]
@@ -17,7 +17,7 @@
 //     page it should be). The log is <folder>\preview.log.
 //
 // Nothing of the user's is read or written (a temporary profile), and
-// nothing that reaches the running Win顺 is started: no hotkeys, hooks,
+// nothing that reaches the running Luma is started: no hotkeys, hooks,
 // clipboard listener, taskbar box, pipe server or tray icon. The
 // environment the rendering needs (the scale factor, the software renderer)
 // is set before QGuiApplication by prepare(); run() does the rest once the

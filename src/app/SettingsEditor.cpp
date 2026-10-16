@@ -69,7 +69,7 @@ bool addProgram(QStringList& list, const QString& name)
 
 } // namespace
 
-// Changed outside Win顺 (the user pins the button, hides Windows' search in
+// Changed outside Luma (the user pins the button, hides Windows' search in
 // the Settings app): read again at once, so that the steps of 代替任务栏上的
 // Windows 搜索 tick themselves off.
 struct SettingsEditor::TaskbarWatch {
@@ -195,7 +195,7 @@ namespace {
 
 // What the user should know of the number keys `keys` ("ctrl", "alt"):
 // those another program holds as global hotkeys, and those that are one of
-// Win顺's own shortcuts. Win顺 leaves both alone (numberkeys::heldMask,
+// Luma's own shortcuts. Luma leaves both alone (numberkeys::heldMask,
 // KeyRouter::heldAsHotkey), and their rows show the chord struck through.
 QString describeNumberKeys(const QString& keys, const Settings& settings)
 {
@@ -221,7 +221,7 @@ QString describeNumberKeys(const QString& keys, const Settings& settings)
         parts.append(SettingsEditor::tr("%1 是别的程序的快捷键，留给它用，对应的行不标序号。")
                          .arg(others.join(SettingsEditor::tr("、"))));
     if (!own.isEmpty())
-        parts.append(SettingsEditor::tr("%1 是你给 Win顺 设的快捷键，按它仍是打开或关闭窗口，对应的行不标序号。")
+        parts.append(SettingsEditor::tr("%1 是你给 Luma 设的快捷键，按它仍是打开或关闭窗口，对应的行不标序号。")
                          .arg(own.join(SettingsEditor::tr("、"))));
     return parts.join(u' ');
 }
@@ -357,7 +357,7 @@ void SettingsEditor::setIndexAccess(const QString& mode)
     if (mode == u"direct" && !m_indexAccessState.administrator)
         return; // not offered: the row leaves it out
     m_settings.indexAccess = mode;
-    commit(); // the app restarts Win顺 with other rights, or switches in place (App::applyIndexAccess)
+    commit(); // the app restarts Luma with other rights, or switches in place (App::applyIndexAccess)
 }
 
 void SettingsEditor::setIndexAccessState(const IndexAccessState& state)
@@ -709,7 +709,7 @@ namespace {
 
 std::wstring taskbarButton()
 {
-    return QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + u"/WinShunSearch.exe").toStdWString();
+    return QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + u"/LumaSearch.exe").toStdWString();
 }
 
 } // namespace
@@ -732,11 +732,11 @@ bool SettingsEditor::pinTaskbarButton()
         return false;
     // Windows asks only for a program in the Start menu: the installer's
     // shortcut, else one made now.
-    const std::wstring shortcut = taskbar::buttonShortcut(button, tr("Win顺 搜索").toStdWString());
+    const std::wstring shortcut = taskbar::buttonShortcut(button, tr("Luma 搜索").toStdWString());
     if (shortcut.empty())
         return false;
     // Through Explorer, with the user's rights: that program goes on the
-    // taskbar, so it asks for itself (and Win顺, elevated, could not).
+    // taskbar, so it asks for itself (and Luma, elevated, could not).
     shell::run(u'"' + QString::fromStdWString(button) + u"\" --pin \""_s + QString::fromStdWString(shortcut) + u'"');
     return true;
 }
@@ -746,7 +746,7 @@ bool SettingsEditor::showTaskbarButton()
     const std::wstring button = taskbarButton();
     if (!QFileInfo::exists(QString::fromStdWString(button)))
         return false;
-    const std::wstring shortcut = taskbar::buttonShortcut(button, tr("Win顺 搜索").toStdWString());
+    const std::wstring shortcut = taskbar::buttonShortcut(button, tr("Luma 搜索").toStdWString());
     if (shortcut.empty())
         return false;
     shell::revealInExplorer(QString::fromStdWString(shortcut)); // its menu pins it
@@ -1032,7 +1032,7 @@ QString SettingsEditor::importWebShortcuts()
     bool newer = false;
     const std::optional<WebShortcutFile> read = readWebShortcutsFile(file.readAll(), &newer);
     if (!read)
-        return newer ? tr("这个文件是更新版本的 Win顺 导出的，请先更新 Win顺") : tr("这不是 Win顺 导出的网页搜索文件");
+        return newer ? tr("这个文件是更新版本的 Luma 导出的，请先更新 Luma") : tr("这不是 Luma 导出的网页搜索文件");
 
     WebShortcuts imported;
     int badIcons = 0;
@@ -1082,7 +1082,7 @@ QString SettingsEditor::exportWebShortcuts()
     if (shortcuts.isEmpty())
         return tr("还没有网页搜索可以导出");
     const HWND owner = m_window ? reinterpret_cast<HWND>(m_window->winId()) : nullptr;
-    const QString path = shell::pickSaveFile(owner, tr("导出网页搜索"), tr("Win顺 网页搜索.json"),
+    const QString path = shell::pickSaveFile(owner, tr("导出网页搜索"), tr("Luma 网页搜索.json"),
         tr("网页搜索（JSON）"), u"json"_s);
     if (path.isEmpty())
         return {};
@@ -1487,7 +1487,7 @@ void SettingsEditor::chooseIndexFolder()
     };
     const bool asItIs
         = same(Settings::dataDir()) || same(m_indexFolderState.folder) || indexfolder::onlyIndexFiles(folder);
-    setIndexFolder(asItIs ? folder : QDir(folder).filePath(u"WinShun"_s));
+    setIndexFolder(asItIs ? folder : QDir(folder).filePath(u"Luma"_s));
 }
 
 void SettingsEditor::setIndexFolder(const QString& folder)

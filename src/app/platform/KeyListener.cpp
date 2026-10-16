@@ -7,7 +7,7 @@ namespace ws {
 
 namespace {
 
-constexpr wchar_t kClassName[] = L"WinShun.KeyListener";
+constexpr wchar_t kClassName[] = L"Luma.KeyListener";
 constexpr USHORT kGenericDesktop = 0x01; // HID usage page
 constexpr USHORT kMouse = 0x02; // HID usage
 constexpr USHORT kKeyboard = 0x06;

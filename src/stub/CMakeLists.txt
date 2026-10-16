@@ -8,3 +8,6 @@ target_link_libraries(WinShunSearch PRIVATE winshun_options taskschd ole32 oleau
 set_target_properties(WinShunSearch PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 install(TARGETS WinShunSearch RUNTIME DESTINATION .)
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShunSearch PROPERTIES OUTPUT_NAME "LumaSearch")

@@ -1,7 +1,7 @@
 #pragma once
 
 // The named pipe between WinShunMcp.exe (the relay the AI clients start, with
-// the user's normal rights) and Win顺 (elevated). Messages are lines of
+// the user's normal rights) and Luma (elevated). Messages are lines of
 // JSON-RPC (JsonRpc.h). Win32 and Qt Core only, for the relay's sake.
 //
 // The pipe is the user's own: its name carries the user's SID (pipe names are
@@ -23,7 +23,7 @@ namespace ws::pipe {
 
 // "S-1-5-21-…" of the user this process runs as; empty if it cannot be read.
 std::wstring userSid();
-// "WinShun.Mcp.S-1-5-21-…": the name Win顺 serves on and the relay opens.
+// "Luma.Mcp.S-1-5-21-…": the name Luma serves on and the relay opens.
 std::wstring defaultName();
 std::wstring fullPath(std::wstring_view name); // "\\.\pipe\" + name
 

@@ -13,7 +13,7 @@
 
 namespace ws {
 
-// Marks the input Win顺 sends itself (SendInput's dwExtraInfo): the paste
+// Marks the input Luma sends itself (SendInput's dwExtraInfo): the paste
 // keys, KeyRouter's masking key. KeyRouter lets it through.
 inline constexpr ULONG_PTR kOwnInput = 0x5753'4B52; // "WSKR"
 
@@ -50,7 +50,7 @@ inline constexpr ULONG_PTR kOwnInput = 0x5753'4B52; // "WSKR"
 // after such a key. A double Ctrl stays a double Ctrl.
 //
 // Clicks are not taken (the window does not activate on them); a button
-// pressed outside Win顺's windows, or another window coming to the front,
+// pressed outside Luma's windows, or another window coming to the front,
 // tells the window to go, as a menu would.
 //
 // Done (drain), it takes no more keys, but stays until the keys it took are
@@ -71,7 +71,7 @@ public:
     };
     struct Callbacks {
         std::function<void(const Key&)> key; // taken, or Shift, Ctrl or Alt (seen, passed on)
-        std::function<void()> clickedAway; // a mouse button pressed outside Win顺's windows
+        std::function<void()> clickedAway; // a mouse button pressed outside Luma's windows
         std::function<void(HWND)> foregroundChanged; // the top-level window now in front
         std::function<void()> drained; // after drain(): the keys it took are all let go
     };

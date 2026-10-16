@@ -72,7 +72,7 @@ public:
         // followed NTFS volumes through theirs, the passes wait this long
         // after start() for setVolumeAccess() before treating those volumes
         // as walked: the index service comes up a moment after the user's
-        // Win顺 at login, and a volume walked meanwhile would have lost its
+        // Luma at login, and a volume walked meanwhile would have lost its
         // journal position (a whole MFT read once the service is there,
         // instead of catching up). 0: not at all.
         int accessWaitMs = 0;

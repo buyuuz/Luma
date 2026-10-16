@@ -41,7 +41,7 @@ class SearchEngine;
 // the list offers the folders open in file managers, a path on the clipboard (a
 // file copied in Explorer too), the favorites (Favorites, the launcher's too:
 // folders, and files but in a folder picker), and the folders used lately
-// (what Windows lists as recent, then what was opened through Win顺).
+// (what Windows lists as recent, then what was opened through Luma).
 //
 // The view-model of DialogBarWindow.qml, and its window's placement: shown by
 // the dialog while that is in front (DialogJump tells), without taking the
@@ -52,7 +52,7 @@ class SearchEngine;
 // where that is not enough; restored first, if it is maximised with no button
 // to restore it): the list need not cover it. Its border is in
 // the accent colour and the logo peeks out from behind it (PeekingLogo): it
-// is Win顺's, not one of the dialog's own boxes.
+// is Luma's, not one of the dialog's own boxes.
 class DialogBar : public QObject {
     Q_OBJECT
     QML_ELEMENT

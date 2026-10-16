@@ -14,3 +14,6 @@ add_executable(WinShunSemantic
 target_include_directories(WinShunSemantic PRIVATE ${PROJECT_SOURCE_DIR}/src/plugins-sdk)
 target_link_libraries(WinShunSemantic PRIVATE winshun_options winhttp)
 set_target_properties(WinShunSemantic PROPERTIES AUTOMOC OFF MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShunSemantic PROPERTIES OUTPUT_NAME "LumaSemantic")

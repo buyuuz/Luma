@@ -4,7 +4,7 @@ import QtQuick
 import WinShun
 
 // The clipboard history (Win+V) in a window of its own, ClipboardPage.qml in
-// it. Opened from a search box of Win顺's, it drops down under that box and
+// it. Opened from a search box of Luma's, it drops down under that box and
 // pastes into it; from anywhere else, it drops down under the text caret of
 // the program that was in front, or else at the mouse pointer, and pastes
 // into that program (App, Placement). Moved, it stays there until hidden.
@@ -38,7 +38,7 @@ Window {
     color: Theme.backdrop && SystemTheme.materials && (window.active || clipboard.keysRouted || clipboard.pinned)
            ? "transparent" : Theme.background
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
-    title: qsTr("剪贴板") // Qt adds " - Win顺"
+    title: qsTr("剪贴板") // Qt adds " - Luma"
 
     Binding {
         target: window.clipboard.items

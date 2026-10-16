@@ -19,7 +19,7 @@ namespace ws {
 
 namespace {
 
-constexpr wchar_t kClassName[] = L"WinShun.ClipboardWatcher";
+constexpr wchar_t kClassName[] = L"Luma.ClipboardWatcher";
 constexpr UINT kWriteMessage = WM_APP + 1; // lParam: a WriteJob
 constexpr UINT_PTR kReadTimer = 1;
 constexpr UINT kSettleMs = 40; // programs often put their formats up one after another
@@ -39,7 +39,7 @@ struct Formats {
     UINT excludeMonitoring = ::RegisterClipboardFormatW(L"ExcludeClipboardContentFromMonitorProcessing");
     UINT canIncludeInHistory = ::RegisterClipboardFormatW(L"CanIncludeInClipboardHistory");
     UINT viewerIgnore = ::RegisterClipboardFormatW(L"Clipboard Viewer Ignore");
-    UINT ours = ::RegisterClipboardFormatW(L"WinShun.ClipboardEntry"); // see ClipWrite::id
+    UINT ours = ::RegisterClipboardFormatW(L"Luma.ClipboardEntry"); // see ClipWrite::id
 };
 
 const Formats& formats()
@@ -235,7 +235,7 @@ ClipboardWatcher::ClipboardWatcher(Options options, Callbacks callbacks)
         ready.count_down();
         if (!hwnd)
             return;
-        // What is on the clipboard already (copied before Win顺 started).
+        // What is on the clipboard already (copied before Luma started).
         m_startSequence = ::GetClipboardSequenceNumber();
         ::PostMessageW(hwnd, WM_CLIPBOARDUPDATE, 0, 0);
         MSG msg;

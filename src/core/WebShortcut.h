@@ -16,7 +16,7 @@ namespace ws {
 class NameMatcher;
 
 // A web page opened by a keyword typed in the launcher's 全部: "gh" opens
-// GitHub, "gh WinShun" searches GitHub for WinShun. Typing its name
+// GitHub, "gh Luma" searches GitHub for WinShun. Typing its name
 // ("github", or "baidu" for 百度) finds it among the results too.
 struct WebShortcut {
     QString keyword; // "gh": one word, matched ignoring case
@@ -26,7 +26,7 @@ struct WebShortcut {
     QString url;
     QString home; // what the keyword alone opens; empty: see homeUrl()
     // A picture its user chose ("3f2a….png", see isValidCustomIconName),
-    // kept by Win顺; empty: its site's own icon.
+    // kept by Luma; empty: its site's own icon.
     QString icon;
 
     bool searches() const { return url.contains(u"%s"); }
@@ -45,7 +45,7 @@ struct WebShortcut {
 
 using WebShortcuts = QList<WebShortcut>;
 
-// What Win顺 comes with: the sites most used on the Chinese web ("baidu 天气"
+// What Luma comes with: the sites most used on the Chinese web ("baidu 天气"
 // searches 百度), and "winshun" for its page on GitHub. The rest are the
 // user's own.
 WebShortcuts defaultWebShortcuts();
@@ -66,7 +66,7 @@ struct TypedKeyword {
 };
 
 // The shortcut whose keyword the text starts with, alone or followed by a
-// space and the words to search for ("gh", "gh  WinShun"). A shortcut that
+// space and the words to search for ("gh", "gh  Luma"). A shortcut that
 // does not search takes no words: "page x" is an ordinary query then.
 std::optional<TypedKeyword> typedKeyword(const WebShortcuts& shortcuts, QStringView text);
 
@@ -78,7 +78,7 @@ struct WebHit {
 // The shortcuts whose name matches, best first (by pinyin too: "bd" for 百度).
 std::vector<WebHit> searchWebShortcuts(const WebShortcuts& shortcuts, const NameMatcher& matcher);
 
-// What a typed address becomes, or empty if it is not one Win顺 opens:
+// What a typed address becomes, or empty if it is not one Luma opens:
 // trimmed; "github.com/search?q=%s" gets https://; a search for "%s" copied
 // from the address bar ("q=%25s") gets its %s back. Any scheme of two
 // letters or more but file: (a word typed into a file path could start a
@@ -98,7 +98,7 @@ QString displayWebUrl(const QString& url);
 // "keyword", "name", "url", "home"?, "icon"? }]}, an icon as a PNG in a
 // data: address, so the file is all one needs.
 
-// A custom icon's name as Win顺 keeps it: 16 hex digits of its PNG's
+// A custom icon's name as Luma keeps it: 16 hex digits of its PNG's
 // SHA-1 and ".png". Anything else (a path, "..") is not one.
 bool isValidCustomIconName(QStringView name) noexcept;
 
@@ -113,12 +113,12 @@ QByteArray writeWebShortcutsFile(const WebShortcuts& shortcuts,
 
 struct WebShortcutFile {
     QList<WebShortcutFileEntry> entries;
-    int skipped = 0; // entries with no keyword one can type or no address Win顺 opens
+    int skipped = 0; // entries with no keyword one can type or no address Luma opens
 };
 // Read as the settings file is (readWebShortcuts): addresses tidied, a
 // missing name the keyword's. The later of two with one keyword wins. Null
 // for a file that is not one of these, `newer` set when it is one a newer
-// Win顺 wrote.
+// Luma wrote.
 std::optional<WebShortcutFile> readWebShortcutsFile(QByteArrayView json, bool* newer = nullptr);
 
 struct WebMerge {
@@ -132,7 +132,7 @@ WebMerge mergeWebShortcuts(WebShortcuts& into, const WebShortcuts& from);
 
 // ---- site icons ----------------------------------------------------------
 // A shortcut's row shows its site's own icon, fetched from the site the first
-// time (nothing of other sites ships with Win顺) and kept on disk.
+// time (nothing of other sites ships with Luma) and kept on disk.
 
 // What a site's icon is kept under: the host of the shortcut's home page,
 // lower case ("fanyi.baidu.com", not "baidu.com": 百度翻译 has an icon of its
@@ -145,7 +145,7 @@ QString siteIconKey(const QString& homeUrl);
 // /favicon.ico of the page's site, which nearly every site has. `touchIcons`
 // (apple-touch-icon, made for phones' home screens: 120-512 px, largest
 // first) are sharper but often another picture (bilibili's says "WEB"): only
-// for a site whose browser icon is too small. SVG is left out: Win顺 does
+// for a site whose browser icon is too small. SVG is left out: Luma does
 // not decode it. `pageUrl` is where the page was read from, after redirects.
 struct SiteIconCandidates {
     QStringList icons;

@@ -282,3 +282,6 @@ install(TARGETS WinShun RUNTIME DESTINATION .)
 install(FILES "${ORT_DIR}/lib/onnxruntime.dll" DESTINATION .)
 install(FILES ${OCR_MODEL_FILES} DESTINATION ocr)
 install(FILES ${font_files} DESTINATION fonts)
+
+# Luma branding: retain upstream CMake target names.
+set_target_properties(WinShun PROPERTIES OUTPUT_NAME "Luma")

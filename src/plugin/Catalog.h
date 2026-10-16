@@ -2,7 +2,7 @@
 
 // The plugins installed (the plugin design, §1.2, §4.3, §4.6): every
 // folder with a plugin.json under the user's plugins folder and the ones
-// that came with Win顺 (the user's wins on the same id), read and checked;
+// that came with Luma (the user's wins on the same id), read and checked;
 // the user's folder watched for changes; the keywords and triggers of the
 // enabled ones indexed, and keywords checked against each other and
 // against the [WebSearch] keywords.

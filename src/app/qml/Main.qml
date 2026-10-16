@@ -325,7 +325,7 @@ Window {
     // See-through to Mica, as the settings window (see there).
     color: Theme.backdrop && SystemTheme.materials && window.active ? "transparent" : Theme.background
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
-    title: qsTr("Win顺")
+    title: qsTr("Luma")
 
     Binding {
         target: window.launcher.results

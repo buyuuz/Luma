@@ -13,7 +13,7 @@ namespace ws {
 // of the app (WM_COPYDATA), drives coming and going (WM_DEVICECHANGE) and
 // Windows resuming. It also restores the tray icon when Explorer restarts.
 //
-// Beside it, a second hidden window ("WinShun.SearchHere") takes a folder
+// Beside it, a second hidden window ("Luma.SearchHere") takes a folder
 // from Explorer's "search here" (WinShunSearch.exe --search-here, run with
 // the user's normal rights, GitHub #20). It alone is open to programs that
 // are not elevated, and it takes nothing but a folder's path: the commands
@@ -43,7 +43,7 @@ public:
 
     void showTrayIcon(const QString& tooltip);
     void setTrayTooltip(const QString& tooltip); // the language changed
-    // The tray icon in one colour, the taskbar's (monologo), or Win顺's own
+    // The tray icon in one colour, the taskbar's (monologo), or Luma's own
     // colours; the one-colour icon follows the taskbar's light or dark mode.
     void setTrayIconMono(bool mono);
     void showNotification(const QString& title, const QString& text);

@@ -2,7 +2,7 @@
 
 // A plugin's password settings (the plugin design, §4.7): kept by Windows'
 // Credential Manager, never in WinShun.ini, as generic credentials named
-// "WinShun/plugin/<id>/<key>". Read when the plugin is told its settings,
+// "Luma/plugin/<id>/<key>". Read when the plugin is told its settings,
 // removed with the plugin.
 
 #include "Manifest.h"
@@ -17,7 +17,7 @@
 
 namespace ws::plugin::secrets {
 
-QString target(const QString& pluginId, const QString& key); // "WinShun/plugin/<id>/<key>"
+QString target(const QString& pluginId, const QString& key); // "Luma/plugin/<id>/<key>"
 bool write(const QString& pluginId, const QString& key, const QString& value); // an empty value removes it
 std::optional<QString> read(const QString& pluginId, const QString& key); // nothing when there is none
 bool remove(const QString& pluginId, const QString& key);

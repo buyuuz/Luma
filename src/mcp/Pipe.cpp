@@ -29,7 +29,7 @@ std::wstring userSid()
 
 std::wstring defaultName()
 {
-    return L"WinShun.Mcp." + userSid();
+    return L"Luma.Mcp." + userSid();
 }
 
 std::wstring fullPath(std::wstring_view name)
@@ -42,7 +42,7 @@ PSECURITY_DESCRIPTOR createSecurityDescriptor()
     const std::wstring sid = userSid();
     if (sid.empty())
         return nullptr;
-    // Everything for the system and administrators (Win顺 itself); reading
+    // Everything for the system and administrators (Luma itself); reading
     // and writing for the user. Protected: nothing inherited. The label lets
     // medium-integrity processes in (made by an elevated process, the pipe
     // would be high, and they could not open it), and keeps low ones out.

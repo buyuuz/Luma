@@ -1,6 +1,6 @@
 #pragma once
 
-// The tools Win顺 offers AI clients (MCP "tools"): what each takes and
+// The tools Luma offers AI clients (MCP "tools"): what each takes and
 // gives (JSON Schema), what it may do (annotations), and the switch in the
 // settings that allows it (Gate). ToolHost runs them on the search engine
 // and the index, one search at a time.
@@ -81,7 +81,7 @@ struct ClipSummary {
 struct Services {
     IndexService* index = nullptr; // required
     SearchEngine* engine = nullptr; // required, and the host's own: an engine runs only its newest request
-    QString version; // of Win顺, for index_status
+    QString version; // of Luma, for index_status
     std::function<QStringList()> history; // recent items, newest first, for the ranking; may be empty
     // Opens a file or folder with the user's normal rights, shows one in its
     // folder; `done` may run on any thread.
@@ -150,7 +150,7 @@ public:
     void cancel(std::uint64_t id); // queued or running: done() is not called
     int pendingCalls() const;
 
-    // For the initialize result: how to search with Win顺.
+    // For the initialize result: how to search with Luma.
     static QString instructions();
 
 signals:

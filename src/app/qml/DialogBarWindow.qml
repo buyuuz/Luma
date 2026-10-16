@@ -26,10 +26,10 @@ Window {
     readonly property bool menuOpen: contextMenu !== null && contextMenu.visible
 
     // On top: it shows only while the dialog (or the bar) is in front, and
-    // Win顺 has no right to bring a window of its own above others then.
+    // Luma has no right to bring a window of its own above others then.
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
     color: Theme.background
-    title: qsTr("Win顺")
+    title: qsTr("Luma")
 
     onActiveChanged: {
         if (active) {

@@ -3,7 +3,7 @@
 // The MCP server: sessions over the pipe (one per relay, so one per AI
 // client), the protocol's lifecycle and the tools/* methods, answered with
 // the ToolHost's tools. Lives on one thread with an event loop (the GUI
-// thread in Win顺); the pipe's threads hand it lines through the queue.
+// thread in Luma); the pipe's threads hand it lines through the queue.
 
 #include "McpTools.h"
 

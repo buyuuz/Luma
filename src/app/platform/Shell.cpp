@@ -239,7 +239,7 @@ bool executeWithShellToken(const std::wstring& file, const std::wstring& args, c
     return startWithShellToken(std::move(command), dir).valid();
 }
 
-// Starts `file` with the user's normal rights, never elevated. Win顺 not
+// Starts `file` with the user's normal rights, never elevated. Luma not
 // elevated: ShellExecute, as any program. Elevated: through Explorer, else
 // with the desktop shell's token, waiting a few seconds for a shell while
 // Explorer restarts. False when neither works.
@@ -263,7 +263,7 @@ bool executeUnelevated(const std::wstring& file, const std::wstring& args, const
     return false;
 }
 
-// Starts `file` as administrator: UAC asks, unless Win顺 is elevated already.
+// Starts `file` as administrator: UAC asks, unless Luma is elevated already.
 // `process`, when wanted, gets a handle to wait on (null if the shell made
 // no process of its own for it). False when it did not start: the prompt
 // declined (ERROR_CANCELLED), or the file missing.
@@ -704,14 +704,14 @@ namespace autostart {
 
 namespace {
 
-// Autostart is a logon task: it can start Win顺 elevated without a UAC
+// Autostart is a logon task: it can start Luma elevated without a UAC
 // prompt (the 管理员直读 mode, GitHub #21; Windows skips Run-key entries of
 // programs that need elevation), and the taskbar button and the MCP relay
-// start Win顺 by running it. Older versions, still called QuickFind, used a
+// start Luma by running it. Older versions, still called QuickFind, used a
 // Run-key value and later a logon task of that name; migrateFromQuickFind()
 // moves either over.
 constexpr auto kRunKey = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
-constexpr wchar_t kTaskName[] = L"WinShun";
+constexpr wchar_t kTaskName[] = L"Luma";
 constexpr wchar_t kOldTaskName[] = L"QuickFind";
 constexpr auto kOldRunValue = u"QuickFind";
 
@@ -903,7 +903,7 @@ void writeTask(bool enabled)
         return;
     ComPtr<IRegistrationInfo> info;
     if (SUCCEEDED(definition->get_RegistrationInfo(&info)))
-        info->put_Description(Bstr(L"Win顺：登录后在后台启动"));
+        info->put_Description(Bstr(L"Luma：登录后在后台启动"));
     ComPtr<ITaskSettings> settings;
     if (SUCCEEDED(definition->get_Settings(&settings))) {
         settings->put_DisallowStartIfOnBatteries(VARIANT_FALSE);
@@ -924,7 +924,7 @@ void writeTask(bool enabled)
     // Refused to a process that is not elevated when it asks for the highest
     // level (E_ACCESSDENIED), and for a task another user registered.
     if (FAILED(hr))
-        qWarning("WinShun: cannot register the autostart task (%s, 0x%08lx)", highest ? "elevated" : "normal rights",
+        qWarning("Luma: cannot register the autostart task (%s, 0x%08lx)", highest ? "elevated" : "normal rights",
             static_cast<unsigned long>(hr));
 }
 

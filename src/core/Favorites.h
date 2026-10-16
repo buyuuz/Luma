@@ -69,7 +69,7 @@ struct FavoritesFile {
     int skipped = 0; // entries with no path, of no kind known, or there twice
 };
 // Null for a file that is not one of these (or not JSON), `newer` set when
-// it is one a newer Win顺 wrote. A keyword that cannot be typed is dropped,
+// it is one a newer Luma wrote. A keyword that cannot be typed is dropped,
 // one already taken by an earlier entry too.
 std::optional<FavoritesFile> readFavoritesFile(QByteArrayView json, bool* newer = nullptr);
 
@@ -88,7 +88,7 @@ public:
     explicit Favorites(QString filePath, QString pinsFile = {}, QObject* parent = nullptr);
 
     // A file that cannot be read is kept aside as favorites.json.bad, not
-    // overwritten; one a newer Win顺 wrote is read-only meanwhile.
+    // overwritten; one a newer Luma wrote is read-only meanwhile.
     void load();
 
     const FavoriteList& items() const noexcept { return m_items; }
@@ -122,7 +122,7 @@ private:
     QString m_filePath;
     QString m_pinsFile;
     FavoriteList m_items;
-    bool m_readOnly = false; // a newer Win顺's file
+    bool m_readOnly = false; // a newer Luma's file
 };
 
 } // namespace ws

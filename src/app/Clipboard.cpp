@@ -516,7 +516,7 @@ void Clipboard::startPaste(ClipWrite write, Into into, std::vector<qint64> touch
 
 void Clipboard::onWritten(bool ok)
 {
-    // A field of Win顺's own gets its text from here, not through the
+    // A field of Luma's own gets its text from here, not through the
     // clipboard (which is written only to hold it after, as any paste
     // leaves it): no reason to stop.
     if (!ok && m_into != Into::Field) {
@@ -548,11 +548,11 @@ void Clipboard::onWritten(bool ok)
         flash(tr("已复制。没有找到要粘贴进去的窗口，可以自己按 Ctrl+V"));
         return;
     }
-    // An elevated program while Win顺 is not: Windows drops the keys Win顺
+    // An elevated program while Luma is not: Windows drops the keys Luma
     // would press there (UIPI), SendInput says nothing. The user presses them.
     if (integrity::higherThanOurs(m_pasteWindow)) {
         m_pasting = false;
-        flash(tr("已复制。那个程序以管理员身份运行，Win顺 没法替它粘贴：回到它那里按 Ctrl+V"));
+        flash(tr("已复制。那个程序以管理员身份运行，Luma 没法替它粘贴：回到它那里按 Ctrl+V"));
         return;
     }
     // Pinned, it stays up: a joined paste's picks go, the next click is one
@@ -644,7 +644,7 @@ void Clipboard::paste(int row, bool plainText)
     }
     QString problem;
     if (m_field.item) {
-        // A field of Win顺's own takes text, a file list as its paths (gone
+        // A field of Luma's own takes text, a file list as its paths (gone
         // or not); the clipboard holds the entry after, as any paste leaves it.
         ClipWrite write = writeFor(clips, true, &problem);
         m_fieldText = m_field.oneLine ? textfield::oneLine(write.text) : write.text;
@@ -747,7 +747,7 @@ void Clipboard::copyText(const QString& text, bool remember)
         ClipCapture capture;
         capture.kind = kindOfText(text);
         capture.text = text;
-        capture.source = tr("Win顺");
+        capture.source = tr("Luma");
         capture.sourcePath = QCoreApplication::applicationFilePath();
         write.id = m_store->add(capture, now());
         historyChanged();
@@ -1014,7 +1014,7 @@ QVariantList Clipboard::menuItems(int row) const
     const bool onlyImages = std::all_of(clips.begin(), clips.end(), [](const Clip* c) { return c->kind == ClipKind::Image; });
     // Glyphs: Segoe Fluent Icons / MDL2 Assets.
     QVariantList items;
-    // Into a field of Win顺's own it is text either way: no plain-text entry.
+    // Into a field of Luma's own it is text either way: no plain-text entry.
     const QString field = fieldName();
     items.append(entry(Paste, many ? tr("粘贴 %Ln 条", nullptr, n) : field.isEmpty() ? tr("粘贴") : tr("粘贴到%1").arg(field),
         u"Enter"_s, u""_s));

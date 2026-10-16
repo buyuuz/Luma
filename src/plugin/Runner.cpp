@@ -118,7 +118,7 @@ bool Runner::start(QString* error)
     // The pipe: one instance, the user's own (Pipe.h's descriptor: the
     // runner runs as the user at medium integrity), a name of ours alone.
     static unsigned counter = 0;
-    m_pipeName = L"WinShun.Plugin." + pipe::userSid() + L"." + std::to_wstring(::GetCurrentProcessId()) + L"."
+    m_pipeName = L"Luma.Plugin." + pipe::userSid() + L"." + std::to_wstring(::GetCurrentProcessId()) + L"."
         + std::to_wstring(counter++) + L"." + std::to_wstring(QRandomGenerator::system()->generate64());
     m_key = QString::number(QRandomGenerator::system()->generate64(), 16);
     PSECURITY_DESCRIPTOR descriptor = pipe::createSecurityDescriptor();

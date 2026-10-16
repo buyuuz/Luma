@@ -4,8 +4,8 @@
 <context>
     <name>AiAccessSection</name>
     <message>
-        <source>Claude、Cursor、VS Code 等 AI 助手通过 MCP（Model Context Protocol）连接 Win顺，就能搜文件名、文件里的文字和最近改过的文件：和你在搜索框里一样快，拼音也行。默认只读，不改动任何文件。</source>
-        <translation>AI assistants such as Claude, Cursor and VS Code connect to WinShun through MCP (Model Context Protocol) and can then search file names, the text inside files and the files changed lately, as fast as you do from the search box, pinyin included. Read-only by default: nothing is changed.</translation>
+        <source>Claude、Cursor、VS Code 等 AI 助手通过 MCP（Model Context Protocol）连接 Luma，就能搜文件名、文件里的文字和最近改过的文件：和你在搜索框里一样快，拼音也行。默认只读，不改动任何文件。</source>
+        <translation>AI assistants such as Claude, Cursor and VS Code connect to Luma through MCP (Model Context Protocol) and can then search file names, the text inside files and the files changed lately, as fast as you do from the search box, pinyin included. Read-only by default: nothing is changed.</translation>
     </message>
     <message>
         <source>允许 AI 连接</source>
@@ -16,12 +16,12 @@
         <translation>MCP;AI;Claude;Cursor;assistant;model;LLM</translation>
     </message>
     <message>
-        <source>关着时 AI 客户端连不上 Win顺</source>
-        <translation>Off: AI clients cannot reach WinShun</translation>
+        <source>关着时 AI 客户端连不上 Luma</source>
+        <translation>Off: AI clients cannot reach Luma</translation>
     </message>
     <message>
-        <source>AI 客户端启动 WinShunMcp.exe 就能连上</source>
-        <translation>An AI client connects by starting WinShunMcp.exe</translation>
+        <source>AI 客户端启动 LumaMcp.exe 就能连上</source>
+        <translation>An AI client connects by starting LumaMcp.exe</translation>
     </message>
     <message>
         <source>允许 AI 打开文件和文件夹</source>
@@ -76,11 +76,11 @@
     <name>AiClientsSection</name>
     <message>
         <source>点“连接”就写进那个客户端的配置（原文件先备份成 .bak）。装了的客户端才列出来。</source>
-        <translation>“Connect” writes WinShun into that client&apos;s configuration (the file is backed up as .bak first). Only installed clients are listed.</translation>
+        <translation>“Connect” writes Luma into that client&apos;s configuration (the file is backed up as .bak first). Only installed clients are listed.</translation>
     </message>
     <message>
-        <source>没找到 WinShunMcp.exe，重新安装 Win顺 就有了。</source>
-        <translation>WinShunMcp.exe is missing; reinstalling WinShun brings it back.</translation>
+        <source>没找到 LumaMcp.exe，重新安装 Luma 就有了。</source>
+        <translation>LumaMcp.exe is missing; reinstalling Luma brings it back.</translation>
     </message>
     <message>
         <source>连接;配置;MCP;AI;%1</source>
@@ -115,8 +115,8 @@
         <translation>other;configure;stdio;MCP;AI;JSON</translation>
     </message>
     <message>
-        <source>把 WinShunMcp.exe 加为 stdio 类型的 MCP 服务器，不需要参数：</source>
-        <translation>Add WinShunMcp.exe as a stdio MCP server, no arguments needed:</translation>
+        <source>把 LumaMcp.exe 加为 stdio 类型的 MCP 服务器，不需要参数：</source>
+        <translation>Add LumaMcp.exe as a stdio MCP server, no arguments needed:</translation>
     </message>
     <message>
         <source>复制路径</source>
@@ -425,8 +425,8 @@
 <context>
     <name>DialogBarWindow</name>
     <message>
-        <source>Win顺</source>
-        <translation>WinShun</translation>
+        <source>Luma</source>
+        <translation>Luma</translation>
     </message>
     <message>
         <source>搜索文件夹，或输入路径</source>
@@ -672,8 +672,8 @@
         <translation>Serve the People</translation>
     </message>
     <message>
-        <source>Win顺</source>
-        <translation>WinShun</translation>
+        <source>Luma</source>
+        <translation>Luma</translation>
     </message>
     <message>
         <source>让 Windows 用起来更顺手</source>
@@ -760,8 +760,8 @@
         <translation>Feedback on %1 %2</translation>
     </message>
     <message>
-        <source>Win顺</source>
-        <translation>WinShun</translation>
+        <source>Luma</source>
+        <translation>Luma</translation>
     </message>
     <message>
         <source>已复制</source>
@@ -798,8 +798,8 @@
 <context>
     <name>Main</name>
     <message>
-        <source>Win顺</source>
-        <translation>WinShun</translation>
+        <source>Luma</source>
+        <translation>Luma</translation>
     </message>
     <message>
         <source>正在搜索文件内容…</source>
@@ -921,8 +921,8 @@
         <translation>Usable in VS Code&apos;s Copilot chat (agent mode); “MCP: List Servers” shows it</translation>
     </message>
     <message>
-        <source>没找到 WinShunMcp.exe，重新安装 Win顺 就有了</source>
-        <translation>WinShunMcp.exe is missing; reinstalling WinShun brings it back</translation>
+        <source>没找到 LumaMcp.exe，重新安装 Luma 就有了</source>
+        <translation>LumaMcp.exe is missing; reinstalling Luma brings it back</translation>
     </message>
     <message>
         <source>完全退出并重新打开 Claude Desktop 后生效。</source>
@@ -1220,8 +1220,8 @@
         <translation>Network access</translation>
     </message>
     <message>
-        <source>Win顺 不能阻止它联网</source>
-        <translation>WinShun cannot stop it going online</translation>
+        <source>Luma 不能阻止它联网</source>
+        <translation>Luma cannot stop it going online</translation>
     </message>
 </context>
 <context>
@@ -1432,8 +1432,8 @@
 <context>
     <name>SettingsWindow</name>
     <message>
-        <source>打开 Win顺</source>
-        <translation>Open WinShun</translation>
+        <source>打开 Luma</source>
+        <translation>Open Luma</translation>
     </message>
     <message>
         <source>外观</source>
@@ -1561,8 +1561,8 @@
         </translation>
     </message>
     <message>
-        <source>Win顺 %1</source>
-        <translation>WinShun %1</translation>
+        <source>Luma %1</source>
+        <translation>Luma %1</translation>
     </message>
     <message>
         <source>· 有新版本 %1</source>
@@ -1644,8 +1644,8 @@
         <translation>Clear</translation>
     </message>
     <message>
-        <source>读不到任务栏上的图标，可能被改任务栏的工具换掉了；详情在 WinShun.log</source>
-        <translation>Can’t read the taskbar’s icons; a taskbar tool may have replaced them. Details are in WinShun.log</translation>
+        <source>读不到任务栏上的图标，可能被改任务栏的工具换掉了；详情在 Luma.log</source>
+        <translation>Can’t read the taskbar’s icons; a taskbar tool may have replaced them. Details are in Luma.log</translation>
     </message>
     <message>
         <source>没找到任务栏；重启资源管理器后会再放</source>
@@ -1672,8 +1672,8 @@
         <translation>The box is beside the icons; hold its icon and drag it onto Start to make the icons move over</translation>
     </message>
     <message>
-        <source>资源管理器右键“用 Win顺 搜索此处”</source>
-        <translation>“Search here with WinShun” in Explorer’s right-click menu</translation>
+        <source>资源管理器右键“用 Luma 搜索此处”</source>
+        <translation>“Search here with Luma” in Explorer’s right-click menu</translation>
     </message>
     <message>
         <source>右键;右键菜单;上下文菜单;搜索此文件夹;在此搜索;资源管理器;context menu</source>
@@ -1764,12 +1764,12 @@
         <translation>Instead of Windows search on the taskbar</translation>
     </message>
     <message>
-        <source>1. 把 Win顺 按钮固定到任务栏</source>
-        <translation>1. Pin WinShun’s button to the taskbar</translation>
+        <source>1. 把 Luma 按钮固定到任务栏</source>
+        <translation>1. Pin Luma’s button to the taskbar</translation>
     </message>
     <message>
-        <source>没找到 WinShunSearch.exe，重新安装 Win顺 就有了</source>
-        <translation>WinShunSearch.exe is missing; installing WinShun again brings it back</translation>
+        <source>没找到 LumaSearch.exe，重新安装 Luma 就有了</source>
+        <translation>LumaSearch.exe is missing; installing Luma again brings it back</translation>
     </message>
     <message>
         <source>2. 隐藏 Windows 自带的搜索（推荐）</source>
@@ -1788,8 +1788,8 @@
         <translation>Taskbar settings</translation>
     </message>
     <message>
-        <source>3. 用 Win+S 打开 Win顺</source>
-        <translation>3. Open WinShun with Win+S</translation>
+        <source>3. 用 Win+S 打开 Luma</source>
+        <translation>3. Open Luma with Win+S</translation>
     </message>
     <message>
         <source>Win+S;Windows 搜索;截图;Win+Shift+S</source>
@@ -1804,8 +1804,8 @@
         <translation>Could not change the Windows setting: Win+S still opens Windows search</translation>
     </message>
     <message>
-        <source>4. 在开始菜单里打字，也用 Win顺 搜索</source>
-        <translation>4. Typing in the Start menu searches with WinShun</translation>
+        <source>4. 在开始菜单里打字，也用 Luma 搜索</source>
+        <translation>4. Typing in the Start menu searches with Luma</translation>
     </message>
     <message>
         <source>开始菜单;打字;Win;start menu</source>
@@ -1948,8 +1948,8 @@
         <translation>Open with Win+V, instead of Windows’ clipboard</translation>
     </message>
     <message>
-        <source>已生效：Win+V 打开 Win顺的剪贴板</source>
-        <translation>Done: Win+V opens WinShun’s clipboard</translation>
+        <source>已生效：Win+V 打开 Luma的剪贴板</source>
+        <translation>Done: Win+V opens Luma’s clipboard</translation>
     </message>
     <message>
         <source>资源管理器重启后生效，下次登录 Windows 时也会自动生效</source>
@@ -2060,8 +2060,8 @@
         <translation>Making room…</translation>
     </message>
     <message>
-        <source>1. 在任务栏上放 Win顺 的搜索框</source>
-        <translation>1. Put WinShun’s search box on the taskbar</translation>
+        <source>1. 在任务栏上放 Luma 的搜索框</source>
+        <translation>1. Put Luma’s search box on the taskbar</translation>
     </message>
     <message>
         <source>固定;任务栏;按钮;搜索框;pin;taskbar</source>
@@ -2259,8 +2259,8 @@
         <translation>tray;notification area;monochrome;mono;colour;color;icon</translation>
     </message>
     <message>
-        <source>通知区域和任务栏搜索框里的 Win顺 图标。单色随任务栏的浅色、深色变成黑或白，和系统图标一致</source>
-        <translation>WinShun&apos;s icon in the notification area and the taskbar search box. Monochrome turns black or white with the taskbar&apos;s light or dark mode, like Windows&apos; own icons</translation>
+        <source>通知区域和任务栏搜索框里的 Luma 图标。单色随任务栏的浅色、深色变成黑或白，和系统图标一致</source>
+        <translation>Luma&apos;s icon in the notification area and the taskbar search box. Monochrome turns black or white with the taskbar&apos;s light or dark mode, like Windows&apos; own icons</translation>
     </message>
     <message>
         <source>彩色</source>
@@ -2295,12 +2295,12 @@
         <translation>index service;administrator;rights;elevation;UAC;MFT;master file table;walk;service</translation>
     </message>
     <message>
-        <source>通过索引服务读取磁盘的主文件表和变更日志，Win顺 以普通权限运行</source>
-        <translation>The index service reads the disks' master file tables and change journals; WinShun runs with your normal rights</translation>
+        <source>通过索引服务读取磁盘的主文件表和变更日志，Luma 以普通权限运行</source>
+        <translation>The index service reads the disks' master file tables and change journals; Luma runs with your normal rights</translation>
     </message>
     <message>
-        <source>Win顺 以管理员身份运行，自己读取主文件表和变更日志；开机自启也以管理员身份</source>
-        <translation>WinShun runs as administrator and reads the master file tables and change journals itself; it starts at login as administrator too</translation>
+        <source>Luma 以管理员身份运行，自己读取主文件表和变更日志；开机自启也以管理员身份</source>
+        <translation>Luma runs as administrator and reads the master file tables and change journals itself; it starts at login as administrator too</translation>
     </message>
     <message>
         <source>不需要任何权限，逐个文件夹遍历，建索引慢一些</source>
@@ -2323,12 +2323,12 @@
         <translation>portable;install service;uninstall service;index service</translation>
     </message>
     <message>
-        <source>已安装 Windows 服务“Win顺 索引服务”，它替普通权限的 Win顺 读取主文件表</source>
-        <translation>The Windows service "WinShun Index Service" is installed: it reads the master file tables for a WinShun running with normal rights</translation>
+        <source>已安装 Windows 服务“Luma 索引服务”，它替普通权限的 Luma 读取主文件表</source>
+        <translation>The Windows service "Luma Index Service" is installed: it reads the master file tables for a Luma running with normal rights</translation>
     </message>
     <message>
-        <source>安装一个 Windows 服务，替普通权限的 Win顺 读取主文件表，建索引快得多；需要管理员权限一次</source>
-        <translation>Installs a Windows service that reads the master file tables for a WinShun running with normal rights, which builds the index much faster; asks for administrator rights once</translation>
+        <source>安装一个 Windows 服务，替普通权限的 Luma 读取主文件表，建索引快得多；需要管理员权限一次</source>
+        <translation>Installs a Windows service that reads the master file tables for a Luma running with normal rights, which builds the index much faster; asks for administrator rights once</translation>
     </message>
     <message>
         <source>安装索引服务…</source>
@@ -2419,8 +2419,8 @@
         <translation>content;full text;text;switch;off;contents</translation>
     </message>
     <message>
-        <source>关掉后搜索框里不再有“内容”，“全部”只按名字找；Win顺 不读取文件里的文字，内容索引也会清空</source>
-        <translation>Off: no “Content” in the search box and “All” finds names only; WinShun reads no file’s text, and the content index is cleared</translation>
+        <source>关掉后搜索框里不再有“内容”，“全部”只按名字找；Luma 不读取文件里的文字，内容索引也会清空</source>
+        <translation>Off: no “Content” in the search box and “All” finds names only; Luma reads no file’s text, and the content index is cleared</translation>
     </message>
     <message>
         <source>输入程序文件名，例如 KeePass.exe</source>
@@ -2519,8 +2519,8 @@
         <translation>restore;import;new computer;move settings</translation>
     </message>
     <message>
-        <source>从一份备份恢复，Win顺 随后重启；现在的设置会先备份一份，恢复错了还能换回来</source>
-        <translation>Restore from a backup, then WinShun restarts. The current settings are backed up first, so a wrong restore can be undone</translation>
+        <source>从一份备份恢复，Luma 随后重启；现在的设置会先备份一份，恢复错了还能换回来</source>
+        <translation>Restore from a backup, then Luma restarts. The current settings are backed up first, so a wrong restore can be undone</translation>
     </message>
     <message>
         <source>立即备份</source>
@@ -2539,8 +2539,8 @@
         <translation>rendering;GPU;graphics;memory;blurry;sharp;renderer</translation>
     </message>
     <message>
-        <source>重启 Win顺后生效</source>
-        <translation>Takes effect after WinShun restarts</translation>
+        <source>重启 Luma后生效</source>
+        <translation>Takes effect after Luma restarts</translation>
     </message>
     <message>
         <source>立即重启</source>
@@ -2791,8 +2791,8 @@
         <translation>Without Ctrl+G: file dialogs go to the folder open in the file manager by themselves</translation>
     </message>
     <message>
-        <source>已固定，点它就能打开 Win顺</source>
-        <translation>Pinned: click it to open WinShun</translation>
+        <source>已固定，点它就能打开 Luma</source>
+        <translation>Pinned: click it to open Luma</translation>
     </message>
     <message>
         <source>已放好，点它就能打字</source>
@@ -2900,8 +2900,8 @@
         <translation>An extra safeguard for password managers and the like</translation>
     </message>
     <message>
-        <source>补上 U 盘等非 NTFS 磁盘在 Win顺 关闭期间的改动</source>
-        <translation>Catches up on changes made to USB drives and other non-NTFS disks while WinShun was not running</translation>
+        <source>补上 U 盘等非 NTFS 磁盘在 Luma 关闭期间的改动</source>
+        <translation>Catches up on changes made to USB drives and other non-NTFS disks while Luma was not running</translation>
     </message>
     <message>
         <source>要先打开 Windows 设置里的“透明效果”</source>
@@ -2928,8 +2928,8 @@
         <translation>Press Ctrl twice quickly to open or close the search box</translation>
     </message>
     <message>
-        <source>都设好了：任务栏、Win+S 和开始菜单都用 Win顺 搜索。</source>
-        <translation>All set: the taskbar, Win+S and the Start menu all search with WinShun.</translation>
+        <source>都设好了：任务栏、Win+S 和开始菜单都用 Luma 搜索。</source>
+        <translation>All set: the taskbar, Win+S and the Start menu all search with Luma.</translation>
     </message>
     <message>
         <source>结果的图标上标着快捷键，按 %1+1 打开第一行</source>
@@ -3055,8 +3055,8 @@
         <translation>Checking for updates…</translation>
     </message>
     <message>
-        <source>Win顺 %1 可以更新了</source>
-        <translation>WinShun %1 is available</translation>
+        <source>Luma %1 可以更新了</source>
+        <translation>Luma %1 is available</translation>
     </message>
     <message>
         <source>检查更新失败</source>
@@ -3067,12 +3067,12 @@
         <translation>You’re up to date</translation>
     </message>
     <message>
-        <source>你现在用的是 %1。下载安装程序（Setup）运行就行，它会先关掉正在运行的 Win顺，设置和索引都会保留。</source>
-        <translation>You have %1. Download the installer (Setup) and run it: it closes the running WinShun first, and your settings and index are kept.</translation>
+        <source>你现在用的是 %1。下载安装程序（Setup）运行就行，它会先关掉正在运行的 Luma，设置和索引都会保留。</source>
+        <translation>You have %1. Download the installer (Setup) and run it: it closes the running Luma first, and your settings and index are kept.</translation>
     </message>
     <message>
-        <source>Win顺 %1 是目前最新的版本。</source>
-        <translation>WinShun %1 is the latest version.</translation>
+        <source>Luma %1 是目前最新的版本。</source>
+        <translation>Luma %1 is the latest version.</translation>
     </message>
     <message>
         <source>在 GitHub 上查看完整说明</source>
@@ -3181,16 +3181,16 @@
         <translation>File Explorer wasn’t found, so it couldn’t be opened without administrator rights. Try again in a moment, or press Ctrl+Shift+Enter to run it as administrator.</translation>
     </message>
     <message>
-        <source>Win顺 %1 可以更新了</source>
-        <translation>WinShun %1 is available</translation>
+        <source>Luma %1 可以更新了</source>
+        <translation>Luma %1 is available</translation>
     </message>
     <message>
         <source>点这里查看更新内容</source>
         <translation>Click to see what’s new</translation>
     </message>
     <message>
-        <source>Win顺已在后台运行</source>
-        <translation>WinShun is running in the background</translation>
+        <source>Luma已在后台运行</source>
+        <translation>Luma is running in the background</translation>
     </message>
     <message>
         <source>正在保存文件索引</source>
@@ -3201,8 +3201,8 @@
         <translation>Press Ctrl twice to search. The first run takes a moment to build the file index.</translation>
     </message>
     <message>
-        <source>Win顺 现在有剪贴板历史了</source>
-        <translation>WinShun now keeps a clipboard history</translation>
+        <source>Luma 现在有剪贴板历史了</source>
+        <translation>Luma now keeps a clipboard history</translation>
     </message>
     <message>
         <source>复制过的文字、图片和文件都能找回来。点这里设置用 Win+V 打开它。</source>
@@ -3213,12 +3213,12 @@
         <translation>The text, pictures and files you copy can be found again. Click here to turn it on.</translation>
     </message>
     <message>
-        <source>Win顺</source>
-        <translation>WinShun</translation>
+        <source>Luma</source>
+        <translation>Luma</translation>
     </message>
     <message>
-        <source>Win顺 — 双击 Ctrl 打开</source>
-        <translation>WinShun — press Ctrl twice to open</translation>
+        <source>Luma — 双击 Ctrl 打开</source>
+        <translation>Luma — press Ctrl twice to open</translation>
     </message>
     <message>
         <source>“%1” 已被其他程序或系统占用，请换一个。</source>
@@ -3226,15 +3226,15 @@
     </message>
     <message>
         <source>无法识别“%1”，请重新设置。</source>
-        <translation>“%1” isn’t a shortcut WinShun understands. Please set it again.</translation>
+        <translation>“%1” isn’t a shortcut Luma understands. Please set it again.</translation>
     </message>
     <message>
         <source>快捷键不可用</source>
         <translation>Shortcut unavailable</translation>
     </message>
     <message>
-        <source>Win顺 搜索</source>
-        <translation>WinShun Search</translation>
+        <source>Luma 搜索</source>
+        <translation>Luma Search</translation>
     </message>
     <message>
         <source>搜索</source>
@@ -3288,8 +3288,8 @@
         <translation>Press Ctrl twice to search. A portable copy builds its index by walking the folders; for a faster one, install the index service from the settings, or run as administrator.</translation>
     </message>
     <message>
-        <source>用 Win顺 搜索此处</source>
-        <translation>Search here with WinShun</translation>
+        <source>用 Luma 搜索此处</source>
+        <translation>Search here with Luma</translation>
     </message>
     <message numerus="yes">
         <source>已收录 %Ln 个文件，占用 %1 磁盘空间</source>
@@ -3349,8 +3349,8 @@
         <translation>Building the index…</translation>
     </message>
     <message>
-        <source>打开 Win顺</source>
-        <translation>Open WinShun</translation>
+        <source>打开 Luma</source>
+        <translation>Open Luma</translation>
     </message>
     <message>
         <source>双击 Ctrl</source>
@@ -3366,19 +3366,19 @@
     </message>
     <message>
         <source>升级前开机自启是以管理员身份运行的，所以记成了“管理员直读”；改选别的方式，开机自启就改用普通权限。</source>
-        <translation>Before the update WinShun started at login as administrator, so the mode was set to Direct (administrator); choose another and the login start switches to normal rights.</translation>
+        <translation>Before the update Luma started at login as administrator, so the mode was set to Direct (administrator); choose another and the login start switches to normal rights.</translation>
     </message>
     <message>
-        <source>索引服务没有运行（Windows 服务“WinShun”已停止或被禁用）</source>
-        <translation>the index service is not running (the Windows service "WinShun" is stopped or disabled)</translation>
+        <source>索引服务没有运行（Windows 服务“Luma”已停止或被禁用）</source>
+        <translation>the index service is not running (the Windows service "Luma" is stopped or disabled)</translation>
     </message>
     <message>
         <source>没有安装索引服务</source>
         <translation>the index service is not installed</translation>
     </message>
     <message>
-        <source>索引服务的版本和 Win顺 不配，请重新运行安装程序</source>
-        <translation>the index service's version does not match WinShun's; run the installer again</translation>
+        <source>索引服务的版本和 Luma 不配，请重新运行安装程序</source>
+        <translation>the index service's version does not match Luma's; run the installer again</translation>
     </message>
     <message>
         <source>现在：以管理员身份直接读取磁盘的主文件表和变更日志</source>
@@ -3402,23 +3402,23 @@
     </message>
     <message>
         <source>“管理员直读”要以管理员身份运行；这次是以普通权限启动的，点“以管理员身份重新启动”。</source>
-        <translation>Direct (administrator) needs WinShun to run as administrator; this time it started with normal rights. Click "Restart as administrator".</translation>
+        <translation>Direct (administrator) needs Luma to run as administrator; this time it started with normal rights. Click "Restart as administrator".</translation>
     </message>
     <message>
         <source>这个账户不是管理员，“管理员直读”在这里没有意义，请改选别的方式。</source>
         <translation>This account is not an administrator's, so Direct (administrator) means nothing here; choose another mode.</translation>
     </message>
     <message>
-        <source>开机自启的任务还在以管理员身份启动 Win顺：下次登录由它启动时会改成普通权限。</source>
-        <translation>The login task still starts WinShun as administrator: the next time it does, the task is changed to normal rights.</translation>
+        <source>开机自启的任务还在以管理员身份启动 Luma：下次登录由它启动时会改成普通权限。</source>
+        <translation>The login task still starts Luma as administrator: the next time it does, the task is changed to normal rights.</translation>
     </message>
     <message>
-        <source>开机自启的任务还在以普通权限启动 Win顺：以管理员身份重新启动后会改过来。</source>
-        <translation>The login task still starts WinShun with normal rights: it is changed once WinShun is restarted as administrator.</translation>
+        <source>开机自启的任务还在以普通权限启动 Luma：以管理员身份重新启动后会改过来。</source>
+        <translation>The login task still starts Luma with normal rights: it is changed once Luma is restarted as administrator.</translation>
     </message>
     <message>
-        <source>Win顺 旁边没有 WinShunService.exe</source>
-        <translation>There is no WinShunService.exe next to WinShun</translation>
+        <source>Luma 旁边没有 LumaService.exe</source>
+        <translation>There is no LumaService.exe next to Luma</translation>
     </message>
     <message>
         <source>正在安装索引服务…</source>
@@ -3441,8 +3441,8 @@
         <translation>Uninstalling the index service failed (error %1)</translation>
     </message>
     <message>
-        <source>索引服务已安装并启动。移动了 Win顺 的文件夹后要重新安装。</source>
-        <translation>The index service is installed and running. After moving WinShun's folder, install it again.</translation>
+        <source>索引服务已安装并启动。移动了 Luma 的文件夹后要重新安装。</source>
+        <translation>The index service is installed and running. After moving Luma's folder, install it again.</translation>
     </message>
     <message>
         <source>索引服务已卸载。</source>
@@ -3473,8 +3473,8 @@
         <translation>Connected: %1</translation>
     </message>
     <message>
-        <source>没能建立连接通道，详见 WinShun.log</source>
-        <translation>The connection channel could not be set up; see WinShun.log</translation>
+        <source>没能建立连接通道，详见 Luma.log</source>
+        <translation>The connection channel could not be set up; see Luma.log</translation>
     </message>
     <message>
         <source>输入框</source>
@@ -3513,8 +3513,8 @@
         <translation>Exit</translation>
     </message>
     <message>
-        <source>Win顺 %1 可以更新了…</source>
-        <translation>WinShun %1 is available…</translation>
+        <source>Luma %1 可以更新了…</source>
+        <translation>Luma %1 is available…</translation>
     </message>
     <message>
         <source>正在重建索引</source>
@@ -3573,8 +3573,8 @@
         <translation>The index would be gone whenever a USB stick or an external drive is unplugged or ejected. Choose a drive built into this PC.</translation>
     </message>
     <message>
-        <source>%1 现在用不了，这次先把索引放在默认位置，下次启动 Win顺 时再试。</source>
-        <translation>%1 cannot be used now. The index is kept in the default place this time; WinShun tries again when it next starts.</translation>
+        <source>%1 现在用不了，这次先把索引放在默认位置，下次启动 Luma 时再试。</source>
+        <translation>%1 cannot be used now. The index is kept in the default place this time; Luma tries again when it next starts.</translation>
     </message>
     <message>
         <source>索引不能放在 %1：%2。已改回默认位置。</source>
@@ -3596,8 +3596,8 @@
         <translation>Choose a backup to restore</translation>
     </message>
     <message>
-        <source>Win顺 备份</source>
-        <translation>WinShun backups</translation>
+        <source>Luma 备份</source>
+        <translation>Luma backups</translation>
     </message>
     <message>
         <source>所有文件</source>
@@ -3792,8 +3792,8 @@
         <translation>Copied. No window to paste into: press Ctrl+V where you want it</translation>
     </message>
     <message>
-        <source>已复制。那个程序以管理员身份运行，Win顺 没法替它粘贴：回到它那里按 Ctrl+V</source>
-        <translation>Copied. That program runs as administrator, so WinShun cannot paste into it: go back to it and press Ctrl+V</translation>
+        <source>已复制。那个程序以管理员身份运行，Luma 没法替它粘贴：回到它那里按 Ctrl+V</source>
+        <translation>Copied. That program runs as administrator, so Luma cannot paste into it: go back to it and press Ctrl+V</translation>
     </message>
     <message>
         <source>%1里只能粘贴文字</source>
@@ -3811,8 +3811,8 @@
         <translation>Copied</translation>
     </message>
     <message>
-        <source>Win顺</source>
-        <translation>WinShun</translation>
+        <source>Luma</source>
+        <translation>Luma</translation>
     </message>
     <message>
         <source>已复制 %1</source>
@@ -4148,12 +4148,12 @@
         <translation>Can&apos;t read this file</translation>
     </message>
     <message>
-        <source>这个文件是更新版本的 Win顺 导出的，请先更新 Win顺</source>
-        <translation>This file was exported by a newer WinShun. Update WinShun first</translation>
+        <source>这个文件是更新版本的 Luma 导出的，请先更新 Luma</source>
+        <translation>This file was exported by a newer Luma. Update Luma first</translation>
     </message>
     <message>
-        <source>这不是 Win顺 导出的收藏夹文件</source>
-        <translation>This isn&apos;t a favorites file exported by WinShun</translation>
+        <source>这不是 Luma 导出的收藏夹文件</source>
+        <translation>This isn&apos;t a favorites file exported by Luma</translation>
     </message>
     <message numerus="yes">
         <source>新增 %n 项</source>
@@ -4196,8 +4196,8 @@
         <translation>Export favorites</translation>
     </message>
     <message>
-        <source>Win顺 收藏夹.json</source>
-        <translation>WinShun favorites.json</translation>
+        <source>Luma 收藏夹.json</source>
+        <translation>Luma favorites.json</translation>
     </message>
     <message>
         <source>写不了这个文件：%1</source>
@@ -4853,12 +4853,12 @@
 <context>
     <name>ws::PluginSettings</name>
     <message>
-        <source>这些由 Windows 强制：不是管理员、内存上限、子进程、剪贴板、窗口。这些只是插件自己的说明，Win顺 挡不住：联网、读哪些文件、写哪些文件（严格沙箱的插件除外）。只安装你信得过来源的插件。</source>
-        <translation>These are enforced by Windows: not administrator, the memory limit, child processes, the clipboard, windows. These are only the plugin&apos;s own word, which WinShun cannot enforce: going online, which files it reads, which files it writes (except for plugins in the strict sandbox). Only install plugins from sources you trust.</translation>
+        <source>这些由 Windows 强制：不是管理员、内存上限、子进程、剪贴板、窗口。这些只是插件自己的说明，Luma 挡不住：联网、读哪些文件、写哪些文件（严格沙箱的插件除外）。只安装你信得过来源的插件。</source>
+        <translation>These are enforced by Windows: not administrator, the memory limit, child processes, the clipboard, windows. These are only the plugin&apos;s own word, which Luma cannot enforce: going online, which files it reads, which files it writes (except for plugins in the strict sandbox). Only install plugins from sources you trust.</translation>
     </message>
     <message>
-        <source>不运行自己的程序：Win顺 按它的清单打开网址、程序或文件夹，用你的普通权限，不是管理员</source>
-        <translation>Runs no program of its own: Win顺 opens the addresses, programs or folders its manifest names, with your normal rights, not as administrator</translation>
+        <source>不运行自己的程序：Luma 按它的清单打开网址、程序或文件夹，用你的普通权限，不是管理员</source>
+        <translation>Runs no program of its own: Luma opens the addresses, programs or folders its manifest names, with your normal rights, not as administrator</translation>
     </message>
     <message>
         <source>在严格沙箱里运行：低完整性，不是管理员，写不了你的文件（只能写它自己的数据文件夹）；内存上限 %1 MB</source>
@@ -4889,20 +4889,20 @@
         <translation>partly</translation>
     </message>
     <message>
-        <source>用 Win顺 搜索文件名和内容</source>
-        <translation>Search file names and contents with WinShun</translation>
+        <source>用 Luma 搜索文件名和内容</source>
+        <translation>Search file names and contents with Luma</translation>
     </message>
     <message>
-        <source>让 Win顺 打开文件和网址（以普通权限）</source>
-        <translation>Have WinShun open files and URLs (with normal rights)</translation>
+        <source>让 Luma 打开文件和网址（以普通权限）</source>
+        <translation>Have Luma open files and URLs (with normal rights)</translation>
     </message>
     <message>
         <source>读最近打开的项目</source>
         <translation>Read the recently opened items</translation>
     </message>
     <message>
-        <source>读 Win顺 从文档和文本文件里取出的文字</source>
-        <translation>Read the text WinShun took out of documents and text files</translation>
+        <source>读 Luma 从文档和文本文件里取出的文字</source>
+        <translation>Read the text Luma took out of documents and text files</translation>
     </message>
     <message>
         <source>写文件</source>
@@ -4929,8 +4929,8 @@
         <translation>Network access</translation>
     </message>
     <message>
-        <source>Win顺 不能阻止它联网</source>
-        <translation>WinShun cannot stop it going online</translation>
+        <source>Luma 不能阻止它联网</source>
+        <translation>Luma cannot stop it going online</translation>
     </message>
     <message>
         <source>无法使用：%1</source>
@@ -5012,12 +5012,12 @@
         <translation>The keyword %1 is taken by %2; choose another</translation>
     </message>
     <message>
-        <source>插件看不到你在资源管理器里登录的网络位置：资源管理器以管理员身份运行或没有运行，插件只能用 Win顺 自己降权后的身份，它和资源管理器不在同一个登录会话里。</source>
-        <translation>Plugins cannot see the network places you signed in to in File Explorer: Explorer runs as administrator or is not running, so plugins get WinShun&apos;s own token with its rights lowered, which is not in Explorer&apos;s logon session.</translation>
+        <source>插件看不到你在资源管理器里登录的网络位置：资源管理器以管理员身份运行或没有运行，插件只能用 Luma 自己降权后的身份，它和资源管理器不在同一个登录会话里。</source>
+        <translation>Plugins cannot see the network places you signed in to in File Explorer: Explorer runs as administrator or is not running, so plugins get Luma&apos;s own token with its rights lowered, which is not in Explorer&apos;s logon session.</translation>
     </message>
     <message>
-        <source>随 Win顺 安装</source>
-        <translation>Installed with WinShun</translation>
+        <source>随 Luma 安装</source>
+        <translation>Installed with Luma</translation>
     </message>
     <message>
         <source>你的插件文件夹</source>
@@ -5336,16 +5336,16 @@
         <translation>%1 are shortcuts of another program: left to it, so those rows carry no number.</translation>
     </message>
     <message>
-        <source>%1 是你给 Win顺 设的快捷键，按它仍是打开或关闭窗口，对应的行不标序号。</source>
-        <translation>%1 is a shortcut you set for WinShun: it still opens or closes a window, so that row carries no number.</translation>
+        <source>%1 是你给 Luma 设的快捷键，按它仍是打开或关闭窗口，对应的行不标序号。</source>
+        <translation>%1 is a shortcut you set for Luma: it still opens or closes a window, so that row carries no number.</translation>
     </message>
     <message>
         <source>%1 等</source>
         <translation>%1 and more</translation>
     </message>
     <message>
-        <source>Win顺 搜索</source>
-        <translation>WinShun Search</translation>
+        <source>Luma 搜索</source>
+        <translation>Luma Search</translation>
     </message>
     <message>
         <source>请填写关键词</source>
@@ -5412,12 +5412,12 @@
         <translation>This file is too large to be exported web searches</translation>
     </message>
     <message>
-        <source>这个文件是更新版本的 Win顺 导出的，请先更新 Win顺</source>
-        <translation>This file was exported by a newer WinShun. Update WinShun first</translation>
+        <source>这个文件是更新版本的 Luma 导出的，请先更新 Luma</source>
+        <translation>This file was exported by a newer Luma. Update Luma first</translation>
     </message>
     <message>
-        <source>这不是 Win顺 导出的网页搜索文件</source>
-        <translation>This is not a file of web searches exported by WinShun</translation>
+        <source>这不是 Luma 导出的网页搜索文件</source>
+        <translation>This is not a file of web searches exported by Luma</translation>
     </message>
     <message>
         <source>文件里没有网页搜索</source>
@@ -5482,8 +5482,8 @@
         <translation>Export web searches</translation>
     </message>
     <message>
-        <source>Win顺 网页搜索.json</source>
-        <translation>WinShun web searches.json</translation>
+        <source>Luma 网页搜索.json</source>
+        <translation>Luma web searches.json</translation>
     </message>
     <message>
         <source>写不了这个文件：%1</source>
@@ -5713,8 +5713,8 @@
         <translation>Cannot open %1</translation>
     </message>
     <message>
-        <source>这不是 Win顺 的备份</source>
-        <translation>This is not a WinShun backup</translation>
+        <source>这不是 Luma 的备份</source>
+        <translation>This is not a Luma backup</translation>
     </message>
     <message>
         <source>备份文件已损坏</source>

@@ -411,7 +411,7 @@ void FavoritesSettings::importFile()
     bool newer = false;
     const std::optional<FavoritesFile> read = readFavoritesFile(file.readAll(), &newer);
     if (!read) {
-        setMessage(newer ? tr("这个文件是更新版本的 Win顺 导出的，请先更新 Win顺") : tr("这不是 Win顺 导出的收藏夹文件"));
+        setMessage(newer ? tr("这个文件是更新版本的 Luma 导出的，请先更新 Luma") : tr("这不是 Luma 导出的收藏夹文件"));
         return;
     }
     // A keyword the web shortcuts have stays theirs.
@@ -446,7 +446,7 @@ void FavoritesSettings::exportFile()
         return;
     }
     const HWND owner = m_editor->m_window ? reinterpret_cast<HWND>(m_editor->m_window->winId()) : nullptr;
-    const QString path = shell::pickSaveFile(owner, tr("导出收藏夹"), tr("Win顺 收藏夹.json"), tr("收藏夹（JSON）"), u"json"_s);
+    const QString path = shell::pickSaveFile(owner, tr("导出收藏夹"), tr("Luma 收藏夹.json"), tr("收藏夹（JSON）"), u"json"_s);
     if (path.isEmpty())
         return;
     const QByteArray json = writeFavoritesFile(m_store->items());

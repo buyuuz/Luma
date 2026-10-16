@@ -158,7 +158,7 @@ QString copyTree(const QString& from, const QString& to)
 
 QString tempDir()
 {
-    return QDir::temp().filePath(u"WinShun-plugin-"_s + QUuid::createUuid().toString(QUuid::WithoutBraces).left(8));
+    return QDir::temp().filePath(u"Luma-plugin-"_s + QUuid::createUuid().toString(QUuid::WithoutBraces).left(8));
 }
 
 } // namespace

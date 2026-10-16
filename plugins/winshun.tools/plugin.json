@@ -7,7 +7,7 @@
   "author": "LingCore",
   "homepage": "https://github.com/LingCore/WinShun",
   "license": "MIT",
-  "runtime": {"mode": "resident", "program": "WinShunTools.exe", "start": "eager", "sandbox": "strict", "idleExitSec": 0, "memoryMB": 64},
+  "runtime": {"mode": "resident", "program": "LumaTools.exe", "start": "eager", "sandbox": "strict", "idleExitSec": 0, "memoryMB": 64},
   "permissions": [],
   "commands": [
     {

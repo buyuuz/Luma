@@ -138,15 +138,15 @@ bool protect(const std::wstring& dir)
 // loaded from the install folder: the deploy script renames files there, and
 // Explorer would hold them). What is there already is trusted by its hash,
 // not by being there. Making the folder and securing it takes administrator
-// rights, which Win顺 no longer runs with (GitHub #21): the installer does
+// rights, which Luma no longer runs with (GitHub #21): the installer does
 // it, running `WinShun.exe --stage-tap` elevated (stageTap), as does a copy
 // that runs elevated itself; one with the user's normal rights only checks.
 std::optional<std::wstring> stage(std::wstring& why)
 {
-    const std::wstring source = exeDir() + L"\\WinShunTap.dll";
+    const std::wstring source = exeDir() + L"\\LumaTap.dll";
     const std::wstring hash = sha256Prefix(source);
     if (hash.empty()) {
-        why = L"WinShunTap.dll missing next to the program";
+        why = L"LumaTap.dll missing next to the program";
         return std::nullopt;
     }
     const std::wstring base = programData();
@@ -154,10 +154,10 @@ std::optional<std::wstring> stage(std::wstring& why)
         why = L"no ProgramData folder";
         return std::nullopt;
     }
-    const std::wstring tap = base + L"\\WinShun\\tap";
+    const std::wstring tap = base + L"\\Luma\\tap";
     const bool elevated = integrity::processElevated();
     if (elevated) {
-        ::CreateDirectoryW((base + L"\\WinShun").c_str(), nullptr);
+        ::CreateDirectoryW((base + L"\\Luma").c_str(), nullptr);
         ::CreateDirectoryW(tap.c_str(), nullptr);
         if (!protect(tap)) {
             why = L"could not secure " + tap;
@@ -165,11 +165,11 @@ std::optional<std::wstring> stage(std::wstring& why)
         }
     }
     const std::wstring dir = tap + L"\\" + hash;
-    const std::wstring target = dir + L"\\WinShunTap.dll";
+    const std::wstring target = dir + L"\\LumaTap.dll";
     if (sha256Prefix(target) == hash)
         return target;
     if (!elevated) {
-        why = L"WinShunTap.dll is not staged for Explorer under " + tap
+        why = L"LumaTap.dll is not staged for Explorer under " + tap
             + L" (the installer does that; a portable copy once it runs as administrator)";
         return std::nullopt;
     }

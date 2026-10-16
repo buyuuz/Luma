@@ -420,7 +420,7 @@ Flickable {
                         cursorShape: Qt.PointingHandCursor
                         // The subject names the program and version, so the author can sort the mail.
                         onClicked: page.editor.openUrl("mailto:" + Gleaning.feedbackEmail + "?subject="
-                            + encodeURIComponent(qsTr("%1 %2 的建议").arg(qsTr("Win顺")).arg(Qt.application.version)))
+                            + encodeURIComponent(qsTr("%1 %2 的建议").arg(qsTr("Luma")).arg(Qt.application.version)))
                     }
                 }
                 Text {

@@ -10,7 +10,7 @@ namespace ws::service::log {
 
 void toConsole(); // --console: lines go to stderr instead of the file
 void write(const wchar_t* format, ...);
-// Start and stop failures go to the Windows event log too (source "WinShun").
+// Start and stop failures go to the Windows event log too (source "Luma").
 void toEventLog(const std::wstring& message);
 
 } // namespace ws::service::log

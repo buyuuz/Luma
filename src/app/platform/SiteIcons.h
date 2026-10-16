@@ -11,12 +11,12 @@
 // the address. Fetched from each site the first time it is shown (its home
 // page names them; /favicon.ico otherwise), kept as PNG in the data folder
 // (icons\web\<site>.png), fetched again after a month. Nothing of other sites
-// ships with Win顺. Until a site's arrives, its rows show the browser's icon.
+// ships with Luma. Until a site's arrives, its rows show the browser's icon.
 namespace ws::siteicons {
 
 // Where they are kept; once, at start, before anything asks.
 void setFolder(const QString& folder);
-// No more telling of icons that arrive: Win顺 is ending.
+// No more telling of icons that arrive: Luma is ending.
 void shutdown();
 
 // Whether the icon of a site (siteIconKey) is kept. Quick.
@@ -26,7 +26,7 @@ QImage load(const QString& key);
 
 // Fetches the icons of these home pages that are not kept, or were kept a
 // month ago: one at a time, on a thread of their own. A site whose icon
-// could not be had is not asked again before Win顺 starts again.
+// could not be had is not asked again before Luma starts again.
 void fetch(const QStringList& homeUrls);
 
 class Notifier : public QObject {

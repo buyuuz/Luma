@@ -11,7 +11,7 @@
 #include <string_view>
 #include <vector>
 
-// What goes over the pipe between Win顺 and its index service
+// What goes over the pipe between Luma and its index service
 // (WinShunService.exe, src/service; the client is ServiceVolumeAccess): the
 // frames, their payloads, and a channel that reads and writes them on a pipe
 // handle. No Qt: the service has none. Little-endian, both ends on the same
@@ -32,9 +32,9 @@ namespace ws::volproto {
 
 constexpr std::uint16_t kMajor = 1; // different on the two ends: they cannot talk
 constexpr std::uint16_t kMinor = 0; // only ever adds fields at the end of a payload
-constexpr wchar_t kPipeName[] = L"WinShun.Volumes"; // one service for the whole machine
+constexpr wchar_t kPipeName[] = L"Luma.Volumes"; // one service for the whole machine
 constexpr wchar_t kPipeEnvironment[] = L"WINSHUN_PIPE"; // another pipe's name, for tests (--console --pipe)
-constexpr wchar_t kServiceName[] = L"WinShun";
+constexpr wchar_t kServiceName[] = L"Luma";
 constexpr std::size_t kMaxPayloadBytes = 4u << 20; // a larger frame is refused unread
 constexpr std::size_t kBlockBytes = 1u << 20; // the service ends an MftBlock past this
 constexpr std::size_t kMaxNames = 255; // per record in an MftBlock (a 4 KB record holds some 60)
