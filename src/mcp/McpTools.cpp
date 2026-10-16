@@ -665,7 +665,7 @@ void ToolHost::logCall(const Call& call, const ToolResult& result) const
 
 QString ToolHost::instructions()
 {
-    return u"Luma (Luma) indexes every file and folder name on this PC's local drives and searches the text "
+    return u"Luma indexes every file and folder name on this PC's local drives and searches the text "
            "inside text files and documents (Word, Excel, PowerPoint, PDF). search_files finds by name in "
            "milliseconds; search_content looks inside files (slower, returns partial results with complete=false when "
            "its timeout runs out); recent_files lists what changed lately; list_folder and get_file_info look around; "

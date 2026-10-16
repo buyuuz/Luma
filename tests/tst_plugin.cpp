@@ -1436,7 +1436,11 @@ private slots:
         QCOMPARE(f.host->state(u"test.fake"_s).status, Host::State::Status::Running);
         QCOMPARE(f.host->state(u"test.fake"_s).pid, f.startedPids[0]);
         QVERIFY(f.host->runnerReady());
-        QCOMPARE(f.host->tokenSource(), elevated() ? Runner::TokenSource::Explorer : Runner::TokenSource::Plain);
+        // On a machine without a usable unelevated Explorer token, the runner must
+        // use a restricted token instead; never elevate plugin processes.
+        QVERIFY((!elevated() && f.host->tokenSource() == Runner::TokenSource::Plain)
+            || (elevated() && (f.host->tokenSource() == Runner::TokenSource::Explorer
+                || f.host->tokenSource() == Runner::TokenSource::Restricted)));
         // A second query reuses the process.
         QVERIFY(f.host->query(u"fk again"_s, Scope::All, 2));
         QVERIFY(f.waitFinal(2));
@@ -1805,7 +1809,11 @@ private slots:
         QCOMPARE(f.finalFor(3)->items[0].title, u"serve: 3"_s);
         QCOMPARE(f.startedPids.size(), 2u);
         QVERIFY(static_cast<quint32>(f.host->runnerFacts().value(u"pid"_s).toDouble()) != runnerPid);
-        QCOMPARE(f.host->tokenSource(), elevated() ? Runner::TokenSource::Explorer : Runner::TokenSource::Plain);
+        // On a machine without a usable unelevated Explorer token, the runner must
+        // use a restricted token instead; never elevate plugin processes.
+        QVERIFY((!elevated() && f.host->tokenSource() == Runner::TokenSource::Plain)
+            || (elevated() && (f.host->tokenSource() == Runner::TokenSource::Explorer
+                || f.host->tokenSource() == Runner::TokenSource::Restricted)));
     }
 
     void idleExit()
@@ -1928,7 +1936,8 @@ private slots:
         QVERIFY(!f.install(plain).isEmpty());
         QVERIFY(f.host->query(u"fk x"_s, Scope::All, 1));
         QVERIFY2(f.waitFinal(1), qPrintable(f.logs.join(u'\n')));
-        QCOMPARE(f.host->tokenSource(), Runner::TokenSource::Explorer);
+        const auto runnerSource = f.host->tokenSource();
+        QVERIFY(runnerSource == Runner::TokenSource::Explorer || runnerSource == Runner::TokenSource::Restricted);
         const QJsonObject runner = f.host->runnerFacts();
         qInfo() << "runner:" << QJsonDocument(runner).toJson(QJsonDocument::Compact).constData();
         QCOMPARE(runner.value(u"integrity"_s).toInt(), 8192);
@@ -1984,8 +1993,18 @@ private slots:
         QCOMPARE(facts.value(u"jobActiveProcessLimit"_s).toInt(), 0);
         QVERIFY(facts.value(u"spawnOk"_s).toBool());
         QVERIFY(facts.value(u"spawnedInJob"_s).toBool()); // the child is in the plugin's job too
-        if (facts.value(u"clipFormats"_s).toInt() > 0)
-            QVERIFY(facts.value(u"clipRead"_s).toBool());
+        // An elevated process without a usable Explorer token runs its
+        // plugins under a restricted token. In remote or noninteractive
+        // sessions Windows can report clipboard formats yet refuse data
+        // with ERROR_INVALID_HANDLE (6). That is an OS desktop limitation,
+        // not a sandbox permission denial; keep the job restriction check.
+        if (facts.value(u"clipFormats"_s).toInt() > 0) {
+            if (runnerSource == Runner::TokenSource::Explorer) {
+                QVERIFY(facts.value(u"clipRead"_s).toBool());
+            } else if (!facts.value(u"clipRead"_s).toBool()) {
+                QCOMPARE(facts.value(u"clipError"_s).toInt(), static_cast<int>(ERROR_INVALID_HANDLE));
+            }
+        }
         QVERIFY(!(facts.value(u"jobUiRestrictions"_s).toInt() & JOB_OBJECT_UILIMIT_READCLIPBOARD));
 
         // Strict: low integrity, its data folder writable, the profile not.

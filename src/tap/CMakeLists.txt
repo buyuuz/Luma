@@ -10,7 +10,7 @@ add_library(WinShunTap SHARED
     TapProtocol.h
 )
 # C++/WinRT finds combase at run time: no windowsapp, no api-set imports.
-target_link_libraries(WinShunTap PRIVATE winshun_options kernel32 ole32 oleaut32 user32)
+target_link_libraries(WinShunTap PRIVATE winshun_options kernel32 ole32 oleaut32 user32 windowsapp) # WinRT activation on recent Windows SDKs
 set_target_properties(WinShunTap PROPERTIES
     MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
     PREFIX "")

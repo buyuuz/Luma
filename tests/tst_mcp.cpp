@@ -1,7 +1,7 @@
 // The MCP server (src/mcp): JSON-RPC framing, the tools on a hand-made index
 // over a temporary folder, the lifecycle through an in-process session,
 // the named pipe, and the relay WinShunMcp.exe driven over stdio, with
-// Win顺 there and away; and the plugins' commands as tools (plugin::AiBridge).
+// Luma there and away; and the plugins' commands as tools (plugin::AiBridge).
 
 #include "AiBridge.h"
 #include "ContentScanner.h"
@@ -1166,14 +1166,14 @@ private slots:
         reply = relay.exchange(requestLine(4, u"ping"_s));
         QVERIFY(reply && parseObject(*reply).contains(u"result"_s));
 
-        // Win顺 goes away: the relay answers for it, then finds it again.
+        // Luma goes away: the relay answers for it, then finds it again.
         f.server->stop();
         QTRY_COMPARE(f.server->sessionCount(), 0);
         reply = relay.exchange(callLine(5, u"search_files"_s, {{u"query"_s, u"中文"_s}}));
         QVERIFY(reply);
         out = outcomeOf(*reply);
         QVERIFY(out.isError);
-        // "not running", or, with a Win顺 running on this PC that does not
+        // "not running", or, with a Luma running on this PC that does not
         // serve the pipe (an older one, or its AI connection off), that.
         QVERIFY2(out.text.contains(u"not running") || out.text.contains(u"AI connection is off"), qPrintable(out.text));
         reply = relay.exchange(callLine(6, u"index_status"_s));
@@ -1253,7 +1253,7 @@ private slots:
         QVERIFY(reply);
         const Outcome out = outcomeOf(*reply);
         QVERIFY(out.isError);
-        QVERIFY2(out.text.contains(u"Win顺") && (out.text.contains(u"not running") || out.text.contains(u"AI connection is off")),
+        QVERIFY2(out.text.contains(u"Luma") && (out.text.contains(u"not running") || out.text.contains(u"AI connection is off")),
             qPrintable(out.text));
         reply = relay.exchange("garbage\n");
         QVERIFY(reply);
@@ -1345,7 +1345,7 @@ private slots:
                     continue;
                 QVERIFY(t.value(u"annotations"_s).toObject().value(u"readOnlyHint"_s).toBool());
                 QVERIFY(t.value(u"inputSchema"_s).toObject().value(u"properties"_s).toObject().contains(u"query"_s));
-                QVERIFY(t.value(u"description"_s).toString().contains(u"Win顺"));
+                QVERIFY(t.value(u"description"_s).toString().contains(u"Luma"));
             }
         }
 

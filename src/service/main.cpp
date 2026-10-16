@@ -40,7 +40,7 @@ using ws::service::Server;
 
 constexpr wchar_t kDisplayName[] = L"Luma 索引服务 (Luma Index Service)";
 constexpr wchar_t kDescription[]
-    = L"Reads the NTFS volumes' master file tables and change journals for Luma (Luma), which runs with normal "
+    = L"Reads the NTFS volumes' master file tables and change journals for Luma, which runs with normal "
       L"rights. 为以普通权限运行的 Luma 读取 NTFS 磁盘的主文件表和变更日志。";
 
 SERVICE_STATUS_HANDLE g_statusHandle = nullptr;
@@ -283,7 +283,7 @@ int uninstall()
 int usage()
 {
     std::fwprintf(stderr,
-        L"LumaService.exe: the index service of Luma (Luma) %hs\n"
+        L"LumaService.exe: the index service of Luma %hs\n"
         L"  --install              register and start the service (as administrator)\n"
         L"  --uninstall            stop and remove it\n"
         L"  --console [--pipe NAME] [--no-privileges]\n"

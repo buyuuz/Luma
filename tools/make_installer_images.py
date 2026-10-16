@@ -15,7 +15,7 @@ import sys
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from make_icon import render  # noqa: E402
+from make_icon import artwork  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "installer"
@@ -52,17 +52,17 @@ def side_panel(theme):
     top, bottom, ink, soft = THEMES[theme]
     w, h = SIDE
     image = gradient(SIDE, top, bottom)
-    logo = render(176)
+    logo = artwork(176)
     image.paste(logo, ((w - logo.width) // 2, 250), logo)
     draw = ImageDraw.Draw(image)
-    centred(draw, 470, "Win顺", ImageFont.truetype(str(BOLD), 64), ink, w)
-    centred(draw, 556, "WinShun", ImageFont.truetype(str(REGULAR), 30), soft, w)
+    centred(draw, 470, "Luma", ImageFont.truetype(str(BOLD), 64), ink, w)
+
     return image
 
 
 def small():
     image = Image.new("RGBA", (SMALL, SMALL), (0, 0, 0, 0))
-    logo = render(96)
+    logo = artwork(96)
     image.paste(logo, ((SMALL - logo.width) // 2, (SMALL - logo.height) // 2), logo)
     return image
 

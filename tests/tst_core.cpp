@@ -824,7 +824,7 @@ private slots:
 
         const auto winshun = typedKeyword(shortcuts, u"WinSHUN"_s);
         QVERIFY(winshun);
-        QCOMPARE(shortcuts[winshun->index].homeUrl(), u"https://github.com/LingCore/WinShun"_s);
+        QCOMPARE(shortcuts[winshun->index].homeUrl(), u"https://github.com/buyuuz/Luma"_s);
         QVERIFY(winshun->words.isEmpty());
         QVERIFY(!typedKeyword(shortcuts, u"winshun 设置"_s)); // a page: an ordinary query then
     }
@@ -3517,7 +3517,7 @@ private slots:
             app(u"计算器"_s, u"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"_s, uR"(C:\WindowsApps\Calc)"_s,
                 AppKind::Store),
             app(u"Uninstall Code"_s, uR"(C:\VS Code\unins000.exe)"_s, uR"(C:\VS Code\unins000.exe)"_s),
-            app(u"Win顺"_s, uR"(C:\WinShun\WinShun.exe)"_s, uR"(C:\WinShun\WinShun.exe)"_s),
+            app(u"Win顺"_s, uR"(C:\Luma\Luma.exe)"_s, uR"(C:\Luma\Luma.exe)"_s),
             app(u"Notes"_s, uR"(C:\Notes\Notes.exe)"_s, uR"(C:\Notes\Notes.exe)"_s),
         };
         constexpr qint64 day = 86'400'000;

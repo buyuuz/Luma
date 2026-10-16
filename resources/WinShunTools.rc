@@ -23,7 +23,7 @@ BEGIN
             VALUE "FileVersion", WINSHUN_VERSION
             VALUE "InternalName", "LumaTools"
             VALUE "OriginalFilename", "LumaTools.exe"
-            VALUE "ProductName", "Luma · Luma"
+            VALUE "ProductName", "Luma"
             VALUE "ProductVersion", WINSHUN_VERSION
         END
     END

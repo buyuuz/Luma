@@ -102,13 +102,13 @@ bool winShunRunning()
 QString offlineText()
 {
     if (winShunRunning()) {
-        return u"Luma (Luma) is running, but its AI connection is off (or this version of Luma has none), so "
+        return u"Luma is running, but its AI connection is off (or this version of Luma has none), so "
                "this tool cannot answer. Ask the user to turn on 允许 AI 连接 (Allow AI assistants to connect) in "
                "Luma's settings › AI 助手, or to update Luma; then call the tool again. "
                "／Luma 在运行，但没有开放 AI 连接（或这个版本还没有这个功能）。请在 Luma 的设置 → AI 助手 里打开"
                "“允许 AI 连接”，或者更新 Luma，然后再试一次。"_s;
     }
-    return u"Luma (Luma) is not running on this PC, so this tool cannot answer right now. "
+    return u"Luma is not running on this PC, so this tool cannot answer right now. "
            "Ask the user to start Luma (Start menu › Luma, or the tray icon), then call the tool again: "
            "there is no need to restart the AI client. "
            "／Luma 没有运行，这个工具暂时用不了。请启动 Luma（开始菜单里的 Luma），然后再试一次，不用重启 AI 客户端。"_s;
@@ -130,7 +130,7 @@ QJsonObject toolValue(const QJsonObject& structured)
 QJsonObject statusTool()
 {
     return {{u"name"_s, u"index_status"_s}, {u"title"_s, u"Luma status"_s},
-        {u"description"_s, u"Whether Luma (Luma) is running and its index is ready."_s},
+        {u"description"_s, u"Whether Luma is running and its index is ready."_s},
         {u"inputSchema"_s, QJsonObject {{u"type"_s, u"object"_s}, {u"additionalProperties"_s, false}}},
         {u"annotations"_s,
             QJsonObject {{u"readOnlyHint"_s, true}, {u"destructiveHint"_s, false}, {u"idempotentHint"_s, true}, {u"openWorldHint"_s, false}}}};
@@ -335,9 +335,9 @@ private:
             if (method == u"initialize")
                 writeOut(jsonrpc::response(id, localInitialize()));
             else if (method == u"tools/call")
-                writeOut(jsonrpc::response(id, toolError(u"Luma (Luma) stopped while answering. "_s + offlineText())));
+                writeOut(jsonrpc::response(id, toolError(u"Luma stopped while answering. "_s + offlineText())));
             else
-                writeOut(jsonrpc::errorResponse(id, jsonrpc::kUnavailable, u"Luma (Luma) stopped while answering"_s));
+                writeOut(jsonrpc::errorResponse(id, jsonrpc::kUnavailable, u"Luma stopped while answering"_s));
         }
     }
 
@@ -373,7 +373,7 @@ private:
                 QJsonObject {{u"name"_s, u"winshun"_s}, {u"title"_s, u"Luma · Luma"_s}, {u"version"_s, QStringLiteral(WINSHUN_VERSION)},
                     {u"description"_s, u"Search files, folders and text on this PC with Luma"_s}}},
             {u"instructions"_s,
-                u"Luma (Luma) searches the files, folders and text on this PC. It is not running at the moment: "
+                u"Luma searches the files, folders and text on this PC. It is not running at the moment: "
                 "its tools answer with an error until the user starts it (Start menu › Luma); then they work again "
                 "without restarting this client. index_status tells whether it is running."_s}};
     }

@@ -1,4 +1,4 @@
-; Luma installer (Inno Setup 6.5 or later: the Windows 11 wizard style with
+﻿; Luma installer (Inno Setup 6.5 or later: the Windows 11 wizard style with
 ; dark mode). Built by scripts/release.ps1, which passes:
 ;   /DAppVersion=0.2.1  /DSourceDir=<dist\Luma>  /DOutputDir=<dist>
 ; Upgrading is installing again: the same AppId replaces the old version in

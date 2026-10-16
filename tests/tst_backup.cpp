@@ -62,7 +62,7 @@ private slots:
     void init()
     {
         QVERIFY(m_tmp.isValid());
-        m_ini = m_tmp.filePath(u"roaming/WinShun.ini"_s);
+        m_ini = m_tmp.filePath(u"roaming/Luma.ini"_s);
         m_data = m_tmp.filePath(u"local"_s);
         QDir(m_tmp.path()).removeRecursively();
         QDir().mkpath(m_tmp.path());
@@ -87,7 +87,7 @@ private slots:
     void collectsTheSettings()
     {
         QCOMPARE(names(collect(m_ini, m_data)),
-            (QStringList {u"WinShun.ini"_s, u"data/dialog-pins.txt"_s, u"data/favorites.json"_s,
+            (QStringList {u"Luma.ini"_s, u"data/dialog-pins.txt"_s, u"data/favorites.json"_s,
                 u"data/icons/web/custom/mine.png"_s, u"data/plugins/me.notes/plugin.json"_s}));
     }
 
@@ -111,16 +111,16 @@ private slots:
         Packed packed = pack(collect(m_ini, m_data), u"0.7.3"_s, start);
         for (int i = 0; i < kKept + 2; ++i)
             QCOMPARE(write(folder, packed, start.addSecs(i * 3600)), QString());
-        writeFile(folder + u"/WinShun-2026-10-13-070000.zip.part"_s, "cut short");
+        writeFile(folder + u"/Luma-2026-10-13-070000.zip.part"_s, "cut short");
         writeFile(folder + u"/notes.txt"_s, "the user's");
         QCOMPARE(write(folder, packed, start.addSecs((kKept + 2) * 3600)), QString());
         const QList<Found> found = list(folder);
         QCOMPARE(found.size(), kKept);
         QCOMPARE(found.first().when, start.addSecs((kKept + 2) * 3600));
         QCOMPARE(found.last().when, start.addSecs(3 * 3600));
-        QCOMPARE(QFileInfo(found.first().path).fileName(), u"WinShun-2026-10-13-200000.zip"_s);
+        QCOMPARE(QFileInfo(found.first().path).fileName(), u"Luma-2026-10-13-200000.zip"_s);
         QCOMPARE(hashOf(found.first().path), packed.hash);
-        QVERIFY(!QFile::exists(folder + u"/WinShun-2026-10-13-070000.zip.part"_s));
+        QVERIFY(!QFile::exists(folder + u"/Luma-2026-10-13-070000.zip.part"_s));
         QVERIFY(QFile::exists(folder + u"/notes.txt"_s));
     }
 
@@ -147,10 +147,10 @@ private slots:
 
     void refusesOthers()
     {
-        const QByteArray manifest = "{\"app\":\"WinShun\",\"format\":1}";
+        const QByteArray manifest = "{\"app\":\"Luma\",\"format\":1}";
         const QString staged = m_tmp.filePath(u"staged"_s);
         const QString zip = m_tmp.filePath(u"x.zip"_s);
-        writeZip(zip, {{"WinShun.ini", "x"}});
+        writeZip(zip, {{"Luma.ini", "x"}});
         QVERIFY(!unpack(zip, staged).isEmpty()); // no backup.json: not ours
         writeZip(zip, {{"backup.json", manifest}, {"data/../../evil.txt", "x"}});
         QVERIFY(!unpack(zip, staged).isEmpty());

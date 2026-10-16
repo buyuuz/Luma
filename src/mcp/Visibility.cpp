@@ -32,7 +32,26 @@ HANDLE Visibility::defaultToken()
             if (::GetTokenInformation(process, TokenLinkedToken, &linked, sizeof linked, &size))
                 result = linked.LinkedToken;
         }
-        if (!result) {
+        TOKEN_ELEVATION privilegeLevel {};
+        const bool elevated = ::GetTokenInformation(process, TokenElevation, &privilegeLevel, sizeof privilegeLevel, &size)
+            && privilegeLevel.TokenIsElevated;
+        if (!result && elevated) {
+            // The built-in Administrator account can be elevated without a linked
+            // token. Never use its full administrator token for MCP file checks:
+            // restrict Administrators to deny-only and drop all privileges.
+            // If restricting fails, return null (Visibility will deny access).
+            BYTE admins[SECURITY_MAX_SID_SIZE] {};
+            DWORD adminsSize = sizeof admins;
+            if (::CreateWellKnownSid(WinBuiltinAdministratorsSid, nullptr, admins, &adminsSize)) {
+                SID_AND_ATTRIBUTES disabled {admins, 0};
+                HANDLE restricted = nullptr;
+                if (::CreateRestrictedToken(process, DISABLE_MAX_PRIVILEGE, 1, &disabled, 0, nullptr, 0, nullptr, &restricted)) {
+                    ::DuplicateTokenEx(restricted, TOKEN_QUERY | TOKEN_IMPERSONATE | TOKEN_DUPLICATE, nullptr,
+                        SecurityImpersonation, TokenImpersonation, &result);
+                    ::CloseHandle(restricted);
+                }
+            }
+        } else if (!result) {
             ::DuplicateTokenEx(process, TOKEN_QUERY | TOKEN_IMPERSONATE | TOKEN_DUPLICATE, nullptr, SecurityImpersonation,
                 TokenImpersonation, &result);
         }
