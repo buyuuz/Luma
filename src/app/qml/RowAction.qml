@@ -14,10 +14,12 @@ Rectangle {
     property string text
     property bool danger: false
     property bool checked: false
+    property bool glass: false
     property string tip
     property string tipShortcut
     readonly property bool tipWanted: area.containsMouse && !area.used && tip.length > 0
     readonly property color foreground: danger ? Theme.accentText : checked ? Theme.accent
+                                        : glass ? (area.containsMouse ? Theme.glassText : Theme.glassSecondary)
                                         : area.containsMouse ? Theme.text : Theme.subtext
 
     // A handle to drag (a clipboard row in its group's order): held, every
@@ -30,9 +32,10 @@ Rectangle {
 
     implicitWidth: text.length > 0 ? content.implicitWidth + 20 : 32
     implicitHeight: 32
-    radius: 4
+    radius: glass ? 9 : 4
     color: danger
            ? (area.pressed ? Qt.darker(Theme.dangerFill, 1.15) : area.containsMouse ? Qt.lighter(Theme.dangerFill, 1.08) : Theme.dangerFill)
+           : glass ? (area.containsMouse || checked ? Qt.rgba(1, 1, 1, 0.10) : "transparent")
            : (area.pressed ? Theme.controlPressed : area.containsMouse || checked ? Theme.controlHover : "transparent")
 
     Row {

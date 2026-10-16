@@ -54,22 +54,16 @@ Item {
 
     implicitHeight: Theme.headerHeight // 界面大小
 
-    // Raycast-inspired floating glass search surface. This is one cheap
-    // gradient and outline, not a continuously sampled desktop blur.
+    // Spotlight/Raycast: open header without a nested Windows-style outline.
     Rectangle {
         anchors.fill: parent
-        anchors.leftMargin: 8
-        anchors.rightMargin: 8
+        anchors.leftMargin: 12
+        anchors.rightMargin: 12
         anchors.topMargin: 8
-        anchors.bottomMargin: 6
+        anchors.bottomMargin: 5
         visible: !bar.inBox
-        radius: 15
-        border.width: 1
-        border.color: Theme.glassOutline
-        gradient: Gradient {
-            GradientStop { position: 0; color: Theme.glassFieldTop }
-            GradientStop { position: 1; color: Theme.glassFieldBottom }
-        }
+        radius: 16
+        color: Qt.rgba(1, 1, 1, 0.018)
     }
 
     Component.onCompleted: {
@@ -106,7 +100,7 @@ Item {
         readonly property bool pointed: contains(mapFromItem(null, bar.frame.pointer))
         readonly property bool held: bar.placement.moving
 
-        visible: !bar.inBox
+        visible: false // Mac-style search panel needs no Windows drag handle.
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         width: 72 // easier to find than the pill itself
@@ -130,24 +124,25 @@ Item {
         id: icon
         visible: !bar.inBox
         anchors.left: parent.left
-        anchors.leftMargin: 20
+        anchors.leftMargin: 26
         y: bar.onPixel((bar.height - height) / 2)
         glyph: bar.launcher.scope === Launcher.Content ? "" // Document
              : "" // Search
         size: Theme.searchIconSize
+        color: Theme.glassSecondary
     }
 
     TextInput {
         id: input
         objectName: "searchField" // App answers the input method for it while it is in the box
         anchors.left: icon.right
-        anchors.leftMargin: 14
+        anchors.leftMargin: 16
         anchors.right: tabs.left
-        anchors.rightMargin: 12
+        anchors.rightMargin: 16
         y: bar.onPixel((bar.height - height) / 2)
         focus: true
         clip: true
-        color: Theme.text
+        color: Theme.glassText
         font.pixelSize: Theme.uiSearch
         selectByMouse: true
         selectionColor: Theme.textSelection
@@ -170,7 +165,7 @@ Item {
             anchors.fill: parent
             verticalAlignment: Text.AlignVCenter
             text: bar.launcher.placeholder
-            color: Theme.faint
+            color: Theme.glassMuted
             font: input.font
             elide: Text.ElideRight
             visible: input.text.length === 0 && input.preeditText.length === 0
@@ -197,7 +192,7 @@ Item {
             anchors.bottom: parent.bottom
             verticalAlignment: Text.AlignVCenter
             text: bar.launcher.pluginHint
-            color: Theme.faint
+            color: Theme.glassMuted
             font: input.font
             elide: Text.ElideRight
             visible: text.length > 0 && input.preeditText.length === 0 && !bar.inBox
@@ -214,7 +209,7 @@ Item {
         id: tabs
         scaled: true
         anchors.right: parent.right
-        anchors.rightMargin: 12
+        anchors.rightMargin: 22
         anchors.leftMargin: 16
         y: bar.onPixel((bar.height - height) / 2)
         // 文件夹 is a chip of the strip under the box (TypeStrip): 文件 stays current.

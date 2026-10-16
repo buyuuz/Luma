@@ -675,6 +675,15 @@ bool App::createWindow()
         return false;
 
     prepareBackdrop(m_window);
+    {
+        // The launcher is the only window that uses alpha transparency.
+        // Required for the glass gradient to reveal Win10's acrylic behind it.
+        QSurfaceFormat glassFormat = m_window->requestedFormat();
+        if (glassFormat.alphaBufferSize() < 8) {
+            glassFormat.setAlphaBufferSize(8);
+            m_window->setFormat(glassFormat);
+        }
+    }
     m_window->create(); // native handle now, so DWM styling applies before the first show
     m_window->installEventFilter(this);
     m_launcher->setWindow(m_window);
@@ -824,8 +833,10 @@ void App::applyTheme()
     win::setMenuTheme(dark);
     if (m_pluginHost)
         m_pluginHost->setAppearance(m_language, dark ? u"dark"_s : u"light"_s);
-    if (m_window)
+    if (m_window) {
         styleWindow(m_window, SystemTheme::backdropAvailable());
+        win::styleLauncherGlass(m_window);
+    }
     if (m_clipWindow)
         styleWindow(m_clipWindow, SystemTheme::backdropAvailable());
     if (m_settingsWindow)

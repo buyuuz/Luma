@@ -44,8 +44,10 @@ Rectangle {
 
     implicitWidth: row.implicitWidth + 6
     implicitHeight: tabHeight + 6
-    radius: 8
-    color: Theme.track
+    radius: scaled ? height / 2 : 8
+    color: scaled ? Qt.rgba(0.04, 0.04, 0.04, 0.24) : Theme.track
+    border.width: scaled ? 1 : 0
+    border.color: scaled ? Qt.rgba(1, 1, 1, 0.10) : "transparent"
 
     Row {
         id: row
@@ -73,10 +75,11 @@ Rectangle {
 
                 width: labelWidth + (open ? sub.fullWidth : 0) + (pluginOpen ? pluginSub.fullWidth : 0)
                 height: tabs.tabHeight
-                radius: 6
+                radius: tabs.scaled ? height / 2 : 6
                 clip: true
-                color: active ? Theme.chipActive : area.containsMouse ? Theme.chipHover : "transparent"
-                border.width: active ? 1 : 0
+                color: active ? (tabs.scaled ? Qt.rgba(1, 1, 1, 0.16) : Theme.chipActive)
+                       : area.containsMouse ? (tabs.scaled ? Qt.rgba(1, 1, 1, 0.07) : Theme.chipHover) : "transparent"
+                border.width: active && !tabs.scaled ? 1 : 0
                 border.color: Theme.chipBorder
                 Behavior on width { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
 
@@ -86,7 +89,9 @@ Rectangle {
                     y: tabs.onPixel((tab.height - height) / 2)
                     text: tab.modelData
                     // The smaller tab (or the plugin's chip) current: this one is the way back to the whole.
-                    color: tab.active && !tab.subCurrent && !tab.pluginOpen ? Theme.text : Theme.subtext
+                    color: tabs.scaled
+                           ? (tab.active ? Theme.glassText : Theme.glassSecondary)
+                           : tab.active && !tab.subCurrent && !tab.pluginOpen ? Theme.text : Theme.subtext
                     font.pixelSize: tabs.bodySize
                     font.weight: tab.active ? Font.DemiBold : Font.Normal
                 }

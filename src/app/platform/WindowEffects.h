@@ -15,6 +15,9 @@ namespace ws::win {
 // `backdrop`, the Mica material fills the window behind its content (see
 // backdropSupported). The dark mode is separate, see setDarkFrame.
 void styleFramelessWindow(QWindow* window, bool backdrop = false);
+// Optional blurred desktop backdrop for the launcher on Windows 10.
+// Uses the OS compositor when available; other windows are not affected.
+void styleLauncherGlass(QWindow* window);
 
 // Whether DWM rounds the corners of our windows (Windows 11): their edge is
 // drawn rounded to match, else square.

@@ -16,14 +16,22 @@ QtObject {
     // white to read, whatever the accent (SystemTheme.accentFill).
     readonly property color accentFill: SystemTheme.accentFill
 
-    // Mac Glass V1. These lightweight layered colours deliberately avoid
-    // live blur and GPU shaders, so the launcher remains fast on Windows 10.
-    readonly property color glassCanvasTop: dark ? "#222B43" : "#FCFDFF"
-    readonly property color glassCanvasBottom: dark ? "#141B2D" : "#EFF3FA"
-    readonly property color glassFieldTop: dark ? Qt.rgba(0.90, 0.94, 1, 0.14) : Qt.rgba(1, 1, 1, 0.93)
-    readonly property color glassFieldBottom: dark ? Qt.rgba(0.73, 0.82, 1, 0.08) : Qt.rgba(0.96, 0.97, 1, 0.78)
-    readonly property color glassOutline: dark ? Qt.rgba(0.85, 0.91, 1, 0.24) : Qt.rgba(0.43, 0.55, 0.77, 0.24)
-    readonly property color glassAccent: dark ? "#9DAAFF" : "#5E70E4"
+    // Luma Glass V3: neutral graphite tones, inspired by a floating Mac launcher.
+    // The single GPU-composited gradient is cheaper than continuous blur.
+    readonly property color glassCanvasTop: Qt.rgba(0.20, 0.20, 0.21, 0.85)
+    readonly property color glassCanvasMid: Qt.rgba(0.12, 0.13, 0.14, 0.83)
+    readonly property color glassCanvasBottom: Qt.rgba(0.07, 0.08, 0.09, 0.88)
+    readonly property color glassFieldTop: Qt.rgba(1, 1, 1, 0.055)
+    readonly property color glassFieldBottom: Qt.rgba(0.9, 0.9, 0.95, 0.012)
+    readonly property color glassOutline: Qt.rgba(1, 1, 1, 0.14)
+    readonly property color glassAccent: "#D7DDE9"
+    readonly property color glassText: "#F5F5F7"
+    readonly property color glassSecondary: "#B0B0B6"
+    readonly property color glassMuted: "#929299"
+    readonly property color glassSelection: Qt.rgba(1, 1, 1, 0.15)
+    readonly property color glassHover: Qt.rgba(1, 1, 1, 0.075)
+    readonly property color glassPanelEdge: Qt.rgba(1, 1, 1, 0.32)
+    readonly property color glassKeycap: Qt.rgba(1, 1, 1, 0.07)
 
     readonly property color background: dark ? "#172036" : "#F4F7FC"
     // The edge of our windows (WindowEdge.qml), rounded as DWM rounds them.
@@ -31,26 +39,26 @@ QtObject {
     // not show. The light ones stand apart by their shadow.
     // Windows 10 cannot ask DWM for native rounding, but WindowEffects.cpp
     // clips our frameless HWND to the same radius via a Win32 window region.
-    readonly property int windowRadius: 18
-    readonly property color windowEdge: dark ? "#52617D" : "#BCC7DE"
+    readonly property int windowRadius: 22
+    readonly property color windowEdge: glassPanelEdge
     readonly property color divider: backdrop ? (dark ? Qt.rgba(1, 1, 1, 0.084) : Qt.rgba(0, 0, 0, 0.058))
                                               : dark ? "#2E2E2E" : "#EAEAEA"
     readonly property color text: dark ? "#F3F3F3" : "#1B1B1B"
     readonly property color subtext: dark ? "#A7A7A7" : "#666666"
     // Hints and placeholders: Windows 11's tertiary text, legible on a card (≥ 3:1).
     readonly property color faint: "#8A8A8A"
-    readonly property color hover: dark ? Qt.rgba(0.68, 0.76, 1, 0.10) : Qt.rgba(0.44, 0.54, 0.78, 0.08)
-    readonly property color selection: dark ? Qt.rgba(0.55, 0.65, 1, 0.19) : Qt.rgba(0.42, 0.54, 0.90, 0.13)
+    readonly property color hover: dark ? glassHover : Qt.rgba(0.44, 0.54, 0.78, 0.08)
+    readonly property color selection: dark ? glassSelection : Qt.rgba(0.42, 0.54, 0.90, 0.13)
     readonly property color textSelection: Qt.rgba(accent.r, accent.g, accent.b, 0.35)
     readonly property color badge: Qt.rgba(accent.r, accent.g, accent.b, dark ? 0.16 : 0.10) // "应用" tag on app rows
 
     readonly property color track: backdrop ? (dark ? Qt.rgba(1, 1, 1, 0.045) : Qt.rgba(0, 0, 0, 0.05))
                                             : dark ? "#2A2A2A" : "#EDEDED"
-    readonly property color chipActive: dark ? "#3A3A3A" : "#FFFFFF"
+    readonly property color chipActive: dark ? "#454648" : "#FFFFFF"
     readonly property color chipHover: dark ? "#333333" : "#E4E4E4"
-    readonly property color chipBorder: dark ? "#454545" : "#DCDCDC"
-    readonly property color keycap: dark ? "#2A2A2A" : "#FFFFFF"
-    readonly property color keycapBorder: dark ? "#3C3C3C" : "#DADADA"
+    readonly property color chipBorder: dark ? "#5B5C5F" : "#DCDCDC"
+    readonly property color keycap: dark ? "#272829" : "#FFFFFF"
+    readonly property color keycapBorder: dark ? "#55575A" : "#DADADA"
     // The checkerboard under a translucent colour: light in both themes, as in
     // design tools, so that dark and light translucent colours both show.
     readonly property color checker: dark ? "#D0D0D0" : "#FFFFFF"

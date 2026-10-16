@@ -19,6 +19,12 @@ Item {
 
     implicitHeight: Theme.footerHeight // 界面大小
 
+    Rectangle {
+        anchors.fill: parent
+        radius: Theme.windowRadius
+        color: Qt.rgba(0.05, 0.06, 0.065, 0.34)
+    }
+
     // The divider shows work only once it has lasted a moment, so brief
     // work does not make it blink.
     property bool showBusy: false
@@ -125,7 +131,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         text: footer.launcher.statusText
         textFormat: Text.PlainText // may name a file
-        color: Theme.subtext
+        color: Theme.glassSecondary
         font.pixelSize: Theme.uiBody
         elide: Text.ElideRight
     }
@@ -150,15 +156,15 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             glyph: choices.glyph
             size: 16
-            color: Theme.faint
+            color: Theme.glassMuted
         }
 
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             width: chips.implicitWidth + 4
             height: Theme.chipHeight
-            radius: 6
-            color: Theme.track
+            radius: height / 2
+            color: Qt.rgba(1, 1, 1, 0.055)
 
             Row {
                 id: chips
@@ -178,10 +184,11 @@ Item {
 
                         width: Math.ceil(label.implicitWidth) + 16 // whole pixels: the labels after it stay sharp
                         height: Theme.chipHeight - 4
-                        radius: 4
-                        color: active ? Theme.chipActive : area.containsMouse ? Theme.chipHover : "transparent"
-                        border.width: active ? 1 : 0
-                        border.color: Theme.chipBorder
+                        radius: height / 2
+                        color: active ? Qt.rgba(1, 1, 1, 0.15)
+                              : area.containsMouse ? Qt.rgba(1, 1, 1, 0.065) : "transparent"
+                        border.width: 0
+                        border.color: "transparent"
                         Accessible.role: Accessible.RadioButton
                         Accessible.name: modelData
                         Accessible.checked: active
@@ -190,7 +197,7 @@ Item {
                             id: label
                             anchors.centerIn: parent
                             text: chip.modelData
-                            color: chip.active || area.containsMouse ? Theme.text : Theme.subtext
+                            color: chip.active || area.containsMouse ? Theme.glassText : Theme.glassSecondary
                             font.pixelSize: Theme.uiCaption
                             font.weight: chip.active ? Font.DemiBold : Font.Normal
                         }
@@ -266,9 +273,9 @@ Item {
             text: footer.launcher.statusText
         }
 
-        KeyHint { id: enterHint; visible: hints.given < 1 && label.length > 0; keys: "Enter"; label: hints.keyHints.enter ?? "" }
-        KeyHint { id: secondHint; visible: hints.given < 2 && label.length > 0; keys: hints.keyHints.secondKeys ?? ""; label: hints.keyHints.second ?? "" }
-        KeyHint { id: tabHint; visible: label.length > 0; keys: "Tab"; label: hints.keyHints.tab ?? "" }
+        KeyHint { glass: true; id: enterHint; visible: hints.given < 1 && label.length > 0; keys: "Enter"; label: hints.keyHints.enter ?? "" }
+        KeyHint { glass: true; id: secondHint; visible: false; keys: hints.keyHints.secondKeys ?? ""; label: hints.keyHints.second ?? "" }
+        KeyHint { glass: true; id: tabHint; visible: false; keys: "Tab"; label: hints.keyHints.tab ?? "" }
     }
 
     // The launcher's other shortcuts, while the mouse rests on it.

@@ -46,7 +46,7 @@ void clipWin10Corners(QWindow* window)
     const int height = bounds.bottom - bounds.top;
     if (width <= 0 || height <= 0)
         return;
-    const int diameter = qRound(36.0 * window->devicePixelRatio()); // 18 px radius
+    const int diameter = qRound(44.0 * window->devicePixelRatio()); // 22 px radius
     HRGN region = ::CreateRoundRectRgn(0, 0, width + 1, height + 1, diameter, diameter);
     if (!region)
         return;
@@ -129,6 +129,41 @@ void styleFramelessWindow(QWindow* window, bool backdrop)
     // DWM would also draw its caption buttons on it, next to ours.
     if (backdrop && backdropSupported())
         ::DwmSetWindowAttribute(hwnd, kSystemBackdropType, &kBackdropMica, sizeof kBackdropMica);
+}
+
+void styleLauncherGlass(QWindow* window)
+{
+    // Windows 11 uses the native Mica API; no private compositor hook there.
+    if (roundedCorners() || !materialsEnabled())
+        return;
+    const HWND hwnd = handleOf(window);
+    if (!hwnd)
+        return;
+
+    // Windows 10's legacy acrylic policy is dynamically resolved so the
+    // program can gracefully fall back to its QML glass gradient.
+    struct AccentPolicy {
+        int state;
+        int flags;
+        unsigned int tint;
+        int animation;
+    };
+    struct CompositionAttributeData {
+        int attribute;
+        void* data;
+        SIZE_T size;
+    };
+    using SetComposition = BOOL(WINAPI*)(HWND, CompositionAttributeData*);
+    const auto user = ::GetModuleHandleW(L"user32.dll");
+    const auto setComposition = reinterpret_cast<SetComposition>(
+        user ? ::GetProcAddress(user, "SetWindowCompositionAttribute") : nullptr);
+    if (!setComposition)
+        return;
+    // Accent state 4 is Windows 10's acrylic blur; the colour is ABGR.
+    AccentPolicy accent {4, 2, 0xCC252526, 0};
+    CompositionAttributeData desc {19, &accent, sizeof accent};
+    if (!setComposition(hwnd, &desc))
+        qWarning("Luma Glass: native acrylic unavailable; using QML panel");
 }
 
 void setDarkFrame(QWindow* window, bool dark)

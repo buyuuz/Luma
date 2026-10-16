@@ -323,14 +323,14 @@ Window {
     width: 760
     height: layout.implicitHeight
     // See-through to Mica, as the settings window (see there).
-    color: Theme.backdrop && SystemTheme.materials && window.active ? "transparent" : Theme.background
+    color: "transparent" // Win10 acrylic behind the translucent QML gradient
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
     title: qsTr("Luma")
 
     Binding {
         target: window.launcher.results
         property: "highlightColor"
-        value: Theme.accent
+        value: Theme.glassAccent
     }
     Binding {
         target: window.launcher
@@ -639,16 +639,32 @@ Window {
             closeContextMenu()
     }
 
-    // Soft translucent-looking depth, without a costly live desktop capture.
-    // The actual Mica path remains untouched on systems that support it.
+    // A single deep-graphite translucent-looking panel rather than a blue
+    // Windows-style utility window. Rounded HWND clipping on Win10 is native.
     Rectangle {
         anchors.fill: parent
         visible: !Theme.backdrop
         radius: Theme.windowRadius
+        antialiasing: true
         gradient: Gradient {
             GradientStop { position: 0; color: Theme.glassCanvasTop }
+            GradientStop { position: 0.44; color: Theme.glassCanvasMid }
             GradientStop { position: 1; color: Theme.glassCanvasBottom }
         }
+    }
+
+    // Thin top reflection and soft tint give depth without blur/refractive shaders.
+    Rectangle {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.leftMargin: 2
+        anchors.rightMargin: 2
+        height: 54
+        radius: Theme.windowRadius
+        color: "transparent"
+        border.width: 1
+        border.color: Qt.rgba(1, 1, 1, 0.09)
     }
 
     Column {
@@ -680,9 +696,10 @@ Window {
         }
 
         Rectangle {
-            width: parent.width
+            width: parent.width - 32
+            x: 16
             height: 1
-            color: Theme.divider
+            color: Qt.rgba(1, 1, 1, 0.065)
             visible: !window.clipboardBelow && (window.listRows > 0 || window.showEmptyState)
         }
 

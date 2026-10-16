@@ -96,19 +96,20 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
-        anchors.topMargin: 2
-        anchors.bottomMargin: 2
-        radius: 11
-        color: row.selected || (row.current && row.selectedCount === 0) ? Theme.selection
-               : area.containsMouse ? Theme.hover : "transparent"
+        anchors.leftMargin: 12
+        anchors.rightMargin: 12
+        anchors.topMargin: 3
+        anchors.bottomMargin: 3
+        radius: 13
+        color: row.selected || (row.current && row.selectedCount === 0) ? Theme.glassSelection
+               : area.containsMouse ? Theme.glassHover : "transparent"
         border.width: row.current && row.selectedCount === 0 ? 1 : 0
-        border.color: Theme.glassOutline
+        border.color: row.current ? Qt.rgba(1, 1, 1, 0.11) : "transparent"
+        Behavior on color { ColorAnimation { duration: 90 } }
     }
 
     Rectangle { // accent pill on the current row, as in Windows 11 lists
-        visible: row.current
+        visible: false // The rounded selection surface replaces the WinUI accent rail.
         x: 7
         anchors.verticalCenter: parent.verticalCenter
         width: 3
@@ -120,7 +121,7 @@ Item {
     Item {
         id: iconSlot
         opacity: row.offline || row.missing ? 0.6 : 1
-        x: 16
+        x: 24
         anchors.verticalCenter: parent.verticalCenter
         width: 32 // 48 device pixels at 150 %, 64 at 200 %: sizes icons are drawn for
         height: 32
@@ -154,7 +155,7 @@ Item {
         opacity: row.offline || row.missing ? 0.6 : 1
         y: row.onPixel((row.height - height) / 2)
         anchors.left: iconSlot.right
-        anchors.leftMargin: 12
+        anchors.leftMargin: 14
         anchors.right: parent.right
         anchors.rightMargin: row.trailingSpace + (date.visible ? date.width + 16 : 0)
         spacing: 4
@@ -172,7 +173,7 @@ Item {
                       : row.nameHtml
                 textFormat: Text.StyledText
                 elide: Text.ElideRight
-                color: Theme.text
+                color: Theme.glassText
                 font.pixelSize: Theme.uiTitle
             }
 
@@ -201,8 +202,8 @@ Item {
             textFormat: row.contentMode || marked ? Text.StyledText : Text.PlainText
             elide: row.contentMode || marked ? Text.ElideRight : Text.ElideMiddle
             maximumLineCount: 1
-            color: Theme.subtext
-            font.pixelSize: Theme.uiBody
+            color: Theme.glassSecondary
+            font.pixelSize: Theme.uiCaption
         }
     }
 
@@ -217,8 +218,8 @@ Item {
         width: Math.ceil(implicitWidth)
         text: row.modified
         textFormat: Text.PlainText
-        color: Theme.faint
-        font.pixelSize: Theme.uiBody
+        color: Theme.glassMuted
+        font.pixelSize: Theme.uiCaption
     }
 
     Text {
@@ -234,8 +235,8 @@ Item {
             : row.missing ? qsTr("已不存在")
             : row.favorite ? (row.favoriteKeyword.length > 0 ? qsTr("收藏 · %1").arg(row.favoriteKeyword) : qsTr("收藏"))
             : row.recent ? qsTr("最近") : ""
-        color: Theme.faint
-        font.pixelSize: Theme.uiBody
+        color: Theme.glassMuted
+        font.pixelSize: Theme.uiCaption
     }
 
     Rectangle {
@@ -261,8 +262,9 @@ Item {
         }
     }
 
-    IconNumber { // "Ctrl+1" (or "Alt+1"): opens this row
+    IconNumber { // Shortcut remains enabled in Launcher; no badge over file icon.
         id: iconNumber
+        visible: false
         keys: row.hint > 0 ? row.hintModifier + "+" + row.hint : ""
         taken: row.hintTaken
         // From the icon's top left corner rightwards, clear of the title.
@@ -316,6 +318,7 @@ Item {
             spacing: 2
 
             RowAction {
+                glass: true
                 id: adminAction
                 visible: row.isApp && row.elevatable
                 glyph: "" // Admin (shield)
@@ -324,6 +327,7 @@ Item {
                 onClicked: row.actionRequested(row.index, Launcher.RunAsAdmin)
             }
             RowAction {
+                glass: true
                 id: revealAction
                 visible: !row.isApp || row.revealable
                 glyph: "" // OpenFolder
@@ -332,6 +336,7 @@ Item {
                 onClicked: row.actionRequested(row.index, Launcher.Reveal)
             }
             RowAction {
+                glass: true
                 id: terminalAction
                 visible: !row.isApp // a file's or folder's: its folder in cmd
                 glyph: "" // CommandPrompt
@@ -339,6 +344,7 @@ Item {
                 onClicked: row.actionRequested(row.index, Launcher.OpenTerminal)
             }
             RowAction {
+                glass: true
                 id: copyAction
                 visible: row.copyable // a desktop app copies its program; a packaged one has none
                 glyph: "" // Copy
@@ -347,6 +353,7 @@ Item {
                 onClicked: row.actionRequested(row.index, Launcher.CopyItem)
             }
             RowAction {
+                glass: true
                 id: copyPathAction
                 glyph: row.plugin ? "" : "copyPath" // Copy; else drawn by Glyph: a box holding "\\.."
                 tip: row.plugin ? qsTr("复制") : row.web ? qsTr("复制网址") : row.place ? qsTr("复制打开命令") : qsTr("复制完整路径")
@@ -354,6 +361,7 @@ Item {
                 onClicked: row.actionRequested(row.index, Launcher.CopyPath)
             }
             RowAction {
+                glass: true
                 id: deleteAction
                 visible: !row.isApp // uninstalling is for Windows Settings
                 glyph: "" // Delete
