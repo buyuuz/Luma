@@ -653,19 +653,8 @@ Window {
         }
     }
 
-    // Thin top reflection and soft tint give depth without blur/refractive shaders.
-    Rectangle {
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.leftMargin: 2
-        anchors.rightMargin: 2
-        height: 54
-        radius: Theme.windowRadius
-        color: "transparent"
-        border.width: 1
-        border.color: Qt.rgba(1, 1, 1, 0.09)
-    }
+    // The root panel and the native HWND use one shared outer radius.
+    // No second independently rounded outline is painted over the header.
 
     Column {
         id: layout
@@ -1109,5 +1098,5 @@ Window {
         }
     }
 
-    WindowEdge {}
+    WindowEdge { launcherEdge: true }
 }

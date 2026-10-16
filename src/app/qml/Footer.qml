@@ -20,9 +20,17 @@ Item {
     Component.onCompleted: frame.addDragArea(footer)
 
     Rectangle {
+        id: footerSurface
         anchors.fill: parent
         radius: Theme.windowRadius
         color: Qt.rgba(0.035, 0.038, 0.042, 0.48)
+    }
+    Rectangle {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        height: Theme.windowRadius
+        color: footerSurface.color
     }
     Rectangle {
         height: 1

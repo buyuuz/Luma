@@ -6,10 +6,14 @@ import WinShun
 // rounded corners (see win::styleFramelessWindow). The window's own corners
 // are rounded by DWM, as much as this one (Theme.windowRadius).
 Rectangle {
+    property bool launcherEdge: false
     anchors.fill: parent
+    // Inset the launcher outline so the one-pixel Qt antialiasing fringe
+    // never competes with the hard Windows 10 window-region edge.
+    anchors.margins: launcherEdge ? 1 : 0
     z: 1000
     color: "transparent"
-    radius: Theme.windowRadius
+    radius: Theme.windowRadius - (launcherEdge ? 1 : 0)
     antialiasing: true
     border.width: 1
     border.color: Theme.windowEdge
