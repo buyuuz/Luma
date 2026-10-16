@@ -18,9 +18,9 @@ QtObject {
 
     // Luma Glass V3: neutral graphite tones, inspired by a floating Mac launcher.
     // The single GPU-composited gradient is cheaper than continuous blur.
-    readonly property color glassCanvasTop: Qt.rgba(0.20, 0.20, 0.21, 0.85)
-    readonly property color glassCanvasMid: Qt.rgba(0.12, 0.13, 0.14, 0.83)
-    readonly property color glassCanvasBottom: Qt.rgba(0.07, 0.08, 0.09, 0.88)
+    readonly property color glassCanvasTop: Qt.rgba(0.20, 0.20, 0.21, 1.0)
+    readonly property color glassCanvasMid: Qt.rgba(0.12, 0.13, 0.14, 1.0)
+    readonly property color glassCanvasBottom: Qt.rgba(0.07, 0.08, 0.09, 1.0)
     readonly property color glassFieldTop: Qt.rgba(1, 1, 1, 0.055)
     readonly property color glassFieldBottom: Qt.rgba(0.9, 0.9, 0.95, 0.012)
     readonly property color glassOutline: Qt.rgba(1, 1, 1, 0.14)

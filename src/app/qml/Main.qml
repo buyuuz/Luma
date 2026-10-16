@@ -323,7 +323,7 @@ Window {
     width: 980
     height: layout.implicitHeight
     // See-through to Mica, as the settings window (see there).
-    color: "transparent" // Win10 acrylic behind the translucent QML gradient
+    color: "transparent" // Qt paints the rounded silhouette with real alpha on Win10
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
     title: qsTr("Luma")
 

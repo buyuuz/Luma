@@ -104,14 +104,14 @@ bool isShellFlyout(HWND window)
     return window && flyouts.contains(programOf(window), Qt::CaseInsensitive);
 }
 
-void styleFramelessWindow(QWindow* window, bool backdrop)
+void styleFramelessWindow(QWindow* window, bool backdrop, bool perPixelAlpha)
 {
     const HWND hwnd = handleOf(window);
     if (!hwnd)
         return;
     ::DwmSetWindowAttribute(hwnd, kCornerPreference, &kCornerRound, sizeof kCornerRound);
     ::DwmSetWindowAttribute(hwnd, kBorderColor, &kColorNone, sizeof kColorNone);
-    if (!roundedCorners()) {
+    if (!roundedCorners() && !perPixelAlpha) {
         clipWin10Corners(window);
         // Qt can resize the window after initial styling. Defer the region
         // update until the Win32 HWND has its new physical dimensions.
@@ -121,9 +121,12 @@ void styleFramelessWindow(QWindow* window, bool backdrop)
         QObject::connect(window, &QWindow::widthChanged, window, update);
         QObject::connect(window, &QWindow::heightChanged, window, update);
     }
-    // A one-pixel frame extension makes DWM draw its shadow around a
-    // borderless window (and keeps working on Windows 10).
-    const MARGINS margins {0, 0, 1, 0};
+    // On the launcher Qt renders the entire alpha silhouette, with
+    // antialiasing. A DWM frame extension and Win10 acrylic would add an
+    // independent rectangle around these alpha pixels. Do not layer them.
+    // Fresh launchers have no Win32 region; avoid a WM_WINDOWPOSCHANGED here.
+    const MARGINS margins = perPixelAlpha && !roundedCorners() ? MARGINS {0, 0, 0, 0}
+                                        : MARGINS {0, 0, 1, 0};
     ::DwmExtendFrameIntoClientArea(hwnd, &margins);
     // The backdrop fills the whole window, frame extended or not; extended,
     // DWM would also draw its caption buttons on it, next to ours.

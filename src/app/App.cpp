@@ -277,9 +277,10 @@ void saveBoxSpot(const taskbar::SearchBox::Spot& spot)
 // Rounded corners and the shadow, for our windows without a system title bar
 // (the launcher, the clipboard, the bar by file dialogs, the settings
 // window); each draws its edge itself (WindowEdge.qml).
-void styleWindow(QWindow* window, bool backdrop = false)
+void styleWindow(QWindow* window, bool backdrop = false,
+                 bool perPixelAlpha = false)
 {
-    win::styleFramelessWindow(window, backdrop);
+    win::styleFramelessWindow(window, backdrop, perPixelAlpha);
 }
 
 } // namespace
@@ -677,7 +678,7 @@ bool App::createWindow()
     prepareBackdrop(m_window);
     {
         // The launcher is the only window that uses alpha transparency.
-        // Required for the glass gradient to reveal Win10's acrylic behind it.
+        // Required to let Qt render antialiased alpha outside the round launcher.
         QSurfaceFormat glassFormat = m_window->requestedFormat();
         if (glassFormat.alphaBufferSize() < 8) {
             glassFormat.setAlphaBufferSize(8);
@@ -834,8 +835,10 @@ void App::applyTheme()
     if (m_pluginHost)
         m_pluginHost->setAppearance(m_language, dark ? u"dark"_s : u"light"_s);
     if (m_window) {
-        styleWindow(m_window, SystemTheme::backdropAvailable());
-        win::styleLauncherGlass(m_window);
+        // A per-pixel translucent QQuickWindow supplies the only rounded
+        // silhouette. Windows 10 Acrylic is deliberately NOT enabled here:
+        // SetWindowCompositionAttribute draws its own rectangular backing.
+        styleWindow(m_window, SystemTheme::backdropAvailable(), true);
     }
     if (m_clipWindow)
         styleWindow(m_clipWindow, SystemTheme::backdropAvailable());
