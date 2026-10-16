@@ -29,7 +29,9 @@ QtObject {
     // The edge of our windows (WindowEdge.qml), rounded as DWM rounds them.
     // A light grey on the dark ones: over a dark program their shadow does
     // not show. The light ones stand apart by their shadow.
-    readonly property int windowRadius: SystemTheme.roundedCorners ? 16 : 0
+    // Windows 10 cannot ask DWM for native rounding, but WindowEffects.cpp
+    // clips our frameless HWND to the same radius via a Win32 window region.
+    readonly property int windowRadius: 18
     readonly property color windowEdge: dark ? "#52617D" : "#BCC7DE"
     readonly property color divider: backdrop ? (dark ? Qt.rgba(1, 1, 1, 0.084) : Qt.rgba(0, 0, 0, 0.058))
                                               : dark ? "#2E2E2E" : "#EAEAEA"

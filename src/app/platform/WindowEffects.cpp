@@ -5,6 +5,7 @@
 
 #include <QDebug>
 #include <QOperatingSystemVersion>
+#include <QTimer>
 #include <QWindow>
 
 #include <dwmapi.h>
@@ -29,6 +30,29 @@ constexpr int kBackdropMica = 2; // DWMSBT_MAINWINDOW
 HWND handleOf(QWindow* window)
 {
     return window ? reinterpret_cast<HWND>(window->winId()) : nullptr;
+}
+
+// DWMWA_WINDOW_CORNER_PREFERENCE is Windows 11-only. Windows 10 keeps
+// frameless HWNDs rectangular, even when QML draws a rounded border.
+// Clip the *native window* itself; update after each native resize.
+// The radius is measured in logical Qt pixels and scaled for high-DPI screens.
+void clipWin10Corners(QWindow* window)
+{
+    const HWND hwnd = handleOf(window);
+    RECT bounds {};
+    if (!hwnd || !::GetWindowRect(hwnd, &bounds))
+        return;
+    const int width = bounds.right - bounds.left;
+    const int height = bounds.bottom - bounds.top;
+    if (width <= 0 || height <= 0)
+        return;
+    const int diameter = qRound(36.0 * window->devicePixelRatio()); // 18 px radius
+    HRGN region = ::CreateRoundRectRgn(0, 0, width + 1, height + 1, diameter, diameter);
+    if (!region)
+        return;
+    // Windows takes ownership of region on success; on failure we free it.
+    if (!::SetWindowRgn(hwnd, region, TRUE))
+        ::DeleteObject(region);
 }
 
 using foreground::programOf;
@@ -87,6 +111,16 @@ void styleFramelessWindow(QWindow* window, bool backdrop)
         return;
     ::DwmSetWindowAttribute(hwnd, kCornerPreference, &kCornerRound, sizeof kCornerRound);
     ::DwmSetWindowAttribute(hwnd, kBorderColor, &kColorNone, sizeof kColorNone);
+    if (!roundedCorners()) {
+        clipWin10Corners(window);
+        // Qt can resize the window after initial styling. Defer the region
+        // update until the Win32 HWND has its new physical dimensions.
+        const auto update = [window] {
+            QTimer::singleShot(0, window, [window] { clipWin10Corners(window); });
+        };
+        QObject::connect(window, &QWindow::widthChanged, window, update);
+        QObject::connect(window, &QWindow::heightChanged, window, update);
+    }
     // A one-pixel frame extension makes DWM draw its shadow around a
     // borderless window (and keeps working on Windows 10).
     const MARGINS margins {0, 0, 1, 0};
