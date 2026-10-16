@@ -3,320 +3,122 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import WinShun
 
-// On the left, how the list is chosen (Ctrl+S goes to the next): with nothing
-// typed, what was opened last or the files written last; else best match
-// first or by when last written, newest or oldest first. Beside it a word
-// when there is something to say ("已复制路径"); keyboard hints on the
-// right (the three used most; the info button after them lists the rest),
-// and at the very right a button that clears the recent items (while there
-// are some to clear). The divider above shows work going on.
-// Dragging it moves the window.
+// Mac-style launcher action dock. Native Launcher remains the only place that
+// implements keyboard shortcuts, sorting, delete confirmations, and actions.
 Item {
     id: footer
-
     required property Launcher launcher
     required property WindowFrame frame
 
-    implicitHeight: Theme.footerHeight // 界面大小
+    implicitHeight: 58
+    readonly property bool atStart: launcher.query.trim().length === 0
+                                    && launcher.scope !== Launcher.Content
+    readonly property var sortLabels: atStart ? [qsTr("最近打开"), qsTr("最近修改")]
+                                               : [qsTr("最匹配"), qsTr("最新"), qsTr("最早")]
+    readonly property int currentSort: atStart ? launcher.startList : launcher.sort
+
+    Component.onCompleted: frame.addDragArea(footer)
 
     Rectangle {
         anchors.fill: parent
         radius: Theme.windowRadius
-        color: Qt.rgba(0.05, 0.06, 0.065, 0.34)
+        color: Qt.rgba(0.035, 0.038, 0.042, 0.48)
     }
-
-    // The divider shows work only once it has lasted a moment, so brief
-    // work does not make it blink.
-    property bool showBusy: false
-    readonly property bool busy: launcher.busy
-    onBusyChanged: {
-        if (busy) {
-            busyDelay.start()
-        } else {
-            busyDelay.stop()
-            showBusy = false
-        }
-    }
-    Component.onCompleted: {
-        showBusy = busy
-        frame.addDragArea(footer)
-    }
-    Timer {
-        id: busyDelay
-        interval: 400
-        onTriggered: footer.showBusy = footer.busy
-    }
-
-    // The divider, and while work goes on (indexing, reading files for their
-    // contents) the bar along it: filled as far as a content scan has come,
-    // or a light running along it while how far is not known. Done, it fills
-    // up and fades.
-    Item {
-        id: progressLine
-
-        readonly property bool running: footer.showBusy
-        readonly property real fraction: footer.launcher.progress
-        property bool determinate: false
-        property real shown: 0 // of the width, filled
-
-        function update() {
-            if (running && footer.launcher.busy) {
-                determinate = fraction >= 0
-                if (determinate)
-                    shown = fraction
-            } else if (determinate) {
-                shown = 1
-            }
-        }
-        onRunningChanged: update()
-        onFractionChanged: update()
-
-        width: parent.width
+    Rectangle {
         height: 1
-        clip: true
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        color: Qt.rgba(1, 1, 1, 0.09)
+    }
+    Rectangle {
+        anchors.left: parent.left
+        anchors.top: parent.top
+        height: launcher.busy ? 2 : 0
+        width: launcher.progress >= 0 ? parent.width * launcher.progress : parent.width
+        color: Theme.glassAccent
+        opacity: launcher.busy ? 0.7 : 0
+        Behavior on opacity { NumberAnimation { duration: 140 } }
+    }
 
-        Rectangle {
-            anchors.fill: parent
-            color: Theme.divider
+    Rectangle {
+        id: mark
+        width: 32
+        height: 32
+        radius: 16
+        anchors.left: parent.left
+        anchors.leftMargin: 24
+        anchors.verticalCenter: parent.verticalCenter
+        color: Qt.rgba(1, 1, 1, 0.07)
+        border.width: 1
+        border.color: Qt.rgba(1, 1, 1, 0.13)
+        Text {
+            anchors.centerIn: parent
+            text: "L"
+            color: Theme.glassText
+            font.pixelSize: 16
+            font.weight: Font.DemiBold
         }
+    }
 
-        Item {
-            id: bar
+    Rectangle {
+        id: sortButton
+        anchors.left: mark.right
+        anchors.leftMargin: 14
+        anchors.verticalCenter: parent.verticalCenter
+        height: 30
+        width: sortText.implicitWidth + 27
+        radius: 15
+        color: sortArea.containsMouse ? Qt.rgba(1, 1, 1, 0.13)
+                                      : Qt.rgba(1, 1, 1, 0.065)
+        border.width: 1
+        border.color: Qt.rgba(1, 1, 1, 0.08)
+        Text {
+            id: sortText
+            anchors.centerIn: parent
+            text: footer.sortLabels[Math.max(0, Math.min(footer.currentSort, footer.sortLabels.length - 1))] + "  ↻"
+            color: Theme.glassSecondary
+            font.pixelSize: Theme.uiCaption
+        }
+        MouseArea {
+            id: sortArea
             anchors.fill: parent
-            opacity: progressLine.running ? 1 : 0
-            Behavior on opacity {
-                NumberAnimation { duration: progressLine.running ? 150 : 500; easing.type: Easing.OutCubic }
-            }
-
-            Rectangle {
-                visible: progressLine.determinate
-                width: Math.round(parent.width * progressLine.shown)
-                height: parent.height
-                color: Theme.accent
-                Behavior on width {
-                    enabled: bar.opacity > 0.99 // appearing: at once, not back from the last scan's end
-                    NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
-                }
-            }
-
-            Rectangle {
-                id: sweep
-                visible: !progressLine.determinate
-                width: Math.round(parent.width * 0.3)
-                height: parent.height
-                gradient: Gradient {
-                    orientation: Gradient.Horizontal
-                    GradientStop { position: 0; color: Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0) }
-                    GradientStop { position: 0.5; color: Theme.accent }
-                    GradientStop { position: 1; color: Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0) }
-                }
-
-                NumberAnimation on x {
-                    from: -sweep.width
-                    to: progressLine.width
-                    duration: 1400
-                    loops: Animation.Infinite
-                    running: sweep.visible && bar.opacity > 0 && footer.Window.active
-                }
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                if (footer.atStart)
+                    footer.launcher.startList = (footer.launcher.startList + 1) % 2
+                else
+                    footer.launcher.sort = (footer.launcher.sort + 1) % 3
             }
         }
+        Component.onCompleted: footer.frame.addControl(sortButton)
     }
 
     Text {
         id: status
-        anchors.left: order.visible ? order.right : parent.left
-        anchors.leftMargin: order.visible ? 14 : 18
-        anchors.right: hints.left
-        anchors.rightMargin: 12
-        anchors.verticalCenter: parent.verticalCenter
-        text: footer.launcher.statusText
-        textFormat: Text.PlainText // may name a file
-        color: Theme.glassSecondary
-        font.pixelSize: Theme.uiBody
-        elide: Text.ElideRight
-    }
-
-    // A few choices side by side, the current one raised (as ScopeTabs, smaller).
-    component Choices: Row {
-        id: choices
-
-        property alias labels: options.model
-        property int current: 0
-        property string glyph
-        property string tip
-        readonly property bool tipWanted: hover.hovered
-
-        signal activated(int index)
-
-        spacing: 6
-
-        HoverHandler { id: hover }
-
-        Glyph {
-            anchors.verticalCenter: parent.verticalCenter
-            glyph: choices.glyph
-            size: 16
-            color: Theme.glassMuted
-        }
-
-        Rectangle {
-            anchors.verticalCenter: parent.verticalCenter
-            width: chips.implicitWidth + 4
-            height: Theme.chipHeight
-            radius: height / 2
-            color: Qt.rgba(1, 1, 1, 0.055)
-
-            Row {
-                id: chips
-                x: 2
-                y: 2
-                spacing: 2
-
-                Repeater {
-                    id: options
-
-                    delegate: Rectangle {
-                        id: chip
-
-                        required property int index
-                        required property string modelData
-                        readonly property bool active: index === choices.current
-
-                        width: Math.ceil(label.implicitWidth) + 16 // whole pixels: the labels after it stay sharp
-                        height: Theme.chipHeight - 4
-                        radius: height / 2
-                        color: active ? Qt.rgba(1, 1, 1, 0.15)
-                              : area.containsMouse ? Qt.rgba(1, 1, 1, 0.065) : "transparent"
-                        border.width: 0
-                        border.color: "transparent"
-                        Accessible.role: Accessible.RadioButton
-                        Accessible.name: modelData
-                        Accessible.checked: active
-
-                        Text {
-                            id: label
-                            anchors.centerIn: parent
-                            text: chip.modelData
-                            color: chip.active || area.containsMouse ? Theme.glassText : Theme.glassSecondary
-                            font.pixelSize: Theme.uiCaption
-                            font.weight: chip.active ? Font.DemiBold : Font.Normal
-                        }
-
-                        MouseArea {
-                            id: area
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: choices.activated(chip.index)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // Nothing typed: which start list. Else the order; not for a plugin
-    // command's list, which is in the plugin's.
-    readonly property bool atStart: launcher.query.trim().length === 0 && launcher.scope !== Launcher.Content
-
-    Choices {
-        id: order
-        visible: footer.launcher.pluginKeyword.length === 0
-        anchors.left: parent.left
+        anchors.left: sortButton.right
         anchors.leftMargin: 16
+        anchors.right: actionDock.left
+        anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
-        glyph: footer.atStart ? "\uE81C" : "\uE8CB" // History, Sort
-        labels: footer.atStart ? [qsTr("最近打开"), qsTr("最近修改")]
-                                 : [qsTr("最匹配"), qsTr("最新"), qsTr("最早")]
-        current: footer.atStart ? footer.launcher.startList : footer.launcher.sort
-        tip: footer.atStart ? qsTr("不输入时列出最近打开的，或最近修改的文件")
-                              : qsTr("最匹配的在前，或按修改时间：最新的在前、最早的在前")
-        onActivated: (index) => {
-            if (footer.atStart)
-                footer.launcher.startList = index
-            else
-                footer.launcher.sort = index
-        }
-        Component.onCompleted: footer.frame.addControl(order) // buttons, not part of the drag area
+        elide: Text.ElideRight
+        text: footer.launcher.statusText
+        color: Theme.glassMuted
+        font.pixelSize: Theme.uiCaption
     }
 
-    Row {
-        id: hints
-        anchors.right: info.left
-        anchors.rightMargin: 8
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: 14
-
-        // What the keys do on the row the keyboard is on (Launcher.keyHints:
-        // a plugin's row names its own actions, a row with no location has
-        // no Ctrl+Enter, Tab completes the row that offers it). Plain words,
-        // not "↵": a symbol missing from the UI font triggers system-wide
-        // font fallback, which costs tens of MB.
-        readonly property var keyHints: footer.launcher.keyHints
-
-        // Hints give way to the status from the left, Enter's first (everyone
-        // knows it), then Ctrl+Enter's; Tab's stays. Mostly there is none,
-        // and all show. Worked out from the full widths, not the laid-out
-        // ones, which depend on it.
-        readonly property real statusNeeds: Math.ceil(statusMetrics.advanceWidth)
-        readonly property real statusRoom: info.x - 8 - (order.visible ? 16 + order.width + 14 : 18) - 12
-        function roomWith(shown) { // the status's, with these hints shown
-            const widths = shown.map(h => h.fullWidth).filter(w => w > 0)
-            return statusRoom - widths.reduce((a, b) => a + b, 0) - hints.spacing * Math.max(0, widths.length - 1)
-        }
-        readonly property int given: statusNeeds <= roomWith([enterHint, secondHint, tabHint]) ? 0
-                                     : statusNeeds <= roomWith([secondHint, tabHint]) ? 1 : 2
-
-        TextMetrics {
-            id: statusMetrics
-            font.pixelSize: Theme.uiBody
-            text: footer.launcher.statusText
-        }
-
-        KeyHint { glass: true; id: enterHint; visible: hints.given < 1 && label.length > 0; keys: "Enter"; label: hints.keyHints.enter ?? "" }
-        KeyHint { glass: true; id: secondHint; visible: false; keys: hints.keyHints.secondKeys ?? ""; label: hints.keyHints.second ?? "" }
-        KeyHint { glass: true; id: tabHint; visible: false; keys: "Tab"; label: hints.keyHints.tab ?? "" }
-    }
-
-    // The launcher's other shortcuts, while the mouse rests on it.
-    ShortcutsButton {
-        id: info
-
-        readonly property string modifier: footer.launcher.numberKeys === "alt" ? "Alt" : "Ctrl"
-        shortcuts: [
-            ["Shift+Tab", qsTr("在“文件”里切换类型，在“内容”里换个文件夹")],
-            ["↑ ↓", qsTr("上下移动，PgUp PgDn 翻页")],
-            ["Shift+↑ ↓", qsTr("选中多行，也可 Ctrl+单击、Shift+单击")],
-            ["Ctrl+Shift+Enter", qsTr("以管理员身份运行")],
-            ["Ctrl+C", qsTr("复制文件")],
-            ["Ctrl+Shift+C", qsTr("复制路径")],
-            ["Ctrl+S", qsTr("切换排序；不输入时切换最近打开、最近修改")]
-        ].concat(footer.launcher.numberKeys === "off" ? []
-                 : [[modifier + "+1…9", qsTr("打开第几行（图标上标着快捷键）")]])
-         .concat([
-            ["Shift+F10", qsTr("右键菜单")],
-            ["Esc", qsTr("关闭；选中了多行时先取消选择")]
-        ])
-
-        host: footer.launcher
-        frame: footer.frame
-        anchors.right: clearHistory.visible ? clearHistory.left : parent.right
-        anchors.rightMargin: clearHistory.visible ? 2 : 6
-        anchors.verticalCenter: parent.verticalCenter
-    }
-
-    // Two clicks, as a row's delete button: the first arms it.
+    // Two-click confirmation is still required to clear recent history.
     RowAction {
         id: clearHistory
-
         property bool armed: false
-
-        visible: footer.launcher.canClearHistory
-        anchors.right: parent.right
-        anchors.rightMargin: 6
+        visible: footer.launcher.canClearHistory && hoverFooter.hovered
+        glass: true
+        anchors.right: actionDock.left
+        anchors.rightMargin: 10
         anchors.verticalCenter: parent.verticalCenter
-        glyph: "\uE74D" // Delete
-        tip: armed ? "" : qsTr("清除最近使用记录")
+        glyph: "\uE74D"
+        tip: armed ? "" : qsTr("清除最近使用记录（点两次确认）")
         text: armed ? qsTr("确认清除") : ""
         danger: armed
         onClicked: {
@@ -328,9 +130,8 @@ Item {
                 disarm.restart()
             }
         }
-        onVisibleChanged: armed = false
-        Component.onCompleted: footer.frame.addControl(clearHistory) // a button, not part of the drag area
-
+        onVisibleChanged: if (!visible) armed = false
+        Component.onCompleted: footer.frame.addControl(clearHistory)
         Timer {
             id: disarm
             interval: 3000
@@ -338,9 +139,104 @@ Item {
         }
     }
 
+    Rectangle {
+        id: actionDock
+        anchors.right: parent.right
+        anchors.rightMargin: 24
+        anchors.verticalCenter: parent.verticalCenter
+        height: 37
+        width: actions.implicitWidth + 32
+        radius: 18.5
+        color: Qt.rgba(0, 0, 0, 0.20)
+        border.width: 1
+        border.color: Qt.rgba(1, 1, 1, 0.17)
+
+        Row {
+            id: actions
+            anchors.centerIn: parent
+            spacing: 13
+            Text {
+                text: footer.launcher.keyHints.enter ?? qsTr("打开")
+                color: Theme.glassText
+                font.pixelSize: Theme.uiCaption
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Rectangle {
+                width: enterKey.implicitWidth + 14
+                height: 23
+                radius: 7
+                color: Qt.rgba(1, 1, 1, 0.085)
+                border.width: 1
+                border.color: Qt.rgba(1, 1, 1, 0.15)
+                anchors.verticalCenter: parent.verticalCenter
+                Text {
+                    id: enterKey
+                    anchors.centerIn: parent
+                    text: "Enter"
+                    color: Theme.glassSecondary
+                    font.pixelSize: 12
+                }
+            }
+            Rectangle {
+                width: 1
+                height: 22
+                color: Qt.rgba(1, 1, 1, 0.14)
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Text {
+                text: qsTr("操作")
+                color: Theme.glassSecondary
+                font.pixelSize: Theme.uiCaption
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Rectangle {
+                width: actionKey.implicitWidth + 12
+                height: 23
+                radius: 7
+                color: Qt.rgba(1, 1, 1, 0.07)
+                border.width: 1
+                border.color: Qt.rgba(1, 1, 1, 0.13)
+                anchors.verticalCenter: parent.verticalCenter
+                Text {
+                    id: actionKey
+                    anchors.centerIn: parent
+                    text: "Shift+F10"
+                    font.pixelSize: 11
+                    color: Theme.glassMuted
+                }
+            }
+        }
+    }
+
+    ShortcutsButton {
+        id: info
+        readonly property string modifier: footer.launcher.numberKeys === "alt" ? "Alt" : "Ctrl"
+        shortcuts: [
+            ["Enter", qsTr("打开所选结果")],
+            ["Shift+F10", qsTr("所选结果的全部操作菜单")],
+            ["Ctrl+Enter", qsTr("打开文件所在位置")],
+            ["↑ ↓", qsTr("上下选择结果")],
+            ["Shift+↑ ↓", qsTr("选中多行")],
+            ["Ctrl+C", qsTr("复制文件")],
+            ["Ctrl+Shift+C", qsTr("复制路径")],
+            ["Ctrl+S", qsTr("切换排序方式")],
+            ["Tab", qsTr("切换搜索范围")],
+            [modifier + "+1…9", qsTr("打开对应位置的结果")],
+            ["Esc", qsTr("关闭搜索窗口")]
+        ]
+        host: footer.launcher
+        frame: footer.frame
+        anchors.right: actionDock.left
+        anchors.rightMargin: 11
+        anchors.verticalCenter: parent.verticalCenter
+        opacity: hoverFooter.hovered ? 0.85 : 0.42
+    }
+
+    HoverHandler { id: hoverFooter }
     HoverTip {
-        target: clearHistory.tipWanted ? clearHistory : order.tipWanted && order.visible ? order : null
-        text: clearHistory.tipWanted ? clearHistory.tip : order.tip
-        shortcut: clearHistory.tipWanted ? "" : "Ctrl+S"
+        target: clearHistory.tipWanted ? clearHistory
+               : sortArea.containsMouse ? sortButton : null
+        text: clearHistory.tipWanted ? clearHistory.tip
+            : qsTr("点击切换排序，快捷键 Ctrl+S")
     }
 }

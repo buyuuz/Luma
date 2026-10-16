@@ -27,7 +27,7 @@ Window {
     // (so opening it never moves the window), but at the taskbar, where the
     // list area takes its room from the rows instead.
     readonly property int chromeHeight: searchBar.implicitHeight + (fullHeight ? 0 : typeStrip.fullHeight) + 1 + 8
-                                        + footer.implicitHeight
+                                        + resultsHeading.height + footer.implicitHeight
     // The strip opens in steps (TypeStrip): the window takes its full height
     // at once as it opens, so it is resized once, not on every frame (a
     // native resize per frame shows torn and stretched frames). Meanwhile the
@@ -320,7 +320,7 @@ Window {
         onTriggered: window.dimRows = window.stale
     }
 
-    width: 760
+    width: 980
     height: layout.implicitHeight
     // See-through to Mica, as the settings window (see there).
     color: "transparent" // Win10 acrylic behind the translucent QML gradient
@@ -696,11 +696,36 @@ Window {
         }
 
         Rectangle {
-            width: parent.width - 32
-            x: 16
+            width: parent.width - 42
+            x: 21
             height: 1
-            color: Qt.rgba(1, 1, 1, 0.065)
+            color: Qt.rgba(1, 1, 1, 0.09)
             visible: !window.clipboardBelow && (window.listRows > 0 || window.showEmptyState)
+        }
+
+        // Raycast-style semantic group label. It is part of the layout, not
+        // an overlay that can collide with the first result.
+        Item {
+            id: resultsHeading
+            width: parent.width
+            height: window.trimmedQuery.length > 0 && !window.clipboardBelow ? 35 : 0
+            visible: height > 0
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 34
+                anchors.verticalCenter: parent.verticalCenter
+                text: qsTr("搜索结果")
+                color: Theme.glassMuted
+                font.pixelSize: Theme.uiCaption
+            }
+            Text {
+                anchors.right: parent.right
+                anchors.rightMargin: 34
+                anchors.verticalCenter: parent.verticalCenter
+                text: list.count > 0 ? qsTr("%1 项").arg(list.count) : ""
+                color: Theme.glassMuted
+                font.pixelSize: Theme.uiCaption
+            }
         }
 
         Item {

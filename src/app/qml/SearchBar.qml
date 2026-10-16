@@ -52,18 +52,15 @@ Item {
         function onSelectionRequested(anchor, position) { input.select(anchor, position) }
     }
 
-    implicitHeight: Theme.headerHeight // 界面大小
+    implicitHeight: bar.inBox ? Theme.headerHeight : Theme.headerHeight + 14 // Raycast header has extra breathing room
 
     // Spotlight/Raycast: open header without a nested Windows-style outline.
+    // The input floats directly on the glass panel; no nested Windows pill.
     Rectangle {
         anchors.fill: parent
-        anchors.leftMargin: 12
-        anchors.rightMargin: 12
-        anchors.topMargin: 8
-        anchors.bottomMargin: 5
         visible: !bar.inBox
-        radius: 16
-        color: Qt.rgba(1, 1, 1, 0.018)
+        radius: Theme.windowRadius
+        color: Qt.rgba(1, 1, 1, 0.016)
     }
 
     Component.onCompleted: {
@@ -124,7 +121,7 @@ Item {
         id: icon
         visible: !bar.inBox
         anchors.left: parent.left
-        anchors.leftMargin: 26
+        anchors.leftMargin: 35
         y: bar.onPixel((bar.height - height) / 2)
         glyph: bar.launcher.scope === Launcher.Content ? "" // Document
              : "" // Search
@@ -136,14 +133,14 @@ Item {
         id: input
         objectName: "searchField" // App answers the input method for it while it is in the box
         anchors.left: icon.right
-        anchors.leftMargin: 16
+        anchors.leftMargin: 20
         anchors.right: tabs.left
-        anchors.rightMargin: 16
+        anchors.rightMargin: 20
         y: bar.onPixel((bar.height - height) / 2)
         focus: true
         clip: true
         color: Theme.glassText
-        font.pixelSize: Theme.uiSearch
+        font.pixelSize: Theme.uiSearch + 2
         selectByMouse: true
         selectionColor: Theme.textSelection
         selectedTextColor: Theme.text
@@ -209,7 +206,7 @@ Item {
         id: tabs
         scaled: true
         anchors.right: parent.right
-        anchors.rightMargin: 22
+        anchors.rightMargin: 32
         anchors.leftMargin: 16
         y: bar.onPixel((bar.height - height) / 2)
         // 文件夹 is a chip of the strip under the box (TypeStrip): 文件 stays current.

@@ -66,7 +66,7 @@ Item {
     // With rows selected, the background marks them; the current row keeps only its accent pill.
     readonly property int selectedCount: ListView.view ? ListView.view.model.selectedCount : 0
     readonly property var results: ListView.view ? ListView.view.model : null // the ResultModel
-    readonly property bool showActions: current || area.containsMouse
+    readonly property bool showActions: area.containsMouse
     // Room kept on the right for the buttons, the badge or the label.
     readonly property real trailingSpace: (showActions ? actions.width + actions.anchors.rightMargin
                                            : isApp ? badge.width + badge.anchors.rightMargin
@@ -151,56 +151,44 @@ Item {
         }
     }
 
-    Column {
+    // Mac launcher row: icon, title and location share a baseline.
+    // Long paths elide in their own flexible region rather than squeezing
+    // the filename into a column and wasting vertical space.
+    Item {
         opacity: row.offline || row.missing ? 0.6 : 1
-        y: row.onPixel((row.height - height) / 2)
         anchors.left: iconSlot.right
-        anchors.leftMargin: 14
+        anchors.leftMargin: 20
         anchors.right: parent.right
-        anchors.rightMargin: row.trailingSpace + (date.visible ? date.width + 16 : 0)
-        spacing: 4
+        anchors.rightMargin: row.trailingSpace + (date.visible ? date.width + 20 : 0)
+        anchors.verticalCenter: parent.verticalCenter
+        height: row.height - 12
 
-        Item {
-            width: parent.width
-            height: row.upToPixel(title.implicitHeight) // the line below on a whole pixel too
-
-            Text {
-                id: title
-                width: Math.min(implicitWidth, parent.width)
-                // A long name is shortened around its matches, not past them.
-                text: row.results && row.nameMatches.length > 0
-                      ? row.results.elidedHtml(row.name, row.nameMatches, parent.width, font, row.results.highlightColor)
-                      : row.nameHtml
-                textFormat: Text.StyledText
-                elide: Text.ElideRight
-                color: Theme.glassText
-                font.pixelSize: Theme.uiTitle
-            }
-
-            Text { // content search: where the file lives, next to its name
-                visible: row.contentMode
-                y: row.onPixel(title.baselineOffset - baselineOffset) // on the name's baseline
-                anchors.left: title.right
-                anchors.leftMargin: 8
-                anchors.right: parent.right
-                text: row.folder
-                textFormat: Text.PlainText
-                elide: Text.ElideMiddle
-                color: Theme.faint
-                font.pixelSize: Theme.uiBody
-            }
+        Text {
+            id: title
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            width: Math.min(parent.width * 0.52, Math.max(155, Math.min(330, implicitWidth + 20)))
+            text: row.results && row.nameMatches.length > 0
+                  ? row.results.elidedHtml(row.name, row.nameMatches, width, font, row.results.highlightColor)
+                  : row.nameHtml
+            textFormat: Text.StyledText
+            elide: Text.ElideRight
+            color: Theme.glassText
+            font.pixelSize: Theme.uiTitle
+            font.weight: row.current ? Font.DemiBold : Font.Medium
         }
 
         Text {
-            // A term found in a folder rather than the name stands out there,
-            // and stays in sight when the path is shortened.
-            readonly property bool marked: !row.contentMode && row.folderMatches.length > 0 && row.results !== null
-            width: parent.width
+            anchors.left: title.right
+            anchors.leftMargin: 22
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
             text: row.contentMode ? row.snippetHtml
-                : marked ? row.results.elidedHtml(row.folder, row.folderMatches, width, font, row.results.highlightColor)
-                : row.folder
-            textFormat: row.contentMode || marked ? Text.StyledText : Text.PlainText
-            elide: row.contentMode || marked ? Text.ElideRight : Text.ElideMiddle
+                  : row.folderMatches.length > 0 && row.results !== null
+                      ? row.results.elidedHtml(row.folder, row.folderMatches, width, font, row.results.highlightColor)
+                      : row.folder
+            textFormat: row.contentMode || row.folderMatches.length > 0 ? Text.StyledText : Text.PlainText
+            elide: Text.ElideMiddle
             maximumLineCount: 1
             color: Theme.glassSecondary
             font.pixelSize: Theme.uiCaption
@@ -308,101 +296,35 @@ Item {
                 row.clicked(row.index, mouse.modifiers)
         }
 
-        // Inside the MouseArea so that hovering a button still hovers the row.
+        // Context actions remain available via right-click, Shift+F10, or
+        // the single unobtrusive overflow button on hover. All actions
+        // themselves are still implemented by the existing context menu.
         Row {
             id: actions
             visible: row.showActions
             anchors.right: parent.right
-            anchors.rightMargin: 14
+            anchors.rightMargin: 24
             anchors.verticalCenter: parent.verticalCenter
-            spacing: 2
 
             RowAction {
+                id: moreAction
                 glass: true
-                id: adminAction
-                visible: row.isApp && row.elevatable
-                glyph: "" // Admin (shield)
-                tip: qsTr("以管理员身份运行")
-                tipShortcut: "Ctrl+Shift+Enter"
-                onClicked: row.actionRequested(row.index, Launcher.RunAsAdmin)
-            }
-            RowAction {
-                glass: true
-                id: revealAction
-                visible: !row.isApp || row.revealable
-                glyph: "" // OpenFolder
-                tip: row.packagedApp ? qsTr("打开安装文件夹") : qsTr("打开所在位置")
-                tipShortcut: "Ctrl+Enter"
-                onClicked: row.actionRequested(row.index, Launcher.Reveal)
-            }
-            RowAction {
-                glass: true
-                id: terminalAction
-                visible: !row.isApp // a file's or folder's: its folder in cmd
-                glyph: "" // CommandPrompt
-                tip: qsTr("在终端中打开")
-                onClicked: row.actionRequested(row.index, Launcher.OpenTerminal)
-            }
-            RowAction {
-                glass: true
-                id: copyAction
-                visible: row.copyable // a desktop app copies its program; a packaged one has none
-                glyph: "" // Copy
-                tip: qsTr("复制")
-                tipShortcut: "Ctrl+C"
-                onClicked: row.actionRequested(row.index, Launcher.CopyItem)
-            }
-            RowAction {
-                glass: true
-                id: copyPathAction
-                glyph: row.plugin ? "" : "copyPath" // Copy; else drawn by Glyph: a box holding "\\.."
-                tip: row.plugin ? qsTr("复制") : row.web ? qsTr("复制网址") : row.place ? qsTr("复制打开命令") : qsTr("复制完整路径")
-                tipShortcut: row.plugin ? "Ctrl+C" : "Ctrl+Shift+C"
-                onClicked: row.actionRequested(row.index, Launcher.CopyPath)
-            }
-            RowAction {
-                glass: true
-                id: deleteAction
-                visible: !row.isApp // uninstalling is for Windows Settings
-                glyph: "" // Delete
-                tip: row.deleteArmed ? "" : qsTr("删除（点两次，移到回收站）")
-                text: !row.deleteArmed ? ""
-                      : row.selected && row.selectedCount > 1 ? qsTr("确认删除 %1 项").arg(row.selectedCount)
-                      : qsTr("确认删除")
-                danger: row.deleteArmed
-                onClicked: {
-                    if (row.deleteArmed) {
-                        row.deleteArmed = false
-                        row.actionRequested(row.index, Launcher.Recycle)
-                    } else {
-                        row.deleteArmed = true
-                        disarmTimer.restart()
-                    }
-                }
+                glyph: "\uE10C" // horizontal ellipsis, Segoe MDL2
+                tip: qsTr("操作")
+                tipShortcut: "Shift+F10"
+                onClicked: row.menuRequested(row.index,
+                    row.mapToGlobal(Qt.point(row.width - 32, row.height - 10)))
             }
         }
     }
 
-    // One tip for all the buttons: it glides from one to the next. The date
-    // has one too: the time in full.
     HoverTip {
-        readonly property RowAction hovered: adminAction.tipWanted ? adminAction
-                                           : revealAction.tipWanted ? revealAction
-                                           : terminalAction.tipWanted ? terminalAction
-                                           : copyAction.tipWanted ? copyAction
-                                           : copyPathAction.tipWanted ? copyPathAction
-                                           : deleteAction.tipWanted ? deleteAction : null
-        // Hover handlers on items under the row's mouse area get no hover: asked of the area instead.
-        function under(item: Item): bool {
-            return area.containsMouse && item.contains(item.mapFromItem(area, area.mouseX, area.mouseY))
-        }
-        readonly property bool onDate: !hovered && date.visible && under(date)
-        readonly property bool onKeys: !hovered && !onDate && iconNumber.taken && under(iconNumber)
-        target: hovered ? hovered : onDate ? date : onKeys ? iconNumber : null
-        text: hovered ? hovered.tip : onDate ? row.modifiedFull
-            : onKeys ? qsTr("%1 被别的程序占用了，在这里按也会交给那个程序。可在设置的“结果列表”里改用 %2")
-                       .arg(iconNumber.keys).arg(row.hintModifier === "Alt" ? "Ctrl" : "Alt")
-            : ""
-        shortcut: hovered ? hovered.tipShortcut : ""
+        // Keep full timestamps accessible; selected row no longer sprouts
+        // five grey icons over its filename and folder path.
+        readonly property bool onDate: date.visible && area.containsMouse
+            && date.contains(date.mapFromItem(area, area.mouseX, area.mouseY))
+        target: moreAction.tipWanted ? moreAction : onDate ? date : null
+        text: moreAction.tipWanted ? moreAction.tip : onDate ? row.modifiedFull : ""
+        shortcut: moreAction.tipWanted ? moreAction.tipShortcut : ""
     }
 }

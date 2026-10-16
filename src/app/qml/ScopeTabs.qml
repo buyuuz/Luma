@@ -45,9 +45,9 @@ Rectangle {
     implicitWidth: row.implicitWidth + 6
     implicitHeight: tabHeight + 6
     radius: scaled ? height / 2 : 8
-    color: scaled ? Qt.rgba(0.04, 0.04, 0.04, 0.24) : Theme.track
-    border.width: scaled ? 1 : 0
-    border.color: scaled ? Qt.rgba(1, 1, 1, 0.10) : "transparent"
+    color: scaled ? Qt.rgba(1, 1, 1, 0.015) : Theme.track
+    border.width: scaled ? 0 : 0
+    border.color: "transparent"
 
     Row {
         id: row
@@ -77,8 +77,8 @@ Rectangle {
                 height: tabs.tabHeight
                 radius: tabs.scaled ? height / 2 : 6
                 clip: true
-                color: active ? (tabs.scaled ? Qt.rgba(1, 1, 1, 0.16) : Theme.chipActive)
-                       : area.containsMouse ? (tabs.scaled ? Qt.rgba(1, 1, 1, 0.07) : Theme.chipHover) : "transparent"
+                color: active ? (tabs.scaled ? Qt.rgba(1, 1, 1, 0.11) : Theme.chipActive)
+                       : area.containsMouse ? (tabs.scaled ? Qt.rgba(1, 1, 1, 0.045) : Theme.chipHover) : "transparent"
                 border.width: active && !tabs.scaled ? 1 : 0
                 border.color: Theme.chipBorder
                 Behavior on width { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
