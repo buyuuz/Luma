@@ -96,13 +96,15 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        anchors.leftMargin: 6
-        anchors.rightMargin: 6
-        anchors.topMargin: 1
-        anchors.bottomMargin: 1
-        radius: 6
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        anchors.topMargin: 2
+        anchors.bottomMargin: 2
+        radius: 11
         color: row.selected || (row.current && row.selectedCount === 0) ? Theme.selection
                : area.containsMouse ? Theme.hover : "transparent"
+        border.width: row.current && row.selectedCount === 0 ? 1 : 0
+        border.color: Theme.glassOutline
     }
 
     Rectangle { // accent pill on the current row, as in Windows 11 lists

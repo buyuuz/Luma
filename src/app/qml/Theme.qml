@@ -16,22 +16,29 @@ QtObject {
     // white to read, whatever the accent (SystemTheme.accentFill).
     readonly property color accentFill: SystemTheme.accentFill
 
-    readonly property color background: dark ? "#202020" : "#F9F9F9"
+    // Mac Glass V1. These lightweight layered colours deliberately avoid
+    // live blur and GPU shaders, so the launcher remains fast on Windows 10.
+    readonly property color glassCanvasTop: dark ? "#222B43" : "#FCFDFF"
+    readonly property color glassCanvasBottom: dark ? "#141B2D" : "#EFF3FA"
+    readonly property color glassFieldTop: dark ? Qt.rgba(0.90, 0.94, 1, 0.14) : Qt.rgba(1, 1, 1, 0.93)
+    readonly property color glassFieldBottom: dark ? Qt.rgba(0.73, 0.82, 1, 0.08) : Qt.rgba(0.96, 0.97, 1, 0.78)
+    readonly property color glassOutline: dark ? Qt.rgba(0.85, 0.91, 1, 0.24) : Qt.rgba(0.43, 0.55, 0.77, 0.24)
+    readonly property color glassAccent: dark ? "#9DAAFF" : "#5E70E4"
+
+    readonly property color background: dark ? "#172036" : "#F4F7FC"
     // The edge of our windows (WindowEdge.qml), rounded as DWM rounds them.
     // A light grey on the dark ones: over a dark program their shadow does
     // not show. The light ones stand apart by their shadow.
-    readonly property int windowRadius: SystemTheme.roundedCorners ? 8 : 0
-    readonly property color windowEdge: dark ? "#6A6A6A" : "#B4B4B4"
+    readonly property int windowRadius: SystemTheme.roundedCorners ? 16 : 0
+    readonly property color windowEdge: dark ? "#52617D" : "#BCC7DE"
     readonly property color divider: backdrop ? (dark ? Qt.rgba(1, 1, 1, 0.084) : Qt.rgba(0, 0, 0, 0.058))
                                               : dark ? "#2E2E2E" : "#EAEAEA"
     readonly property color text: dark ? "#F3F3F3" : "#1B1B1B"
     readonly property color subtext: dark ? "#A7A7A7" : "#666666"
     // Hints and placeholders: Windows 11's tertiary text, legible on a card (≥ 3:1).
     readonly property color faint: "#8A8A8A"
-    readonly property color hover: backdrop ? (dark ? Qt.rgba(1, 1, 1, 0.05) : Qt.rgba(0, 0, 0, 0.035))
-                                            : dark ? "#292929" : "#F1F1F1"
-    readonly property color selection: backdrop ? (dark ? Qt.rgba(1, 1, 1, 0.08) : Qt.rgba(0, 0, 0, 0.06))
-                                                : dark ? "#2F2F2F" : "#EAEAEA"
+    readonly property color hover: dark ? Qt.rgba(0.68, 0.76, 1, 0.10) : Qt.rgba(0.44, 0.54, 0.78, 0.08)
+    readonly property color selection: dark ? Qt.rgba(0.55, 0.65, 1, 0.19) : Qt.rgba(0.42, 0.54, 0.90, 0.13)
     readonly property color textSelection: Qt.rgba(accent.r, accent.g, accent.b, 0.35)
     readonly property color badge: Qt.rgba(accent.r, accent.g, accent.b, dark ? 0.16 : 0.10) // "应用" tag on app rows
 

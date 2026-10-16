@@ -54,6 +54,24 @@ Item {
 
     implicitHeight: Theme.headerHeight // 界面大小
 
+    // Raycast-inspired floating glass search surface. This is one cheap
+    // gradient and outline, not a continuously sampled desktop blur.
+    Rectangle {
+        anchors.fill: parent
+        anchors.leftMargin: 8
+        anchors.rightMargin: 8
+        anchors.topMargin: 8
+        anchors.bottomMargin: 6
+        visible: !bar.inBox
+        radius: 15
+        border.width: 1
+        border.color: Theme.glassOutline
+        gradient: Gradient {
+            GradientStop { position: 0; color: Theme.glassFieldTop }
+            GradientStop { position: 1; color: Theme.glassFieldBottom }
+        }
+    }
+
     Component.onCompleted: {
         frame.addDragArea(bar)
         frame.addControl(input)

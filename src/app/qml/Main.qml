@@ -639,6 +639,18 @@ Window {
             closeContextMenu()
     }
 
+    // Soft translucent-looking depth, without a costly live desktop capture.
+    // The actual Mica path remains untouched on systems that support it.
+    Rectangle {
+        anchors.fill: parent
+        visible: !Theme.backdrop
+        radius: Theme.windowRadius
+        gradient: Gradient {
+            GradientStop { position: 0; color: Theme.glassCanvasTop }
+            GradientStop { position: 1; color: Theme.glassCanvasBottom }
+        }
+    }
+
     Column {
         id: layout
         width: window.width
