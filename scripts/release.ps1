@@ -31,9 +31,10 @@ $notes = Join-Path $root "docs\release-notes\$tag.md"
 if ($Publish -and -not (Test-Path $notes)) { throw "Write the release notes first: $notes" }
 Write-Host "Luma $version"
 
-# build.ps1 -Deploy replaces dist\Luma, which a running copy holds on to.
-$running = Get-Process Luma -ErrorAction SilentlyContinue
-if ($running) { throw 'Quit Luma first (tray menu > 退出): dist\Luma is about to be replaced.' }
+# Build into a dedicated staging directory. Never overwrite a running Luma,
+# including installed copies and earlier preview folders.
+$dist = Join-Path $root 'dist'
+$sourceDir = Join-Path $dist '.release-stage-Luma'
 
 # Inno Setup: a per-user install of a recent version first (the one under
 # Program Files may be too old for the Windows 11 wizard style).
@@ -45,15 +46,14 @@ if (-not $Iscc) {
 }
 if (-not $Iscc -or -not (Test-Path $Iscc)) { throw 'Inno Setup 6.5 or later is needed (winget install JRSoftware.InnoSetup), or pass -Iscc' }
 
-$buildArgs = @{ Deploy = $true }
+$buildArgs = @{ Deploy = $true; DeployDir = $sourceDir }
 if ($PSBoundParameters.ContainsKey('QtDir')) { $buildArgs.QtDir = $QtDir } # else build.ps1 looks at QTDIR itself
 & (Join-Path $PSScriptRoot 'build.ps1') @buildArgs
 
-$dist = Join-Path $root 'dist'
-Copy-Item (Join-Path $root 'LICENSE') (Join-Path $dist 'Luma\LICENSE.txt')
+Copy-Item (Join-Path $root 'LICENSE') (Join-Path $sourceDir 'LICENSE.txt')
 
 $setup = Join-Path $dist "Luma-$version-x64-setup.exe"
-& $Iscc /Q "/DAppVersion=$version" "/DSourceDir=$(Join-Path $dist 'Luma')" "/DOutputDir=$dist" (Join-Path $root 'installer\WinShun.iss')
+& $Iscc /Q "/DAppVersion=$version" "/DSourceDir=$sourceDir" "/DOutputDir=$dist" (Join-Path $root 'installer\WinShun.iss')
 if ($LASTEXITCODE -or -not (Test-Path $setup)) { throw 'Inno Setup failed' }
 Write-Host "Packaged $setup"
 
@@ -66,7 +66,7 @@ Remove-Item $portable -ErrorAction SilentlyContinue
 $stage = Join-Path ([IO.Path]::GetTempPath()) "Luma-portable-$version"
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory $stage | Out-Null
-Copy-Item (Join-Path $dist 'Luma') $stage -Recurse
+Copy-Item $sourceDir (Join-Path $stage 'Luma') -Recurse
 New-Item -ItemType Directory (Join-Path $stage 'Luma\data') | Out-Null
 Copy-Item (Join-Path $root 'installer\portable-data-README.txt') (Join-Path $stage 'Luma\data\README.txt')
 Compress-Archive -Path (Join-Path $stage 'Luma') -DestinationPath $portable -CompressionLevel Optimal
