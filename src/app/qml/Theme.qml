@@ -40,6 +40,7 @@ QtObject {
     // Windows 10 cannot ask DWM for native rounding, but WindowEffects.cpp
     // clips our frameless HWND to the same radius via a Win32 window region.
     readonly property int windowRadius: 22
+    readonly property int launcherRadius: 28 // Only the floating Raycast launcher
     readonly property color windowEdge: glassPanelEdge
     readonly property color divider: backdrop ? (dark ? Qt.rgba(1, 1, 1, 0.084) : Qt.rgba(0, 0, 0, 0.058))
                                               : dark ? "#2E2E2E" : "#EAEAEA"

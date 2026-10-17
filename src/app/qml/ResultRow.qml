@@ -100,7 +100,7 @@ Item {
         anchors.rightMargin: 12
         anchors.topMargin: 3
         anchors.bottomMargin: 3
-        radius: 13
+        radius: 15
         color: row.selected || (row.current && row.selectedCount === 0) ? Theme.glassSelection
                : area.containsMouse ? Theme.glassHover : "transparent"
         border.width: row.current && row.selectedCount === 0 ? 1 : 0
@@ -167,20 +167,20 @@ Item {
             id: title
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            width: Math.min(parent.width * 0.52, Math.max(155, Math.min(330, implicitWidth + 20)))
+            width: Math.min(parent.width * 0.50, Math.max(160, Math.min(300, implicitWidth + 24)))
             text: row.results && row.nameMatches.length > 0
                   ? row.results.elidedHtml(row.name, row.nameMatches, width, font, row.results.highlightColor)
                   : row.nameHtml
             textFormat: Text.StyledText
             elide: Text.ElideRight
             color: Theme.glassText
-            font.pixelSize: Theme.uiTitle
+            font.pixelSize: Theme.uiTitle + 2
             font.weight: row.current ? Font.DemiBold : Font.Medium
         }
 
         Text {
             anchors.left: title.right
-            anchors.leftMargin: 22
+            anchors.leftMargin: 18
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: row.contentMode ? row.snippetHtml
@@ -191,7 +191,7 @@ Item {
             elide: Text.ElideMiddle
             maximumLineCount: 1
             color: Theme.glassSecondary
-            font.pixelSize: Theme.uiCaption
+            font.pixelSize: Theme.uiCaption + 1
         }
     }
 
@@ -246,7 +246,7 @@ Item {
                 : row.favorite ? (row.favoriteKeyword.length > 0 ? qsTr("收藏 · %1").arg(row.favoriteKeyword) : qsTr("收藏"))
                 : row.recent ? qsTr("最近") : row.web ? qsTr("网页") : row.place ? qsTr("系统") : qsTr("应用")
             color: Theme.accent
-            font.pixelSize: Theme.uiCaption
+            font.pixelSize: Theme.uiCaption + 1
         }
     }
 

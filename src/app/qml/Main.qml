@@ -19,7 +19,7 @@ Window {
     // The clipboard dropped down under the search box (see above).
     readonly property bool clipboardBelow: clipboard.active && clipboard.field === searchBar.field
 
-    readonly property int rowHeight: Theme.rowHeight // 界面大小
+    readonly property int rowHeight: Theme.rowHeight - 4 // compact results, launcher only
     readonly property int maxRows: 8
     readonly property int minRows: 3 // the window settles no lower than these fit below
     // Everything but the rows: header, the strip of kinds of file, divider,
@@ -320,7 +320,7 @@ Window {
         onTriggered: window.dimRows = window.stale
     }
 
-    width: 980
+    width: 930
     height: layout.implicitHeight
     // See-through to Mica, as the settings window (see there).
     color: "transparent" // Qt paints the rounded silhouette with real alpha on Win10
@@ -644,7 +644,7 @@ Window {
     Rectangle {
         anchors.fill: parent
         visible: !Theme.backdrop
-        radius: Theme.windowRadius
+        radius: Theme.launcherRadius
         antialiasing: true
         gradient: Gradient {
             GradientStop { position: 0; color: Theme.glassCanvasTop }
@@ -697,7 +697,7 @@ Window {
         Item {
             id: resultsHeading
             width: parent.width
-            height: window.trimmedQuery.length > 0 && !window.clipboardBelow ? 35 : 0
+            height: window.trimmedQuery.length > 0 && !window.clipboardBelow ? 31 : 0
             visible: height > 0
             Text {
                 anchors.left: parent.left
@@ -705,7 +705,7 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("搜索结果")
                 color: Theme.glassMuted
-                font.pixelSize: Theme.uiCaption
+                font.pixelSize: Theme.uiCaption + 1
             }
             Text {
                 anchors.right: parent.right
@@ -713,7 +713,7 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 text: list.count > 0 ? qsTr("%1 项").arg(list.count) : ""
                 color: Theme.glassMuted
-                font.pixelSize: Theme.uiCaption
+                font.pixelSize: Theme.uiCaption + 1
             }
         }
 
@@ -735,7 +735,7 @@ Window {
                 text: window.launcher.approximateHeading
                 textFormat: Text.PlainText // holds what was typed
                 color: Theme.subtext
-                font.pixelSize: Theme.uiCaption
+                font.pixelSize: Theme.uiCaption + 1
             }
 
             Column { // the apps opened most (showHome), over the recent ones
@@ -750,7 +750,7 @@ Window {
                     verticalAlignment: Text.AlignVCenter
                     text: qsTr("常用应用")
                     color: Theme.subtext
-                    font.pixelSize: Theme.uiCaption
+                    font.pixelSize: Theme.uiCaption + 1
                 }
 
                 Row {
@@ -818,7 +818,7 @@ Window {
                                 text: tile.modelData.name
                                 textFormat: Text.PlainText
                                 color: Theme.text
-                                font.pixelSize: Theme.uiCaption
+                                font.pixelSize: Theme.uiCaption + 1
                                 elide: Text.ElideRight
                                 wrapMode: Text.Wrap
                                 maximumLineCount: 2
@@ -843,7 +843,7 @@ Window {
                           ? (window.launcher.startList === Launcher.RecentlyModified ? qsTr("收藏和最近修改") : qsTr("收藏和最近"))
                           : (window.launcher.startList === Launcher.RecentlyModified ? qsTr("最近修改") : qsTr("最近"))
                     color: Theme.subtext
-                    font.pixelSize: Theme.uiCaption
+                    font.pixelSize: Theme.uiCaption + 1
                 }
             }
 

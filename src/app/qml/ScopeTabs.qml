@@ -39,8 +39,8 @@ Rectangle {
     // settings window, as the rest there.
     property bool scaled: false
     readonly property int tabHeight: scaled ? Theme.tabHeight : 32
-    readonly property int bodySize: scaled ? Theme.uiBody : Theme.fontBody
-    readonly property int captionSize: scaled ? Theme.uiCaption : Theme.fontCaption
+    readonly property int bodySize: scaled ? Theme.uiBody + 1 : Theme.fontBody
+    readonly property int captionSize: scaled ? Theme.uiCaption + 1 : Theme.fontCaption
 
     implicitWidth: row.implicitWidth + 6
     implicitHeight: tabHeight + 6

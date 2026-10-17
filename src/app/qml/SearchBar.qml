@@ -52,14 +52,14 @@ Item {
         function onSelectionRequested(anchor, position) { input.select(anchor, position) }
     }
 
-    implicitHeight: bar.inBox ? Theme.headerHeight : Theme.headerHeight + 14 // Raycast header has extra breathing room
+    implicitHeight: bar.inBox ? Theme.headerHeight : Theme.headerHeight + 8 // 6px tighter floating header
 
     // Spotlight/Raycast: open header without a nested Windows-style outline.
     // The input floats directly on the glass panel; no nested Windows pill.
     Rectangle {
         anchors.fill: parent
         visible: !bar.inBox
-        radius: Theme.windowRadius
+        radius: Theme.launcherRadius
         color: Qt.rgba(1, 1, 1, 0.016)
     }
 
@@ -140,7 +140,7 @@ Item {
         focus: true
         clip: true
         color: Theme.glassText
-        font.pixelSize: Theme.uiSearch + 2
+        font.pixelSize: Theme.uiSearch + 4
         selectByMouse: true
         selectionColor: Theme.textSelection
         selectedTextColor: Theme.text

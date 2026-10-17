@@ -10,7 +10,7 @@ Item {
     required property Launcher launcher
     required property WindowFrame frame
 
-    implicitHeight: 58
+    implicitHeight: 52
     readonly property bool atStart: launcher.query.trim().length === 0
                                     && launcher.scope !== Launcher.Content
     readonly property var sortLabels: atStart ? [qsTr("最近打开"), qsTr("最近修改")]
@@ -22,14 +22,14 @@ Item {
     Rectangle {
         id: footerSurface
         anchors.fill: parent
-        radius: Theme.windowRadius
+        radius: Theme.launcherRadius
         color: Qt.rgba(0.035, 0.038, 0.042, 0.48)
     }
     Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        height: Theme.windowRadius
+        height: Theme.launcherRadius
         color: footerSurface.color
     }
     Rectangle {
@@ -74,9 +74,9 @@ Item {
         anchors.left: mark.right
         anchors.leftMargin: 14
         anchors.verticalCenter: parent.verticalCenter
-        height: 30
+        height: 29
         width: sortText.implicitWidth + 27
-        radius: 15
+        radius: 14.5
         color: sortArea.containsMouse ? Qt.rgba(1, 1, 1, 0.13)
                                       : Qt.rgba(1, 1, 1, 0.065)
         border.width: 1
@@ -86,7 +86,7 @@ Item {
             anchors.centerIn: parent
             text: footer.sortLabels[Math.max(0, Math.min(footer.currentSort, footer.sortLabels.length - 1))] + "  ↻"
             color: Theme.glassSecondary
-            font.pixelSize: Theme.uiCaption
+            font.pixelSize: Theme.uiCaption + 1
         }
         MouseArea {
             id: sortArea
@@ -113,7 +113,7 @@ Item {
         elide: Text.ElideRight
         text: footer.launcher.statusText
         color: Theme.glassMuted
-        font.pixelSize: Theme.uiCaption
+        font.pixelSize: Theme.uiCaption + 1
     }
 
     // Two-click confirmation is still required to clear recent history.
@@ -152,9 +152,9 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 24
         anchors.verticalCenter: parent.verticalCenter
-        height: 37
+        height: 35
         width: actions.implicitWidth + 32
-        radius: 18.5
+        radius: 17.5
         color: Qt.rgba(0, 0, 0, 0.20)
         border.width: 1
         border.color: Qt.rgba(1, 1, 1, 0.17)
@@ -166,13 +166,13 @@ Item {
             Text {
                 text: footer.launcher.keyHints.enter ?? qsTr("打开")
                 color: Theme.glassText
-                font.pixelSize: Theme.uiCaption
+                font.pixelSize: Theme.uiCaption + 1
                 anchors.verticalCenter: parent.verticalCenter
             }
             Rectangle {
                 width: enterKey.implicitWidth + 14
                 height: 23
-                radius: 7
+                radius: 9
                 color: Qt.rgba(1, 1, 1, 0.085)
                 border.width: 1
                 border.color: Qt.rgba(1, 1, 1, 0.15)
@@ -182,7 +182,7 @@ Item {
                     anchors.centerIn: parent
                     text: "Enter"
                     color: Theme.glassSecondary
-                    font.pixelSize: 12
+                    font.pixelSize: 13
                 }
             }
             Rectangle {
@@ -194,13 +194,13 @@ Item {
             Text {
                 text: qsTr("操作")
                 color: Theme.glassSecondary
-                font.pixelSize: Theme.uiCaption
+                font.pixelSize: Theme.uiCaption + 1
                 anchors.verticalCenter: parent.verticalCenter
             }
             Rectangle {
                 width: actionKey.implicitWidth + 12
                 height: 23
-                radius: 7
+                radius: 9
                 color: Qt.rgba(1, 1, 1, 0.07)
                 border.width: 1
                 border.color: Qt.rgba(1, 1, 1, 0.13)
@@ -209,7 +209,7 @@ Item {
                     id: actionKey
                     anchors.centerIn: parent
                     text: "Shift+F10"
-                    font.pixelSize: 11
+                    font.pixelSize: 12
                     color: Theme.glassMuted
                 }
             }

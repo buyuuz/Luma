@@ -13,7 +13,7 @@ Rectangle {
     anchors.margins: launcherEdge ? 1 : 0
     z: 1000
     color: "transparent"
-    radius: Theme.windowRadius - (launcherEdge ? 1 : 0)
+    radius: launcherEdge ? Theme.launcherRadius - 1 : Theme.windowRadius
     antialiasing: true
     border.width: 1
     border.color: Theme.windowEdge
