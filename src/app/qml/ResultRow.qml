@@ -174,7 +174,7 @@ Item {
             textFormat: Text.StyledText
             elide: Text.ElideRight
             color: Theme.glassText
-            font.pixelSize: Theme.uiTitle + 2
+            font.pixelSize: Theme.uiTitle + 1
             font.weight: row.current ? Font.DemiBold : Font.Medium
         }
 

@@ -52,7 +52,7 @@ Item {
         function onSelectionRequested(anchor, position) { input.select(anchor, position) }
     }
 
-    implicitHeight: bar.inBox ? Theme.headerHeight : Theme.headerHeight + 8 // 6px tighter floating header
+    implicitHeight: bar.inBox ? Theme.headerHeight : Theme.headerHeight + 4 // 4px slimmer launcher header
 
     // Spotlight/Raycast: open header without a nested Windows-style outline.
     // The input floats directly on the glass panel; no nested Windows pill.
@@ -140,7 +140,7 @@ Item {
         focus: true
         clip: true
         color: Theme.glassText
-        font.pixelSize: Theme.uiSearch + 4
+        font.pixelSize: Theme.uiSearch + 2
         selectByMouse: true
         selectionColor: Theme.textSelection
         selectedTextColor: Theme.text
