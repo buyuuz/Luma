@@ -52,7 +52,7 @@ Item {
         function onSelectionRequested(anchor, position) { input.select(anchor, position) }
     }
 
-    implicitHeight: Theme.headerHeight // 64px launcher header, taskbar mode unchanged
+    implicitHeight: bar.inBox ? Theme.headerHeight : Theme.headerHeight - 4 // 60px default launcher header; taskbar unaffected
 
     // Spotlight/Raycast: open header without a nested Windows-style outline.
     // The input floats directly on the glass panel; no nested Windows pill.
@@ -125,7 +125,7 @@ Item {
         y: bar.onPixel((bar.height - height) / 2)
         glyph: bar.launcher.scope === Launcher.Content ? "" // Document
              : "" // Search
-        size: Theme.searchIconSize
+        size: Math.max(18, Theme.searchIconSize - 2) // 20px at default UI scale
         color: Theme.glassSecondary
     }
 
@@ -140,7 +140,7 @@ Item {
         focus: true
         clip: true
         color: Theme.glassText
-        font.pixelSize: Theme.uiSearch // 24px default launcher input
+        font.pixelSize: bar.inBox ? Theme.uiSearch : Theme.uiSearch - 2 // 22px default launcher input
         selectByMouse: true
         selectionColor: Theme.textSelection
         selectedTextColor: Theme.text
