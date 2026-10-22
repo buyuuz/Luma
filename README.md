@@ -2,7 +2,7 @@
 
 **Luma** 是基于 [LingCore / WinShun](https://github.com/LingCore/WinShun)（MIT）维护的 Windows 10/11 搜索与快速启动器分支。保留其搜索、索引、剪贴板、插件、MCP 等主要能力，并使用独立的 **Luma 品牌、Windows 服务、安装身份和 Raycast 风格搜索主窗口**。原作者版权与 MIT 许可均保留。
 
-> **版本：** Luma 0.8.1（Raycast V7）。与上游 WinShun 的版本号并不严格同步。当前上游 WinShun 0.10.0 的功能更新尚未合并，不能用上游安装包覆盖 Luma。
+> **版本：** Luma 0.8.1（Raycast V7）。与上游 WinShun 的版本号并不严格同步。截至 2026-10-22，上游 WinShun 已发布 0.12.0，其功能更新尚未合并；请勿用上游安装包覆盖 Luma。
 
 <p align="center">
   <img src="resources/luma-preview.png" width="112" height="112" alt="Luma icon">
